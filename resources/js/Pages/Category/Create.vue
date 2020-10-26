@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Category
+                <button type="btn" class="btn btn-primary">Primary</button>
             </h2>
         </template>
 
