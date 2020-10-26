@@ -17,6 +17,9 @@
                             <jet-nav-link :href="route('dashboard')" :active="$page.currentRouteName == 'dashboard'">
                                 Dashboard
                             </jet-nav-link>
+                             <jet-nav-link :href="route('createCategory')" :active="$page.currentRouteName == 'createCategory'">
+                                Categorias
+                            </jet-nav-link>
                         </div>
                     </div>
 
