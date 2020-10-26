@@ -3,7 +3,7 @@
 php artisan make:model Category -a
 
 ## Create Controller -r to Resource
-php artisan make:controller CategoryController -r
+php artisan make:controller ProductController -r
 
 
 
