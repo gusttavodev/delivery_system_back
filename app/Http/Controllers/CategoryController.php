@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -36,21 +37,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'photo' => 'required',
-            'priority' => 'required',
-            'enable' => 'required',
-        ]);
+        Validator::make($request->all(), [
+            'name' => ['required'],
+            'photo' => ['required'],
+            'priority' => ['required'],
+            'enable' =>[ 'required'],
+        ])->validate();
 
         $category = new Category();
-        $category->name =$request->name;
-        $category->photo =$request->photo;
-        $category->priority =$request->priority;
-        $category->enable =$request->enable;
+        $category->name = $request->name;
+        $category->photo = $request->photo;
+        $category->priority = $request->priority;
+        $category->enable = $request->enable;
         $category->save();
 
-        return response($category, 201);
+        return redirect()->back()->with('message', 'Post Created Successfully.');
     }
 
     /**
