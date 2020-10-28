@@ -22,6 +22,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/category', 'middleware' => ['auth:sanctum']], function () {
-    Route::get('/', array('as' => 'createCategory', 'uses' => 'CategoryController@create'));
-    Route::post('/', array('as' => 'storeCategory', 'uses' => 'CategoryController@store'));
+    Route::get('/', array('as' => 'indexCategory', 'uses' => 'CategoryController@index'));
+    Route::get('/create', array('as' => 'createCategory', 'uses' => 'CategoryController@create'));
+    Route::post('/create', array('as' => 'storeCategory', 'uses' => 'CategoryController@store'));
 });
