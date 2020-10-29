@@ -90,7 +90,7 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'photo' => 'required',
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
             'priority' => 'required',
             'enable' => 'required',
         ]);
