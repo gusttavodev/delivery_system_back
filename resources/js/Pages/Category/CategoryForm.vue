@@ -101,18 +101,25 @@ export default {
     props: ['errors'],
     data() {
         return {
-            form: this.$inertia.form(
-                {
-                    name: "",
-                    photo: "",
-                    priority: "",
-                    enable: true
-                },
-                {
-                    bag: "storeCategory",
-                    resetOnSuccess: true
-                }
-            ),
+            // form: this.$inertia.form(
+            //     {
+            //         name: "",
+            //         photo: "",
+            //         priority: "",
+            //         enable: true
+            //     },
+            //     {
+            //         bag: "storeCategory",
+            //         resetOnSuccess: true
+            //     }
+            // ),
+            form: {
+                name: "",
+                photo: "",
+                priority: "",
+                enable: true
+            },
+
             photoPreview: null
         };
     },
@@ -122,9 +129,16 @@ export default {
             if (this.$refs.photo) {
                     this.form.photo = this.$refs.photo.files[0]
             }
-            this.form.post(route("storeCategory"), {
-                preserveScroll: true
-            });
+            var data = new FormData()
+            data.append('name', this.form.name || '')
+            data.append('photo', this.form.photo || '')
+            data.append('priority', this.form.priority || '')
+            data.append('enable', this.form.enable)
+
+            this.$inertia.post(route("storeCategory"), data)
+            // this.form.post(route("storeCategory"), {
+            //     preserveScroll: true
+            // });
         },
         updatePhotoPreview() {
                 const reader = new FileReader();

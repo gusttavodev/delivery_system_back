@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+Route::post('/gustavo', function (Request $request) {
+    Validator::make($request->all(), [
+        'name' => 'required',
+        'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        'priority' => 'required',
+        'enable' => 'required',
+    ])->validate();
+    // /storage/images/123.png
+    $imageName = $request->file('photo')->getClientOriginalName();
+
+    $pathName = $request->file('photo')->store('images', 'public');
+
+    return $pathName;
+});
+
+
 Route::get('/', function () {
     return view('welcome');
 });

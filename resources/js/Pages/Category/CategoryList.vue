@@ -1,6 +1,7 @@
 <template>
     <table-layout>
         <template #table-title>
+                <th class="p-3 text-left">Foto</th>
                 <th class="p-3 text-left">Name</th>
                 <th class="p-3 text-left">Prioridade</th>
                 <th class="p-3 text-left" width="110px">Habilitado</th>
@@ -9,7 +10,10 @@
 
         <template #table-content>
             <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0" v-for="category in $page.categories" :key="category.id">
-                 <td class="border-grey-light border hover:bg-gray-100 p-3">
+                <td class="border-grey-light border hover:bg-gray-100 p-3">
+                    <img class="h-10 w-10 rounded-full" :src="getCategoryPhoto(category.photo)" :alt="category.name" />
+                </td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3">
                     {{category.name}}
                 </td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3">
@@ -54,7 +58,12 @@ export default {
         };
     },
     methods: {
+        getCategoryPhoto(photoPath){
+            const host = window.location.host
+            const photo = `http://${host}/storage/${photoPath}`
 
+            return photo
+        }
     },
     mounted(){
 

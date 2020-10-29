@@ -39,17 +39,19 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'name' => ['required'],
-            'photo' => ['required'],
-            'priority' => ['required'],
-            'enable' =>[ 'required'],
+            'name' => 'required',
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'priority' => 'required',
+            'enable' => 'required',
         ])->validate();
+
+        $pathName = $request->file('photo')->store('images', 'public');
 
         $category = new Category();
         $category->name = $request->name;
-        $category->photo = $request->photo;
+        $category->photo = $pathName;
         $category->priority = $request->priority;
-        $category->enable = $request->enable;
+        $category->enable = $request->enable == 'true' ? true : false;
         $category->save();
 
         return redirect()->back()->with('message', 'Post Created Successfully.');
