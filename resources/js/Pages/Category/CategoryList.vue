@@ -1,35 +1,10 @@
 <template>
-    <table-layout>
-        <template #table-title>
-                <th class="p-3 text-left">Foto</th>
-                <th class="p-3 text-left">Name</th>
-                <th class="p-3 text-left">Prioridade</th>
-                <th class="p-3 text-left" width="110px">Habilitado</th>
-                <th class="p-3 text-left" width="110px">Ações</th>
-        </template>
-
-        <template #table-content>
-            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0" v-for="category in $page.categories" :key="category.id">
-                <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    <img class="h-10 w-10 rounded-full" :src="getCategoryPhoto(category.photo)" :alt="category.name" />
-                </td>
-                <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    {{category.name}}
-                </td>
-                <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    {{category.priority}}
-                </td>
-                <td class="border-grey-light border hover:bg-gray-100 p-3">
-                    {{category.enable}}
-                </td>
-                <td
-                    class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer"
-                >
-                    Delete
-                </td>
-            </tr>
-        </template>
-    </table-layout>
+<div class="container row" id="cards-container-category">
+    <CategoryCard v-for="category in $page.categories" :key="category.id"
+        :name="category.name"
+        :photo="getCategoryPhoto(category.photo)"
+    />
+</div>
 </template>
 
 <script>
@@ -41,6 +16,8 @@ import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 
+import CategoryCard from './CategoryCard'
+
 export default {
     components: {
         JetActionMessage,
@@ -49,7 +26,8 @@ export default {
         JetInput,
         JetInputError,
         JetLabel,
-        JetSecondaryButton
+        JetSecondaryButton,
+        CategoryCard
     },
     props: ["categories"],
     data() {
@@ -70,3 +48,9 @@ export default {
     }
 };
 </script>
+
+<style>
+#cards-container-category {
+
+}
+</style>

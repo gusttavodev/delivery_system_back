@@ -16,11 +16,11 @@
             leave-class="transform opacity-100 scale-100"
             leave-to-class="transform opacity-0 scale-95">
             <div v-show="open"
-                    class="absolute z-50 mt-2 rounded-md shadow-lg"
+                    class="absolute z-999999 mt-2 rounded-md shadow-lg"
                     :class="[widthClass, alignmentClasses]"
-                    style="display: none;"
+                    style="display: none; z-index: 9999999;"
                     @click="open = false">
-                <div class="rounded-md shadow-xs" :class="contentClasses">
+                <div class="rounded-md shadow-xs z-9999999" :class="contentClasses">
                     <slot name="content"></slot>
                 </div>
             </div>

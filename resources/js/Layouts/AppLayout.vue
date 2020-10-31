@@ -17,7 +17,7 @@
                             <jet-nav-link :href="route('dashboard')" :active="$page.currentRouteName == 'dashboard'">
                                 Dashboard
                             </jet-nav-link>
-                             <jet-nav-link :href="route('createCategory')" :active="$page.currentRouteName == 'createCategory'">
+                             <jet-nav-link :href="route('indexCategory')" :active="$page.currentRouteName == 'indexCategory'">
                                 Categorias
                             </jet-nav-link>
                         </div>
@@ -197,7 +197,7 @@
 
         <!-- Page Heading -->
         <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8" id="layout-header">
                 <slot name="header"></slot>
             </div>
         </header>
@@ -212,6 +212,12 @@
         </portal-target>
     </div>
 </template>
+<style scoped>
+#layout-header{
+    display: flex;
+    justify-content: space-between;
+}
+</style>
 
 <script>
     import JetApplicationLogo from '@/Jetstream/ApplicationLogo'

@@ -4,6 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Criar Categoria
             </h2>
+            <inertia-link :href="route('indexCategory')" >
+                <jet-button >
+                    Voltar
+                </jet-button>
+            </inertia-link>
         </template>
 
         <div class="py-12">
@@ -19,11 +24,15 @@
 <script>
     import AppLayout from '@/Layouts/AppLayout'
     import CategoryForm from './CategoryForm'
+    import JetButton from "@/Jetstream/Button";
+    import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink";
 
     export default {
         components: {
             AppLayout,
             CategoryForm,
+            JetButton,
+            JetResponsiveNavLink
         },
     }
 </script>

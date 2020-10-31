@@ -125,7 +125,7 @@ export default {
     },
 
     methods: {
-        createCategory() {
+        async createCategory() {
             if (this.$refs.photo) {
                     this.form.photo = this.$refs.photo.files[0]
             }
@@ -135,10 +135,11 @@ export default {
             data.append('priority', this.form.priority || '')
             data.append('enable', this.form.enable)
 
-            this.$inertia.post(route("storeCategory"), data)
+            await this.$inertia.post(route("storeCategory"), data)
             // this.form.post(route("storeCategory"), {
             //     preserveScroll: true
             // });
+            this.$inertia.replace(route("indexCategory"))
         },
         updatePhotoPreview() {
                 const reader = new FileReader();
