@@ -25,9 +25,14 @@
 
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" v-show="photoPreview">
-                    <span class="block rounded-full w-40 h-40"
+                    <div v-if="isEdit && !editPhotoPreview">
+                        <img id="old_image" :src="getCategoryPhoto(editData.photo)" class="block rounded-full w-40 h-40" :alt="form.name" />
+                    </div>
+                    <div v-else>
+                        <span class="block rounded-full w-40 h-40"
                           :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
-                    </span>
+                        </span>
+                    </div>
                 </div>
 
                 <jet-secondary-button class="mt-2 mr-2" type="button" @click.native.prevent="selectNewPhoto">
@@ -98,34 +103,38 @@ export default {
         FormLayout,
         JetSecondaryButton
     },
-    props: ['errors'],
+    props: ['errors', 'isEdit', 'editData'],
     data() {
         return {
-            // form: this.$inertia.form(
-            //     {
-            //         name: "",
-            //         photo: "",
-            //         priority: "",
-            //         enable: true
-            //     },
-            //     {
-            //         bag: "storeCategory",
-            //         resetOnSuccess: true
-            //     }
-            // ),
             form: {
                 name: "",
                 photo: "",
                 priority: "",
                 enable: true
             },
-
+            editPhotoPreview: false,
             photoPreview: null
         };
     },
-
+    mounted() {
+        if(this.isEdit){
+           this.form.name = this.editData.name
+           this.form.photo = this.editData.photo
+           this.form.priority = this.editData.priority
+           this.form.enable = this.editData.enable
+        }
+    },
     methods: {
+        getCategoryPhoto(photoPath) {
+            const host = window.location.host;
+            const photo = `http://${host}/storage/${photoPath}`;
+            this.photoPreview = true
+            return photo;
+        },
         async createCategory() {
+            if(this.isEdit){
+                return await this.updateCategory()
+            }
             if (this.$refs.photo) {
                     this.form.photo = this.$refs.photo.files[0]
             }
@@ -136,10 +145,26 @@ export default {
             data.append('enable', this.form.enable)
 
             await this.$inertia.post(route("storeCategory"), data)
-            // this.form.post(route("storeCategory"), {
-            //     preserveScroll: true
-            // });
+
             this.$inertia.replace(route("indexCategory"))
+        },
+        async updateCategory() {
+
+            let updateImage = true
+            if (this.$refs.photo && this.editPhotoPreview) {
+               this.form.photo = this.$refs.photo.files[0]
+            }else{
+               updateImage = false
+            }
+
+            var data = new FormData()
+            data.append('name', this.form.name)
+            data.append('photo', this.form.photo)
+            data.append('priority', this.form.priority)
+            data.append('enable', this.form.enable)
+            data.append('updateImage', updateImage)
+
+            await this.$inertia.post(route("updateCategory", this.editData.id), data)
         },
         updatePhotoPreview() {
                 const reader = new FileReader();
@@ -147,7 +172,7 @@ export default {
                 reader.onload = (e) => {
                     this.photoPreview = e.target.result;
                 };
-
+                if(this.isEdit) this.editPhotoPreview = true
                 reader.readAsDataURL(this.$refs.photo.files[0]);
         },
         selectNewPhoto() {

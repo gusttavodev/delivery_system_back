@@ -77,9 +77,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return Inertia::render('Category/Edit', ['category' => $category]);
     }
 
     /**
@@ -91,21 +92,31 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
-            'priority' => 'required',
-            'enable' => 'required',
-        ]);
-
         $category = Category::findOrFail($id);
-        $category->name =$request->name;
-        $category->photo =$request->photo;
-        $category->priority =$request->priority;
-        $category->enable =$request->enable;
+
+        if($request->updateImage != "false"){
+            $this->validate($request, [
+                'name' => 'required',
+                'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+                'priority' => 'required',
+                'enable' => 'required',
+            ]);
+            $pathName = $request->file('photo')->store('images', 'public');
+            $category->photo = $pathName;
+        }else{
+            $this->validate($request, [
+                'name' => 'required',
+                'priority' => 'required',
+                'enable' => 'required',
+            ]);
+        }
+
+        $category->name = $request->name;
+        $category->priority = $request->priority;
+        $category->enable = $request->enable == 'true' ? true : false;
         $category->save();
 
-        return response($category, 200);
+        return redirect()->back()->with('message', 'Categoria Atualizado com sucesso.');
     }
 
     /**
@@ -118,7 +129,21 @@ class CategoryController extends Controller
     {
         Category::findOrFail($id)->delete();
 
-        $categories = Category::all();
+        $categories = Category::paginate(6);
         return Inertia::render('Category/Index', ['categories' => $categories]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function enableDisable($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->enable = $category->enable ? false : true;
+        $category->save();
+
+        return redirect()->back();
     }
 }

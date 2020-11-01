@@ -7,6 +7,7 @@
                 :name="category.name"
                 :photo="getCategoryPhoto(category.photo)"
                 :id="category.id"
+                :enable="category.enable"
                 @confirm-delete="confirmDelete(category.id)"
             />
         </div>

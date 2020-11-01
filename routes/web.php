@@ -44,4 +44,7 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/category', 'mid
     Route::get('/create', array('as' => 'createCategory', 'uses' => 'CategoryController@create'));
     Route::post('/create', array('as' => 'storeCategory', 'uses' => 'CategoryController@store'));
     Route::delete('/{id}', array('as' => 'deleteCategory', 'uses' => 'CategoryController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editCategory', 'uses' => 'CategoryController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateCategory', 'uses' => 'CategoryController@update'));
+    Route::post('/enableDisable/{id}', array('as' => 'enableDisableCategory', 'uses' => 'CategoryController@enableDisable'));
 });
