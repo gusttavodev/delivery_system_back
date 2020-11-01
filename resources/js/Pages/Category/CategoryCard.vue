@@ -13,11 +13,21 @@
 
                     <template #content>
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            Editar Pefil
+                            Escolha uma ação
                         </div>
-                        <jet-dropdown-link :href="route('profile.show')">
-                            Profile
+                        <jet-dropdown-link :href="route('createCategory')">
+                            Editar
                         </jet-dropdown-link>
+                        <span @click="actionDelete(id)">
+                            <jet-dropdown-link as="button">
+                                    Desabilitar
+                            </jet-dropdown-link>
+                        </span>
+                        <span @click="actionDelete(id)">
+                            <jet-dropdown-link as="button">
+                                    Remover
+                            </jet-dropdown-link>
+                        </span>
                     </template>
                 </jet-dropdown>
             </div>
@@ -31,13 +41,18 @@ import JetDropdown from "@/Jetstream/Dropdown";
 import JetDropdownLink from "@/Jetstream/DropdownLink";
 
 export default {
-    props: ["name", "photo"],
+    props: ["name", "photo", "id"],
     components: {
         JetSecondaryButton,
         JetDropdown,
         JetDropdownLink
     },
-    computed: {}
+    computed: {},
+    methods: {
+        async actionDelete(id){
+           this.$emit('confirm-delete');
+        }
+    }
 };
 </script>
 
