@@ -26,7 +26,7 @@
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" v-show="photoPreview">
                     <div v-if="isEdit && !editPhotoPreview">
-                        <img id="old_image" :src="getCategoryPhoto(editData.photo)" class="block rounded-full w-40 h-40" :alt="form.name" />
+                        <img id="old_image" :src="getCategoryPhoto(form.photo)" class="block rounded-full w-40 h-40" :alt="form.name" />
                     </div>
                     <div v-else>
                         <span class="block rounded-full w-40 h-40"
@@ -118,10 +118,8 @@ export default {
     },
     mounted() {
         if(this.isEdit){
-           this.form.name = this.editData.name
-           this.form.photo = this.editData.photo
-           this.form.priority = this.editData.priority
-           this.form.enable = this.editData.enable
+            this.form = this.editData.data
+            console.log("FORM", this.form);
         }
     },
     methods: {
@@ -149,7 +147,6 @@ export default {
             this.$inertia.replace(route("indexCategory"))
         },
         async updateCategory() {
-
             let updateImage = true
             if (this.$refs.photo && this.editPhotoPreview) {
                this.form.photo = this.$refs.photo.files[0]
@@ -164,7 +161,7 @@ export default {
             data.append('enable', this.form.enable)
             data.append('updateImage', updateImage)
 
-            await this.$inertia.post(route("updateCategory", this.editData.id), data)
+            await this.$inertia.post(route("updateCategory", this.form.id), data)
         },
         updatePhotoPreview() {
                 const reader = new FileReader();

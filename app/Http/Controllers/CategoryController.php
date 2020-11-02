@@ -8,6 +8,10 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\Paginator;
 
+use App\Http\Requests\Category\CategoryCreateRequest;
+use App\Http\Requests\Category\CategoryUpdateRequest;
+use App\Http\Resources\Category as CategoryResource;
+
 class CategoryController extends Controller
 {
     /**
@@ -17,10 +21,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
-        $categories = Category::paginate(6);
-
-        return Inertia::render('Category/Index', ['categories' => $categories]);
+        return Inertia::render('Category/Index', [
+            'categories' => Category::paginate(6)->transform(function ($category) {
+                    return CategoryResource::make($category);
+            }),
+        ]);
     }
 
     /**
@@ -39,15 +44,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
-        Validator::make($request->all(), [
-            'name' => 'required',
-            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'priority' => 'required',
-            'enable' => 'required',
-        ])->validate();
-
         $pathName = $request->file('photo')->store('images', 'public');
 
         $category = new Category();
@@ -68,7 +66,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        return Category::findOrFail($id);
+        $category = Category::findOrFail($id);
+        return new CategoryResource($category);
     }
 
     /**
@@ -80,7 +79,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
-        return Inertia::render('Category/Edit', ['category' => $category]);
+        return Inertia::render('Category/Edit', ['category' => new CategoryResource($category)]);
     }
 
     /**
@@ -90,25 +89,13 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
         $category = Category::findOrFail($id);
 
         if($request->updateImage != "false"){
-            $this->validate($request, [
-                'name' => 'required',
-                'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
-                'priority' => 'required',
-                'enable' => 'required',
-            ]);
             $pathName = $request->file('photo')->store('images', 'public');
             $category->photo = $pathName;
-        }else{
-            $this->validate($request, [
-                'name' => 'required',
-                'priority' => 'required',
-                'enable' => 'required',
-            ]);
         }
 
         $category->name = $request->name;
@@ -129,8 +116,7 @@ class CategoryController extends Controller
     {
         Category::findOrFail($id)->delete();
 
-        $categories = Category::paginate(6);
-        return Inertia::render('Category/Index', ['categories' => $categories]);
+        return redirect()->back();
     }
 
     /**

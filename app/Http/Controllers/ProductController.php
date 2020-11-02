@@ -162,8 +162,7 @@ class ProductController extends Controller
     {
         Product::findOrFail($id)->delete();
 
-        $products = Product::paginate(6);
-        return Inertia::render('Product/Index', ['products' => $products]);
+        return redirect()->back();
     }
 
     /**
