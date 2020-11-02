@@ -97,7 +97,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id)->with('categories')->get();
+        $product = Product::findOrFail($id)->where('id', $id)->with('categories')->get();
 
         $categories = Category::all();
         return Inertia::render('Product/Edit', ['product' => $product[0], 'categories' => $categories]);
