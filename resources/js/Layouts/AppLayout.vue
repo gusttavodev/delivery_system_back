@@ -17,8 +17,11 @@
                             <jet-nav-link :href="route('dashboard')" :active="$page.currentRouteName == 'dashboard'">
                                 Dashboard
                             </jet-nav-link>
-                             <jet-nav-link :href="route('indexCategory')" :active="$page.currentRouteName == 'indexCategory'">
+                            <jet-nav-link :href="route('indexCategory')" :active="$page.currentRouteName == 'indexCategory'">
                                 Categorias
+                            </jet-nav-link>
+                            <jet-nav-link :href="route('indexProduct')" :active="$page.currentRouteName == 'indexProduct'">
+                                Produtos
                             </jet-nav-link>
                         </div>
                     </div>
