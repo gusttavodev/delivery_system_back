@@ -9,6 +9,11 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\Paginator;
 
+use App\Http\Requests\Product\ProductCreateRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
+use App\Http\Resources\Product as ProductResource;
+use App\Http\Resources\Category as CategoryResource;
+
 class ProductController extends Controller
 {
     /**
@@ -18,9 +23,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(6);
-
-        return Inertia::render('Product/Index', ['products' => $products]);
+        return Inertia::render('Product/Index', [
+            'products' => Product::paginate(6)->transform(function ($product) {
+                    return ProductResource::make($product);
+            }),
+        ]);
     }
 
     /**
@@ -30,8 +37,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return Inertia::render('Product/Create', ['categories' => $categories]);
+        return Inertia::render('Product/Create', [
+            'categories' => CategoryResource::collection(Category::all())
+        ]);
     }
 
     /**
@@ -40,20 +48,8 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductCreateRequest $request)
     {
-
-        Validator::make($request->all(), [
-            'name' => 'required',
-            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'priority' => 'required',
-            'enable' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'category' => 'required|min:3',
-
-        ])->validate();
-
         $pathName = $request->file('photo')->store('images', 'public');
 
         $product = new Product();
@@ -98,9 +94,12 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id)->where('id', $id)->with('categories')->get();
+        $categories = CategoryResource::collection(Category::all());
 
-        $categories = Category::all();
-        return Inertia::render('Product/Edit', ['product' => $product[0], 'categories' => $categories]);
+        return Inertia::render('Product/Edit', [
+            'product' => new ProductResource($product[0]),
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -110,32 +109,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
         $product = Product::findOrFail($id);
 
         if($request->updateImage != "false"){
-            $this->validate($request, [
-                'name' => 'required',
-                'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
-                'priority' => 'required',
-                'enable' => 'required',
-                'price' => 'required',
-                'description' => 'required',
-                'category' => 'required|min:3',
-            ]);
             $pathName = $request->file('photo')->store('images', 'public');
             $product->photo = $pathName;
-        }else{
-            $this->validate($request, [
-                'name' => 'required',
-                'priority' => 'required',
-                'enable' => 'required',
-                'price' => 'required',
-                'description' => 'required',
-                'category' => 'required|min:3',
-            ]);
         }
+
         $categoryArray = json_decode($request->category);
 
         foreach ($categoryArray as $value) {

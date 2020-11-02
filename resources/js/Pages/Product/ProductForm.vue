@@ -20,7 +20,7 @@
                     <div v-if="isEdit && !editPhotoPreview">
                         <img
                             id="old_image"
-                            :src="getPhoto(editData.photo)"
+                            :src="getPhoto(form.photo)"
                             class="block rounded-full w-40 h-40"
                             :alt="form.name"
                         />
@@ -84,7 +84,7 @@
                             track-by="id"
                             label="name"
                             placeholder="Selecione as categorias"
-                            :options="$page.categories"
+                            :options="$page.categories.data"
                             :allow-empty="false"
                         >
                             <template slot="singleLabel" slot-scope="{ option }"
@@ -211,10 +211,10 @@ export default {
         };
     },
     mounted() {
-
         if (this.isEdit) {
-            this.form = this.editData
-            this.selectedCategories = this.editData.categories
+            console.log("categories", this.editData);
+            this.form = this.editData.data
+            this.selectedCategories = this.editData.data.categories
         }
     },
     methods: {
@@ -268,7 +268,7 @@ export default {
             data.append("updateImage", updateImage);
 
             await this.$inertia.post(
-                route("updateProduct", this.editData.id),
+                route("updateProduct", this.form.id),
                 data
             );
         },
