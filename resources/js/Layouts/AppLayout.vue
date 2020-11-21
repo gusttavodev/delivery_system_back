@@ -23,6 +23,9 @@
                             <jet-nav-link :href="route('indexProduct')" :active="$page.currentRouteName == 'indexProduct'">
                                 Produtos
                             </jet-nav-link>
+                            <jet-nav-link :href="route('indexUser')" :active="$page.currentRouteName == 'indexUser'">
+                                Usuarios
+                            </jet-nav-link>
                         </div>
                     </div>
 

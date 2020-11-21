@@ -17,44 +17,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+
+use Spatie\Permission\Models\Role;
+
 Route::post('/gustavo', function (Request $request) {
-    $product = Product::findOrFail(9)->with('categories')->get();
-
-    if($request->updateImage != "false"){
-        $this->validate($request, [
-            'name' => 'required',
-            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
-            'priority' => 'required',
-            'enable' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'category' => 'required|min:3',
-        ]);
-        $pathName = $request->file('photo')->store('images', 'public');
-        $product->photo = $pathName;
-    }else{
-        $this->validate($request, [
-            'name' => 'required',
-            'priority' => 'required',
-            'enable' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'category' => 'required|min:3',
-        ]);
-    }
-    $categoryArray = json_decode($request->category);
-
-
-    $product->name = $request->name;
-    $product->priority = $request->priority;
-    $product->price = $request->price;
-    $product->description = $request->description;
-    $product->enable = $request->enable == 'true' ? true : false;
-    $product->available = true;
-
-    // $product->save();
-
-    return "OK";
 });
 
 
@@ -85,4 +51,22 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/product', 'midd
     Route::get('/edit/{id}', array('as' => 'editProduct', 'uses' => 'ProductController@edit'));
     Route::post('/edit/{id}', array('as' => 'updateProduct', 'uses' => 'ProductController@update'));
     Route::post('/enableDisable/{id}', array('as' => 'enableDisableProduct', 'uses' => 'ProductController@enableDisable'));
+});
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/user'], function () {
+    Route::get('/', array('as' => 'indexUser', 'uses' => 'UserController@index'));
+    Route::get('/create', array('as' => 'createUser', 'uses' => 'UserController@create'));
+    Route::post('/create', array('as' => 'storeUser', 'uses' => 'UserController@store'));
+    Route::delete('/{id}', array('as' => 'deleteUser', 'uses' => 'UserController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editUser', 'uses' => 'UserController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateUser', 'uses' => 'UserController@update'));
+});
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/role', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexRole', 'uses' => 'RoleController@index'));
+    Route::get('/create', array('as' => 'createRole', 'uses' => 'RoleController@create'));
+    Route::post('/create', array('as' => 'storeRole', 'uses' => 'RoleController@store'));
+    Route::delete('/{id}', array('as' => 'deleteRole', 'uses' => 'RoleController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editRole', 'uses' => 'RoleController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateRole', 'uses' => 'RoleController@update'));
 });

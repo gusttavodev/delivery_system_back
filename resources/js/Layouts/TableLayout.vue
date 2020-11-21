@@ -1,10 +1,10 @@
 <template>
 
 <table class="table">
-  <thead>
-    <tr>
+  <thead class="thead-dark">
+
       <slot name="table-title"></slot>
-    </tr>
+
   </thead>
   <tbody>
 
