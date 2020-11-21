@@ -20,7 +20,7 @@ class InsertAdmin extends Migration
         $user =  DB::transaction(function (){
             return tap(User::create([
                 'name' => "Gustavo Silva",
-                'email' => "teste@gmail.com",
+                'email' => "gusttavo212@gmail.com",
                 'password' => Hash::make('12345678'),
             ]), function (User $user) {
                 $user->ownedTeams()->save(Team::forceCreate([

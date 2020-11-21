@@ -20,6 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->mediumInteger('priority');
             $table->boolean('enable');
 
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

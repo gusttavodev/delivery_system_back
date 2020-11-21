@@ -19,10 +19,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $user_id =  $request->user()->id;
+
         return Inertia::render('Category/Index', [
-            'categories' => Category::paginate(6)->transform(function ($category) {
+            'categories' => Category::where('user_id', $user_id)->paginate(6)->transform(function ($category) {
                     return CategoryResource::make($category);
             }),
         ]);
@@ -53,6 +55,7 @@ class CategoryController extends Controller
         $category->photo = $pathName;
         $category->priority = $request->priority;
         $category->enable = $request->enable == 'true' ? true : false;
+        $category->user_id = $request->user()->id;
         $category->save();
 
         return redirect()->back()->with('message', 'Post Created Successfully.');
@@ -64,9 +67,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $category = Category::findOrFail($id);
+        $user_id =  $request->user()->id;
+        $category = Category::findByUser($id, $user_id);
+
         return new CategoryResource($category);
     }
 
@@ -76,9 +81,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        $category = Category::findOrFail($id);
+        $user_id =  $request->user()->id;
+        $category = Category::findByUser($id, $user_id);
+
         return Inertia::render('Category/Edit', ['category' => new CategoryResource($category)]);
     }
 
@@ -91,7 +98,8 @@ class CategoryController extends Controller
      */
     public function update(CategoryUpdateRequest $request, $id)
     {
-        $category = Category::findOrFail($id);
+        $user_id =  $request->user()->id;
+        $category = Category::findByUser($id, $user_id);
 
         if($request->updateImage != "false"){
             $pathName = $request->file('photo')->store('images', 'public');
@@ -101,6 +109,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->priority = $request->priority;
         $category->enable = $request->enable == 'true' ? true : false;
+        $category->user_id = $request->user()->id;
         $category->save();
 
         return redirect()->back()->with('message', 'Categoria Atualizado com sucesso.');
@@ -112,9 +121,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        Category::findOrFail($id)->delete();
+        $user_id =  $request->user()->id;
+        $category = Category::findByUser($id, $user_id);
+        $category->delete();
 
         return redirect()->back();
     }
@@ -124,9 +135,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function enableDisable($id)
+    public function enableDisable($id, Request $request)
     {
-        $category = Category::findOrFail($id);
+        $user_id =  $request->user()->id;
+        $category = Category::findByUser($id, $user_id);
         $category->enable = $category->enable ? false : true;
         $category->save();
 

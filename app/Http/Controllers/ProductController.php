@@ -21,10 +21,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $user_id =  $request->user()->id;
+
         return Inertia::render('Product/Index', [
-            'products' => Product::paginate(6)->transform(function ($product) {
+            'products' => Product::where('user_id', $user_id)->paginate(6)->transform(function ($product) {
                     return ProductResource::make($product);
             }),
         ]);
@@ -35,10 +37,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $user_id =  $request->user()->id;
         return Inertia::render('Product/Create', [
-            'categories' => CategoryResource::collection(Category::all())
+            'categories' => CategoryResource::collection(Category::where('user_id', $user_id)->get())
         ]);
     }
 
@@ -64,6 +67,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->enable = $request->enable == 'true' ? true : false;
         $product->available = true;
+        $product->user_id = $request->user()->id;
 
         $product->save();
 
@@ -80,9 +84,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        return Product::findOrFail($id);
+        $user_id =  $request->user()->id;
+        $product = Product::findByUser($id, $user_id);
+
+        return $product;
     }
 
     /**
@@ -91,13 +98,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        $product = Product::findOrFail($id)->where('id', $id)->with('categories')->get();
+        $user_id =  $request->user()->id;
+        $product = Product::findByUser($id, $user_id);
         $categories = CategoryResource::collection(Category::all());
 
         return Inertia::render('Product/Edit', [
-            'product' => new ProductResource($product[0]),
+            'product' => new ProductResource($product),
             'categories' => $categories
         ]);
     }
@@ -111,7 +119,8 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $user_id =  $request->user()->id;
+        $product = Product::findByUser($id, $user_id);
 
         if($request->updateImage != "false"){
             $pathName = $request->file('photo')->store('images', 'public');
@@ -129,6 +138,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->enable = $request->enable == 'true' ? true : false;
         $product->available = true;
+        $product->user_id = $request->user()->id;
         $product->save();
 
         return redirect()->back()->with('message', 'Produto Atualizado com sucesso.');
@@ -140,9 +150,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        Product::findOrFail($id)->delete();
+        $user_id =  $request->user()->id;
+        $product = Product::findByUser($id, $user_id);
+        $product->delete();
 
         return redirect()->back();
     }
@@ -152,9 +164,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function enableDisable($id)
+    public function enableDisable($id, Request $request)
     {
-        $product = Product::findOrFail($id);
+        $user_id =  $request->user()->id;
+        $product = Product::findByUser($id, $user_id);
         $product->enable = $product->enable ? false : true;
         $product->save();
 

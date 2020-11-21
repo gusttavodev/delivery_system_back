@@ -13,4 +13,13 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class, 'category_product');
     }
+
+    static function findByUser($id, $user_id) {
+        $response = self::where('id', $id)->where('user_id', $user_id)->first();
+        if(isset($response)){
+            return $response;
+        }else {
+            abort(404);
+        }
+    }
 }
