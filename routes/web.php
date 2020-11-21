@@ -53,7 +53,7 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/product', 'midd
     Route::post('/enableDisable/{id}', array('as' => 'enableDisableProduct', 'uses' => 'ProductController@enableDisable'));
 });
 
-Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/user'], function () {
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/user', 'middleware' => ['auth:sanctum', 'is_admin']], function () {
     Route::get('/', array('as' => 'indexUser', 'uses' => 'UserController@index'));
     Route::get('/create', array('as' => 'createUser', 'uses' => 'UserController@create'));
     Route::post('/create', array('as' => 'storeUser', 'uses' => 'UserController@store'));
@@ -62,7 +62,7 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/user'], functio
     Route::post('/edit/{id}', array('as' => 'updateUser', 'uses' => 'UserController@update'));
 });
 
-Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/role', 'middleware' => ['auth:sanctum']], function () {
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/role', 'middleware' => ['auth:sanctum', 'is_admin']], function () {
     Route::get('/', array('as' => 'indexRole', 'uses' => 'RoleController@index'));
     Route::get('/create', array('as' => 'createRole', 'uses' => 'RoleController@create'));
     Route::post('/create', array('as' => 'storeRole', 'uses' => 'RoleController@store'));

@@ -25,7 +25,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render('User/Index', [
             'users' => User::paginate(6)->transform(function ($user) {
@@ -64,7 +64,7 @@ class UserController extends Controller
 
         $user->assignRole('User');
 
-        // return redirect()->back()->with('message', 'Usuario Criado com Successo.');
+        return redirect()->back()->with('message', 'Usuario Criado com Successo.');
     }
 
     /**
