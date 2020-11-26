@@ -12,3 +12,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [] Aplicar o pacote image cache do laravel para ter as imagens redimensionadas
 - [] Passar um filtro de, deseja importar todos que tem conversa, ou só os que tem como contato
 - [] Adicionar Contato Manualmente
+- [] Trats para ordenar os dados
+- [] Maks para o telefone
+- [] Criar Grupos com contatos

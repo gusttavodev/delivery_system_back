@@ -32,7 +32,7 @@ class WppContactController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('WppContacts/Create');
     }
 
     /**
@@ -48,7 +48,7 @@ class WppContactController extends Controller
             $wppContact = WppContact::updateOrCreate(
                 [
                     'user_phone' =>  $value['id']['user'],
-                    'user_id' =>  1
+                    'user_id' =>  $request->user()->id
                 ],
 
                 [
@@ -56,7 +56,7 @@ class WppContactController extends Controller
                     'server' =>  $value['id']['server'],
                     'user_phone' =>  $value['id']['user'],
                     '_serialized' =>  $value['id']['_serialized'],
-                    'user_id' =>  1
+                    'user_id' =>  $request->user()->id
                 ]
             );
         }
