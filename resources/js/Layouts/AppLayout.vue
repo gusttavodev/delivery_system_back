@@ -26,6 +26,9 @@
                             <jet-nav-link :href="route('indexUser')" :active="$page.currentRouteName == 'indexUser'">
                                 Usuarios
                             </jet-nav-link>
+                            <jet-nav-link :href="route('indexWppContacs')" :active="$page.currentRouteName == 'indexWppContacs'">
+                                Contatos WhatsApp
+                            </jet-nav-link>
                         </div>
                     </div>
 

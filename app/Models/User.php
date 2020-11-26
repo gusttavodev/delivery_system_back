@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\WppContact;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,4 +62,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get the phone record associated with the Wpp Contact.
+     */
+    public function wppContact()
+    {
+        return $this->hasMany(WppContact::class, 'user_id');
+    }
 }

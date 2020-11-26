@@ -70,3 +70,14 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/role', 'middlew
     Route::get('/edit/{id}', array('as' => 'editRole', 'uses' => 'RoleController@edit'));
     Route::post('/edit/{id}', array('as' => 'updateRole', 'uses' => 'RoleController@update'));
 });
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/wpp/contacts', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexWppContacs', 'uses' => 'WppContactController@index'));
+    Route::get('/create', array('as' => 'createWppContacs', 'uses' => 'WppContactController@create'));
+    Route::post('/create', array('as' => 'storeWppContacs', 'uses' => 'WppContactController@store'));
+    Route::delete('/{id}', array('as' => 'deleteWppContacs', 'uses' => 'WppContactController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editWppContacs', 'uses' => 'WppContactController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateWppContacs', 'uses' => 'WppContactController@update'));
+
+    // Route::get('/import', array('as' => 'indexWppContacs', 'uses' => 'WppContactController@index'));
+});
