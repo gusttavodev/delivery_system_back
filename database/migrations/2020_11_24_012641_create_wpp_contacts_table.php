@@ -16,9 +16,9 @@ class CreateWppContactsTable extends Migration
         Schema::create('wpp_contacts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('server');
+            $table->string('server')->default("c.us");
             $table->string('user_phone');
-            $table->string('_serialized');
+            $table->string('_serialized')->nullable();
 
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
 

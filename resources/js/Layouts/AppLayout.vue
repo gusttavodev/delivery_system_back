@@ -29,6 +29,9 @@
                             <jet-nav-link :href="route('indexWppContacs')" :active="$page.currentRouteName == 'indexWppContacs'">
                                 Contatos WhatsApp
                             </jet-nav-link>
+                            <jet-nav-link :href="route('indexWppSession')" :active="$page.currentRouteName == 'indexWppSession'">
+                                Sessão WhatsApp
+                            </jet-nav-link>
                         </div>
                     </div>
 

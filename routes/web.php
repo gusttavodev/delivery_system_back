@@ -20,7 +20,23 @@ use App\Models\Category;
 
 use Spatie\Permission\Models\Role;
 
-Route::post('/gustavo', function (Request $request) {
+use App\Models\WppSession;
+use App\Http\Requests\WppSession\WppSessionCreate;
+
+Route::post('/gustavo', function (WppSessionCreate $request) {
+    $wppSession = new WppSession();
+    $wppSession->name = $request->name;
+    $wppSession->status = $request->status;
+    $wppSession->is_auth = $request->is_auth;
+    $wppSession->phone = $request->phone;
+
+    $wppSession->wa_browser_id = $request->wa_browser_id;
+    $wppSession->wa_secret_bundle = $request->wa_secret_bundle;
+    $wppSession->wa_token_1 = $request->wa_token_1;
+    $wppSession->wa_token_2 = $request->wa_token_2;
+
+    $wppSession->user_id = 1;
+    $wppSession->save();
 });
 
 
@@ -80,4 +96,13 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/wpp/contacts', 
     Route::post('/edit/{id}', array('as' => 'updateWppContacs', 'uses' => 'WppContactController@update'));
 
     // Route::get('/import', array('as' => 'indexWppContacs', 'uses' => 'WppContactController@index'));
+});
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/wpp/session', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexWppSession', 'uses' => 'WppSessionController@index'));
+    Route::get('/create', array('as' => 'createWppSession', 'uses' => 'WppSessionController@create'));
+    Route::post('/create', array('as' => 'storeWppSession', 'uses' => 'WppSessionController@store'));
+    Route::delete('/{id}', array('as' => 'deleteWppSession', 'uses' => 'WppSessionController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editWppSession', 'uses' => 'WppSessionController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateWppSession', 'uses' => 'WppSessionController@update'));
 });
