@@ -13,7 +13,6 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
 use Spatie\Permission\Traits\HasRoles;
-
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -64,8 +63,22 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the phone record associated with the User Categories.
+    */
+    public function categories(){
+        return $this->HasMany(Category::class);
+    }
+
+    /**
+     * Get the phone record associated with the User Products.
+    */
+    public function products(){
+        return $this->HasMany(Product::class);
+    }
+
+    /**
      * Get the phone record associated with the Wpp Contact.
-     */
+    */
     public function wppContact()
     {
         return $this->hasMany(WppContact::class, 'user_id');

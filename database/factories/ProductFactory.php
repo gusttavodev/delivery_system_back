@@ -24,13 +24,12 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'photo' => Str::random(10),
+            'photo' => "images/TPtdcnzl5eFhlEvB6cBAw5bQtMlIVMeBsLGwo2hm.jpeg",
             'available' => true,
             'enable' => true,
             'priority' => 1,
             'description' => Str::random(10),
             'price' => 10.12,
-            'description' => Str::random(10),
         ];
     }
 }

@@ -1,23 +1,22 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Database\Seeders;
 
-use App\Models\Team;
+use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Team;
 use Illuminate\Support\Facades\Hash;
 
-class InsertAdmin extends Migration
+class UserSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
-        $user =  DB::transaction(function (){
+        $user =  \DB::transaction(function (){
             return tap(User::create([
                 'name' => "Gustavo Silva",
                 'email' => "gusttavo212@gmail.com",
@@ -32,15 +31,7 @@ class InsertAdmin extends Migration
         });
 
         $user->assignRole('Admin');
-    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
+        User::factory(1)->create();
     }
 }
