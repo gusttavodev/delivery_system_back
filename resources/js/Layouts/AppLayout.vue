@@ -136,6 +136,21 @@
                     <jet-responsive-nav-link :href="route('dashboard')" :active="$page.currentRouteName == 'dashboard'">
                         Dashboard
                     </jet-responsive-nav-link>
+                     <jet-nav-link :href="route('indexCategory')" :active="$page.currentRouteName == 'indexCategory'">
+                                Categorias
+                            </jet-nav-link>
+                            <jet-nav-link :href="route('indexProduct')" :active="$page.currentRouteName == 'indexProduct'">
+                                Produtos
+                            </jet-nav-link>
+                            <jet-nav-link :href="route('indexUser')" :active="$page.currentRouteName == 'indexUser'">
+                                Usuarios
+                            </jet-nav-link>
+                            <jet-nav-link :href="route('indexWppContacs')" :active="$page.currentRouteName == 'indexWppContacs'">
+                                Contatos WhatsApp
+                            </jet-nav-link>
+                            <jet-nav-link :href="route('indexWppSession')" :active="$page.currentRouteName == 'indexWppSession'">
+                                Sessão WhatsApp
+                            </jet-nav-link>
                 </div>
 
                 <!-- Responsive Settings Options -->

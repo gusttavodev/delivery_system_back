@@ -43,21 +43,30 @@ class WppSessionController extends Controller
      */
     public function store(WppSessionCreate $request)
     {
-        $wppSession = new WppSession();
+        $wppSession = WppSession::where('name', $request->name)->first();
+
+        if(!$wppSession) $wppSession = new WppSession();
+
         $wppSession->name = $request->name;
-        $wppSession->status = $request->status;
-        $wppSession->is_auth = $request->is_auth;
         $wppSession->phone = $request->phone;
+        if($request->is_auth != null)$wppSession->is_auth = $request->is_auth;
+        $wppSession->status = $request->status;
+        $wppSession->state = $request->state;
 
         $wppSession->wa_browser_id = $request->wa_browser_id;
         $wppSession->wa_secret_bundle = $request->wa_secret_bundle;
         $wppSession->wa_token_1 = $request->wa_token_1;
         $wppSession->wa_token_2 = $request->wa_token_2;
 
-        $wppSession->user_id = 1;
+        $wppSession->encKey = $request->encKey;
+        $wppSession->macKey = $request->macKey;
+        $wppSession->qr_code = $request->qr_code;
+
+        $wppSession->user_id = $request->user_id;
+
         $wppSession->save();
 
-        return redirect()->back()->with('message', 'Post Created Successfully.');
+        return redirect()->back()->with('message', 'Session Created Successfully.');
     }
 
     /**

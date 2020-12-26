@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 
 use App\Models\WppContact;
+use App\Models\WppSession;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\WppContact as WppContactResource;
@@ -16,12 +17,15 @@ class WppContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $wppSession = WppSession::where('user_id', $request->user()->id)->first();
+        // Caso n tenha uma sessão mostrar uam tela diferente falando para criar
         return Inertia::render('WppContacts/Index', [
             'wppContacts' => WppContact::paginate(6)->transform(function ($wppContact) {
                     return WppContactResource::make($wppContact);
             }),
+            'wppSession' => $wppSession
         ]);
     }
 
@@ -47,8 +51,9 @@ class WppContactController extends Controller
         foreach ($contacts as $key => $value) {
             $wppContact = WppContact::updateOrCreate(
                 [
+                    'user_id' =>  $request->user()->id,
+                    'wpp_session_id' => $request->wpp_session_id,
                     'user_phone' =>  $value['id']['user'],
-                    'user_id' =>  $request->user()->id
                 ],
 
                 [
@@ -56,7 +61,8 @@ class WppContactController extends Controller
                     'server' =>  $value['id']['server'],
                     'user_phone' =>  $value['id']['user'],
                     '_serialized' =>  $value['id']['_serialized'],
-                    'user_id' =>  $request->user()->id
+                    'user_id' =>  $request->user()->id,
+                    'wpp_session_id' => $request->wpp_session_id
                 ]
             );
         }

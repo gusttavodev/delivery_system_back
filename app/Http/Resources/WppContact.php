@@ -21,7 +21,7 @@ class WppContact extends JsonResource
             'user_phone' => $this->user_phone,
             '_serialized' => $this->_serialized,
             'user' => $this->user,
-
+            'session' => $this->session,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

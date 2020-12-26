@@ -16,16 +16,18 @@ class CreateWppSessionsTable extends Migration
         Schema::create('wpp_sessions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('status');
-            $table->boolean('is_auth');
             $table->string('phone');
+            $table->boolean('is_auth')->default(0);
+            $table->string('status');
+            $table->string('state');
 
-            $table->string('wa_browser_id');
-            $table->string('wa_secret_bundle');
-            $table->string('wa_token_1');
-            $table->string('wa_token_2');
+            $table->string('wa_browser_id')->nullable();
+            $table->string('wa_secret_bundle')->nullable();
+            $table->string('wa_token_1')->nullable();
+            $table->string('wa_token_2')->nullable();
 
-            $table->string('key')->nullable();
+            $table->string('qr_code')->nullable();
+
             $table->string('encKey')->nullable();
             $table->string('macKey')->nullable();
 

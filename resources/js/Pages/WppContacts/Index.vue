@@ -5,7 +5,7 @@
                 Listar Contatos
             </h2>
 
-             <jet-button @click.native="showQrCode = true" >
+            <jet-button @click.native="showQrCode = true" >
                 Verificar Whatsapp
             </jet-button>
 
@@ -38,7 +38,7 @@
             </template>
 
             <template #content>
-                <img src="http://localhost:3000/api/getQrCode?sessionName=session1&amp;image=true">
+                <img :src="`http://localhost:3000/api/getQrCode?sessionName=${$page.wppSession.name}&amp;image=true`">
             </template>
 
             <template #footer>
@@ -66,6 +66,7 @@ import JetDialogModal from "@/Jetstream/DialogModal";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 
 export default {
+    props: ["wppSession"],
     components: {
         AppLayout,
         ContactList,
@@ -83,21 +84,19 @@ export default {
          async importContacts(){
             const { data } = await axios.get('http://localhost:3000/api/contacts/all', {
                 params: {
-                    sessionName: 'session1',
+                    sessionName: this.$page.wppSession.name,
                     isSave: true
                 }
             })
-            console.log("DATA", data);
-            if(data.result == "success")  await this.$inertia.post( route("storeWppContacs"), { contacts: data.data })
+            if(data.result == "success")  await this.$inertia.post( route("storeWppContacs"), { contacts: data.data, wpp_session_id: this.$page.wppSession.id })
         },
         async getQrCode(){
             const result = await axios.get('http://localhost:3000/api/getQrCode', {
                 params: {
-                    sessionName: 'session1',
+                    sessionName: this.$page.wppSession.name,
                     image: true
                 }
             })
-            console.log("result", result);
         }
     },
 };

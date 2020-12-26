@@ -24,15 +24,21 @@ class WppSessionCreate extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:wpp_sessions'],
+            'name' => ['required', 'string', 'max:255'],
             'status' => ['required', 'string', 'max:255'],
-            'is_auth' => ['required', 'boolean'],
+            'state' => ['required', 'string', 'max:255'],
+            'is_auth' => ['boolean'],
             'phone' =>   ['required', 'string', 'max:255'],
 
-            'wa_browser_id' => ['required', 'string', 'max:600'],
-            'wa_secret_bundle' => ['required', 'string', 'max:600'],
-            'wa_token_1' => ['required', 'string', 'max:600'],
-            'wa_token_2' => ['required', 'string', 'max:600'],
+            'wa_browser_id' => ['string', 'max:600'],
+            'wa_secret_bundle' => ['string', 'max:600'],
+            'wa_token_1' => ['string', 'max:600'],
+            'wa_token_2' => ['string', 'max:600'],
+
+            'qr_code' => ['string', 'max:600'],
+
+            'encKey' => ['string', 'max:600'],
+            'macKey' => ['string', 'max:600'],
 		];
     }
 }

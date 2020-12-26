@@ -21,6 +21,7 @@ class CreateWppContactsTable extends Migration
             $table->string('_serialized')->nullable();
 
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('wpp_session_id')->references('id')->on('wpp_sessions')->onDelete('cascade');
 
             $table->timestamps();
         });
