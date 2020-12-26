@@ -27,3 +27,12 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # Interação entre os dados 
 É criado uma sessão na rota http://localhost:3000/api/start?sessionName=session_userId 
 com o sessionName sendo o session_userId
+
+
+# O node vai chamar API do laravel que atualizam o socket
+## Socket
+É criado um Event que instancia um model para ser escutado no Listeners
+
+
+
+

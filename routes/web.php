@@ -22,28 +22,11 @@ use Spatie\Permission\Models\Role;
 
 use App\Models\WppSession;
 use App\Http\Requests\WppSession\WppSessionCreate;
+use App\Events\WppSessionEvent;
 
-Route::post('/gustavo', function (WppSessionCreate $request) {
-    $wppSession = WppSession::where('name', "PETERJORDAN")->first();
-    $wppSession = new WppSession();
-    $wppSession->name = $request->name;
-    $wppSession->phone = $request->phone;
-    if($request->is_auth != null)$wppSession->is_auth = $request->is_auth;
-    $wppSession->status = $request->status;
-    $wppSession->state = $request->state;
-
-    $wppSession->wa_browser_id = $request->wa_browser_id;
-    $wppSession->wa_secret_bundle = $request->wa_secret_bundle;
-    $wppSession->wa_token_1 = $request->wa_token_1;
-    $wppSession->wa_token_2 = $request->wa_token_2;
-
-    $wppSession->encKey = $request->encKey;
-    $wppSession->macKey = $request->macKey;
-    $wppSession->qr_code = $request->qr_code;
-
-    $wppSession->user_id = 1;
-
-    $wppSession->save();
+Route::get('/gustavo', function () {
+    $wppSession = WppSession::first();
+    WppSessionEvent::dispatch($wppSession);
 });
 
 
