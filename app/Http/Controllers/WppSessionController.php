@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\WppSession\WppSessionCreate;
 use App\Http\Resources\WppSession as WppSessionResource;
+use App\Events\WppSessionEvent;
+
+use Illuminate\Support\Facades\Redis;
 
 class WppSessionController extends Controller
 {
@@ -112,5 +115,28 @@ class WppSessionController extends Controller
     public function destroy(WppSession $wppSession)
     {
         //
+    }
+
+
+    /**
+     * Auth QR Code
+     *
+     * @param  String $name
+     * @param  Boolean $qrCode
+     *
+     * @return Boolean
+     */
+    public function authQrCode(Request $request)
+    {
+        $wppSession = WppSession::where('name', $request->name)->first();
+
+        $wppSession->is_auth = $request->qrCode ? true : false;
+        $wppSession->status = $request->status;
+        $wppSession->state = $request->state;
+        $wppSession->save();
+
+        WppSessionEvent::dispatch($wppSession);
+
+        return $wppSession;
     }
 }

@@ -6,7 +6,7 @@
             </h2>
 
             <jet-button @click.native="showStartSession = true">
-                Iniciar Sessão
+                Nova Sessão
             </jet-button>
 
         </template>
@@ -48,7 +48,7 @@
                 </jet-secondary-button>
 
                 <jet-button class="ml-2" @click.native="startSession()">
-                     Iniciar Sessão
+                    Criar Sessão
                 </jet-button>
             </template>
         </jet-dialog-modal>

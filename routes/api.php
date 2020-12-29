@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Enviar e devolver o token do sanctum
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/wpp/session'], function () {
+    Route::post('/auth', array('as' => 'apiAuthQrCodeWppSession', 'uses' => 'WppSessionController@authQrCode'));
+});

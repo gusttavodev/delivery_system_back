@@ -11,12 +11,13 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\WppSession;
 
-class WppSessionEvent
+//Precisa para disparar no Redis/Canal socket ShouldBroadcast, se não só é escutado com um listener do laravel
+class WppSessionEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The order instance.
+     * The WppSession instance.
      *
      * @var \App\Models\WppSession
    */
@@ -33,23 +34,33 @@ class WppSessionEvent
     }
 
     /**
-     * Get the channels the event should broadcast on.
+     * Get the channels the event should broadcast on. Use in channel()
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('wpp_session_'.$this->wppSession->id);
+        return new Channel('wpp_session_'.$this->wppSession->id);
+    }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return WppSession $this->wppSession
+     */
+    public function broadcastWith()
+    {
+       return ['wppSession' => $this->wppSession];
     }
 
      /**
-     * The event's broadcast name.
+     * The event's broadcast name. Use in listen()
      *
      * @return string
      */
     public function broadcastAs()
     {
-        return 'WppSession';
+        return 'WppSessionEvent';
     }
 
     /**
@@ -57,6 +68,6 @@ class WppSessionEvent
 	 */
 	public function tags()
 	{
-		return ['wpp_ession', 'wpp_ession.' . $this->wppSession->id];
+		return ['wpp_session', 'wpp_session_' . $this->wppSession->id];
 	}
 }

@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 use Illuminate\Support\Facades\Log;
 
-class WppSessionNotification
+class WppSessionNotification implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -20,9 +20,9 @@ class WppSessionNotification
         //
     }
 
-    public $connection = 'redis';
-    public $queue = 'wpp_session';
-    public $delay = 60;
+    // public $connection = 'redis';
+    // public $queue = 'wpp_session';
+    // public $delay = 60;
 
     /**
      * Handle the event.
@@ -30,8 +30,20 @@ class WppSessionNotification
      * @param  WppSessionEvent  $event
      * @return void
      */
-    public function handle(WppSessionEvent $data)
+    public function handle(WppSessionEvent $event)
     {
-        Log::debug('Update Wpp Session '.$data->wppSession->name);
+        Log::debug('Update Wpp Session '.$event->wppSession->name);
+    }
+
+     /**
+     * Handle a job failure.
+     *
+     * @param  \App\Events\WppSessionEvent  $event
+     * @param  \Throwable  $exception
+     * @return void
+     */
+    public function failed(WppSessionEvent $event, $exception)
+    {
+        Log::debug('WppSessionEvent Exception '.$Exception);
     }
 }

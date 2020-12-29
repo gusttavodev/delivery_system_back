@@ -24,8 +24,10 @@ use App\Models\WppSession;
 use App\Http\Requests\WppSession\WppSessionCreate;
 use App\Events\WppSessionEvent;
 
-Route::get('/gustavo', function () {
+Route::post('/gustavo', function (Request $request) {
     $wppSession = WppSession::first();
+    $wppSession->is_auth = $request->qrCode ? true : false;
+    $wppSession->save();
     WppSessionEvent::dispatch($wppSession);
 });
 
