@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Roadmap;
 use Illuminate\Http\Request;
+use App\Http\Resources\RoadmapResource;
+use Inertia\Inertia;
 
 class RoadmapController extends Controller
 {
@@ -14,7 +16,11 @@ class RoadmapController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Roadmap/Index', [
+            'roadmaps' => Roadmap::paginate(6)->transform(function ($roadmap) {
+                    return RoadmapResource::make($roadmap);
+            }),
+        ]);
     }
 
     /**
@@ -24,7 +30,7 @@ class RoadmapController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

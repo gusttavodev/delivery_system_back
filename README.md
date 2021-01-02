@@ -26,6 +26,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [] Criar um componente de layout, que fica em todas telas do sistema escutando echo, e mostrando alerts para cada mudançã na sessão
 - [] Quando uma sessão é encerrada, ela precisa ser iniciada novamente para o QR code funcionar, então ao encerrar a sessão preciso salvar o status e não mostrar o QR code
 - [] Tratar a modal do QR code para os momentos onde não tem sessão ou ela foi encerrada
+- [] Desconectar socket ao scanear o QR code
 
 
 # Interação entre os dados 
@@ -40,3 +41,6 @@ Rota para listar canais
 - http://localhost:6001/apps/APP_ID/channels?auth_key=59bc350e4dd056580a4a269e1a98fb5b
 
 
+
+## Componentes TailorWind
+- Cardapio https://tailwindcomponents.com/component/list

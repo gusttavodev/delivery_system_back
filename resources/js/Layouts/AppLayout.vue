@@ -35,6 +35,9 @@
                             <jet-nav-link :href="route('indexWppSession')" :active="$page.currentRouteName == 'indexWppSession'">
                                 Sessão WhatsApp
                             </jet-nav-link>
+                            <jet-nav-link :href="route('indexRoadmap')" :active="$page.currentRouteName == 'indexRoadmap'">
+                                Roteiros
+                            </jet-nav-link>
                         </div>
                     </div>
 

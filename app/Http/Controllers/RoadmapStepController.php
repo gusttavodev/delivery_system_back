@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Roadmap;
 use App\Models\RoadmapStep;
 use Illuminate\Http\Request;
 
@@ -22,9 +24,16 @@ class RoadmapStepController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($roadmap_id)
     {
-        //
+        $roadmap = Roadmap::findOrFail($roadmap_id);
+        $roadmapSteps = RoadmapStep::where('roadmap_id', $roadmap_id)
+        ->where('has_options', true)->orderBy('order', 'asc')->get();
+
+        return Inertia::render('RoadmapStep/Create', [
+            'roadmap' => $roadmap,
+            'roadmapSteps' => $roadmapSteps
+        ]);
     }
 
     /**
@@ -81,5 +90,25 @@ class RoadmapStepController extends Controller
     public function destroy(RoadmapStep $roadmapStep)
     {
         //
+    }
+
+     /**
+     * Store a order
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrder($roadmap_id, Request $request)
+    {
+        $roadmapSteps = $request->roadmapStepsList;
+        foreach ($roadmapSteps as $key => $value) {
+            $step = RoadmapStep::find($value['id']);
+            $step->order = $key+1;
+            $step->save();
+        }
+
+        $roadmapSteps = RoadmapStep::where('roadmap_id', $roadmap_id)->where('has_options', true)->orderBy('order', 'asc')->get();
+
+        return $roadmapSteps;
     }
 }

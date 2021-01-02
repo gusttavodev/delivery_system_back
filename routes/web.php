@@ -98,3 +98,24 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/wpp/session', '
     Route::get('/edit/{id}', array('as' => 'editWppSession', 'uses' => 'WppSessionController@edit'));
     Route::post('/edit/{id}', array('as' => 'updateWppSession', 'uses' => 'WppSessionController@update'));
 });
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexRoadmap', 'uses' => 'RoadmapController@index'));
+    Route::get('/create', array('as' => 'createRoadmap', 'uses' => 'RoadmapController@create'));
+    Route::post('/create', array('as' => 'storeRoadmap', 'uses' => 'RoadmapController@store'));
+    Route::delete('/{id}', array('as' => 'deleteRoadmap', 'uses' => 'RoadmapController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editRoadmap', 'uses' => 'RoadmapController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateRoadmap', 'uses' => 'RoadmapController@update'));
+});
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap/{roadmap_id}/step', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexRoadmapStep', 'uses' => 'RoadmapStepController@index'));
+    Route::get('/create', array('as' => 'createRoadmapStep', 'uses' => 'RoadmapStepController@create'));
+    Route::post('/create', array('as' => 'storeRoadmapStep', 'uses' => 'RoadmapStepController@store'));
+    Route::delete('/{id}', array('as' => 'deleteRoadmapStep', 'uses' => 'RoadmapStepController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editRoadmapStep', 'uses' => 'RoadmapStepController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateRoadmapStep', 'uses' => 'RoadmapStepController@update'));
+
+    Route::post('/store/order', array('as' => 'storeOrderRoadmapStep', 'uses' => 'RoadmapStepController@storeOrder'));
+});
+
