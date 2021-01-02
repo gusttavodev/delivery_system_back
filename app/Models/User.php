@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Roadmap;
+
 use App\Models\WppContact;
+use Laravel\Jetstream\HasTeams;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
-use Laravel\Sanctum\HasApiTokens;
 
-use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -82,5 +84,13 @@ class User extends Authenticatable
     public function wppContact()
     {
         return $this->hasMany(WppContact::class, 'user_id');
+    }
+
+    /**
+     * Get the user Roadmaps.
+    */
+    public function roadmaps()
+    {
+        return $this->hasMany(Roadmap::class, 'user_id');
     }
 }

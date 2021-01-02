@@ -24,6 +24,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [] Usar Wpp vai receber um link com token após digitar o numero, e salvar oq for possivel desse numero
 - [X] Tratar quando a sessão for removida do celular, ela deve ser iniciada novamente sem salvar outra no banco
 - [] Criar um componente de layout, que fica em todas telas do sistema escutando echo, e mostrando alerts para cada mudançã na sessão
+- [] Quando uma sessão é encerrada, ela precisa ser iniciada novamente para o QR code funcionar, então ao encerrar a sessão preciso salvar o status e não mostrar o QR code
+- [] Tratar a modal do QR code para os momentos onde não tem sessão ou ela foi encerrada
 
 
 # Interação entre os dados 
