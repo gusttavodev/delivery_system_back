@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Roadmap;
-
 use App\Models\WppContact;
+use App\Models\Establishment;
+
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -92,5 +93,13 @@ class User extends Authenticatable
     public function roadmaps()
     {
         return $this->hasMany(Roadmap::class, 'user_id');
+    }
+
+    /**
+     * Get the user establishments.
+    */
+    public function establishments()
+    {
+        return $this->hasMany(Establishment::class, 'user_id');
     }
 }

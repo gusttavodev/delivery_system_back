@@ -38,6 +38,10 @@
                             <jet-nav-link :href="route('indexRoadmap')" :active="$page.currentRouteName == 'indexRoadmap'">
                                 Roteiros
                             </jet-nav-link>
+
+                             <jet-nav-link :href="route('indexEstablishment')" :active="$page.currentRouteName == 'indexEstablishment'">
+                                Estabelecimentos
+                            </jet-nav-link>
                         </div>
                     </div>
 

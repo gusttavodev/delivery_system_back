@@ -48,3 +48,6 @@ Rota para listar canais
 
 ## Fluxo de pedido
 - Bot vai ser só para confirmar o pedido/Mandar mensagem agendada com o link para pedido web
+
+## APIs Públicas
+https://postmon.com.br/ ZIPCODE SEARCH

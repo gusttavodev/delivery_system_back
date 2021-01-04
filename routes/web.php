@@ -127,3 +127,12 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap/option/
     Route::get('/edit/{id}', array('as' => 'editStepOption', 'uses' => 'StepOptionController@edit'));
     Route::post('/edit/{id}', array('as' => 'updateStepOption', 'uses' => 'StepOptionController@update'));
 });
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/establishment', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexEstablishment', 'uses' => 'EstablishmentController@index'));
+    Route::get('/create', array('as' => 'createEstablishment', 'uses' => 'EstablishmentController@create'));
+    Route::post('/create', array('as' => 'storeEstablishment', 'uses' => 'EstablishmentController@store'));
+    Route::delete('/{id}', array('as' => 'deleteEstablishment', 'uses' => 'EstablishmentController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editEstablishment', 'uses' => 'EstablishmentController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateEstablishment', 'uses' => 'EstablishmentController@update'));
+});
