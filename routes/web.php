@@ -108,7 +108,7 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap', 'midd
     Route::post('/edit/{id}', array('as' => 'updateRoadmap', 'uses' => 'RoadmapController@update'));
 });
 
-Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap/{roadmap_id}/step', 'middleware' => ['auth:sanctum']], function () {
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap/step/{roadmap_id}', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/', array('as' => 'indexRoadmapStep', 'uses' => 'RoadmapStepController@index'));
     Route::get('/create', array('as' => 'createRoadmapStep', 'uses' => 'RoadmapStepController@create'));
     Route::post('/create', array('as' => 'storeRoadmapStep', 'uses' => 'RoadmapStepController@store'));
@@ -119,3 +119,11 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap/{roadma
     Route::post('/store/order', array('as' => 'storeOrderRoadmapStep', 'uses' => 'RoadmapStepController@storeOrder'));
 });
 
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/roadmap/option/{roadmap_step_id}', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexStepOption', 'uses' => 'StepOptionController@index'));
+    Route::get('/create', array('as' => 'createStepOption', 'uses' => 'StepOptionController@create'));
+    Route::post('/create', array('as' => 'storeStepOption', 'uses' => 'StepOptionController@store'));
+    Route::delete('/{id}', array('as' => 'deleteStepOption', 'uses' => 'StepOptionController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editStepOption', 'uses' => 'StepOptionController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateStepOption', 'uses' => 'StepOptionController@update'));
+});

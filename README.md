@@ -44,3 +44,7 @@ Rota para listar canais
 
 ## Componentes TailorWind
 - Cardapio https://tailwindcomponents.com/component/list
+
+
+## Fluxo de pedido
+- Bot vai ser só para confirmar o pedido/Mandar mensagem agendada com o link para pedido web

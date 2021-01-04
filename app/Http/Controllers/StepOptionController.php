@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Product;
+
 use App\Models\StepOption;
+use App\Models\RoadmapStep;
 use Illuminate\Http\Request;
 
 class StepOptionController extends Controller
@@ -22,9 +26,17 @@ class StepOptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($roadmap_step_id, Request $request)
     {
-        //
+        $roadmapStep = RoadmapStep::find($roadmap_step_id);
+
+        $user_id =  $request->user()->id;
+        $products = Product::where('user_id', $user_id)->get();
+
+        return Inertia::render('StepOption/Create', [
+            'roadmapStep' => $roadmapStep,
+            'products' => $products
+        ]);
     }
 
     /**

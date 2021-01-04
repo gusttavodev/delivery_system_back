@@ -1,76 +1,102 @@
 <template>
-    <div class="bg-gray-200">
-        <div class="container">
-            <div class="flex justify-center p-4">
-                <h1 class="text-xl text-blue-500">Orden das Etapas de Conversa</h1>
-            </div>
-            <div class="flex justify-center">
-                <div class="bg-white shadow-xl rounded-lg w-1/2">
-                    <ul class="divide-y divide-gray-300">
-                        <draggable
-                            v-model="$page.roadmapSteps"
-                            group="people"
-                            @start="drag = true"
-                            @change="onDrag"
-                        >
-                            <transition-group
-                                type="transition"
-                                :name="'flip-list'"
+    <form-layout @submitted="saveOrder">
+        <template #form>
+            <div class="col-span-12 sm:col-span-4">
+                <h1 class="font-semibold text-xl text-gray-800 leading-tight">Ordem das Etapas de Conversa</h1>
+                <div class="divide-y divide-gray-300">
+                    <draggable
+                        v-model="$page.roadmapSteps"
+                        group="people"
+                        @start="drag = true"
+                        @change="onDrag"
+                    >
+                        <transition-group type="transition" :name="'flip-list'">
+                            <div
+                                v-for="roadmapStep in $page.roadmapSteps"
+                                :key="roadmapStep.id"
+                                class="px-2 py-2 whitespace-no-wrap hover:bg-gray-50 cursor-pointer border-b-2 border-blue-100"
                             >
-                                <li
-                                    v-for="roadmapStep in $page.roadmapSteps"
-                                    :key="roadmapStep.id"
-                                    class="px-2 py-2 whitespace-no-wrap hover:bg-gray-50 cursor-pointer border-b-2 border-blue-100"
-                                >
-                                    <div class="leading-5 text-gray-900">Ordem: {{roadmapStep.order}}</div>
-                                    <div class="leading-5 text-gray-900">Titulo: {{roadmapStep.title}}</div>
-                                </li>
-                            </transition-group>
-                        </draggable>
-                    </ul>
-                </div>
+                                <div class="row">
+                                    <div class="col leading-5 text-gray-900">
+                                        Ordem: {{ roadmapStep.order }}
+                                    </div>
+                                    <div class="col-8 leading-5 text-gray-900">
+                                        Titulo: {{ roadmapStep.title }}
+                                    </div>
+                                    <div class="col leading-5 text-gray-900">
+                                        <jet-dropdown align="right" width="48">
+                                            <template #trigger>
+                                                <jet-button >
+                                                    Ações
+                                                </jet-button>
+                                            </template>
 
-            <jet-button
-                @click.native="saveOrder"
-            >
-                Salvar
-            </jet-button>
+                                            <template #content>
+                                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                                    Escolha uma ação
+                                                </div>
+                                                <jet-dropdown-link :href="route('createStepOption', roadmapStep.id)">
+                                                    Gerenciar Opções
+                                                </jet-dropdown-link>
+                                                <jet-dropdown-link :href="route('indexProduct')">
+                                                    Editar
+                                                </jet-dropdown-link>
+                                                <jet-dropdown-link :href="route('indexProduct')">
+                                                    Remover
+                                                </jet-dropdown-link>
+                                            </template>
+                                    </jet-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition-group>
+                    </draggable>
+                </div>
             </div>
-        </div>
-    </div>
+        </template>
+
+        <template #actions>
+            <jet-button>
+                Salvar Ordem
+            </jet-button>
+        </template>
+    </form-layout>
 </template>
 
 <script>
 import draggable from "vuedraggable";
 import JetButton from "@/Jetstream/Button";
+import FormLayout from "@/Layouts/FormLayout";
+import JetDropdown from '@/Jetstream/Dropdown'
+import JetDropdownLink from '@/Jetstream/DropdownLink'
 
 export default {
     components: {
         draggable,
-        JetButton
+        JetButton,
+        FormLayout,
+        JetDropdown,
+        JetDropdownLink
     },
     props: ["roadmap", "roadmapSteps"],
     data() {
-        return {
-
-        };
+        return {};
     },
     methods: {
-        async saveOrder(){
-            const response = await axios.post(route('storeOrderRoadmapStep', this.$page.roadmap.id), {
-                roadmapStepsList: this.$page.roadmapSteps
-            });
-            if(response.status === 200){
-                this.$page.roadmapSteps = response.data
+        async saveOrder() {
+            const response = await axios.post(
+                route("storeOrderRoadmapStep", this.$page.roadmap.id),
+                {
+                    roadmapStepsList: this.$page.roadmapSteps
+                }
+            );
+            if (response.status === 200) {
+                this.$page.roadmapSteps = response.data;
             }
         },
-        onDrag(){
-
-        }
+        onDrag() {}
     },
-    mounted() {
-
-    }
+    mounted() {}
 };
 </script>
 
