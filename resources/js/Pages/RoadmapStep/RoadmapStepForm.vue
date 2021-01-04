@@ -2,72 +2,111 @@
     <form-layout @submitted="sendForm">
         <template #form>
             <div class="col-span-6 sm:col-span-4">
-                <p class="text-sm">{{ $page.flash.message }}</p>
+                <div class="row">
+                    <div class="col">
+                        <jet-label for="title" value="Titulo" />
+                        <jet-input
+                            id="title"
+                            type="text"
+                            class="mt-1 block w-full"
+                            v-model="form.title"
+                            autofocus
+                        />
+                        <jet-input-error
+                            :message="$page.errors.title"
+                            class="mt-2"
+                        />
+                    </div>
+                    <div class="col">
+                        <jet-label
+                            for="message_invalid_response"
+                            value="Mensagem para opção invalida"
+                        />
+                        <text-area-input
+                            id="message_invalid_response"
+                            type="text"
+                            class="mt-1 block w-full"
+                            v-model="form.message_invalid_response"
+                        />
+                        <jet-input-error
+                            :message="$page.errors.message_invalid_response"
+                            class="mt-2"
+                        />
+                    </div>
+                </div>
             </div>
+            <div class="col-span-6 sm:col-span-4">
+                <div class="row">
+                    <div class="col">
+                        <jet-label
+                            for="message_before_options"
+                            value="Mensagem antes das opções"
+                        />
+                        <text-area-input
+                            id="message_before_options"
+                            type="text"
+                            class="mt-1 block w-full"
+                            v-model="form.message_before_options"
+                        />
+                        <jet-input-error
+                            :message="$page.errors.message_before_options"
+                            class="mt-2"
+                        />
+                    </div>
 
+                    <div class="col">
+                        <jet-label
+                            for="message_after_options"
+                            value="Mensagem depois das opções"
+                        />
+                        <text-area-input
+                            id="message_after_options"
+                            type="text"
+                            class="mt-1 block w-full"
+                            v-model="form.message_after_options"
+                        />
+                        <jet-input-error
+                            :message="$page.errors.message_after_options"
+                            class="mt-2"
+                        />
+                    </div>
+                </div>
+            </div>
 
             <div class="col-span-6 sm:col-span-4">
                 <div class="row">
                     <div class="col">
-                        <jet-label for="name" value="Nome" />
-                        <jet-input
-                            id="name"
-                            type="text"
-                            class="mt-1 block w-full"
-                            v-model="form.name"
-                            autofocus
+                        <jet-label
+                            for="has_options"
+                            value="Está estapa tem opções:"
                         />
+                        <label class="inline-flex items-center mt-3">
+                            <input
+                                v-model="form.has_options"
+                                type="checkbox"
+                                class="form-checkbox h-5 w-5 text-gray-600"
+                                checked
+                            /><span class="ml-2 text-gray-700">Sim</span>
+                        </label>
                         <jet-input-error
-                            :message="$page.errors.name"
+                            :message="$page.errors.has_options"
                             class="mt-2"
                         />
                     </div>
 
                     <div class="col">
-                          <jet-label for="email" value="Descrição" />
-                            <text-area-input
-                                id="email"
-                                type="text"
-                                class="mt-1 block w-full"
-                                v-model="form.email"
-                            />
-                            <jet-input-error :message="$page.errors.email" class="mt-2" />
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <jet-label for="password" value="Senha" />
-                        <jet-input
-                            id="password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            v-model="form.password"
-                            autofocus
+                        <jet-label
+                            for="step_before_invalid_response"
+                            value="Etapa caso resposta inválida"
                         />
-                        <jet-input-error
-                            :message="$page.errors.password"
-                            class="mt-2"
-                        />
-                    </div>
-
-                    <div class="col">
-                        <jet-label for="password_confirmation" value="Confirmar Senha" />
-                        <jet-input
-                            id="password_confirmation"
-                            type="password"
-                            class="mt-1 block w-full"
-                            v-model="form.password_confirmation"
-                            autofocus
-                        />
-                        <jet-input-error
-                            :message="$page.errors.password_confirmation"
-                            class="mt-2"
+                        <v-select
+                            label="step_before_invalid_response"
+                            :options="roadmapStepsNoOptions"
+                            v-model="form.step_before_invalid_response"
                         />
                     </div>
                 </div>
             </div>
-
         </template>
 
         <template #actions>
@@ -108,27 +147,44 @@ export default {
         JetSecondaryButton,
         TextAreaInput
     },
-    props: ["errors"],
+    props: ["errors", "roadmap", "roadmapSteps"],
     data() {
         return {
-            form: {
-                name: "",
-                email: "",
-                password: "",
-                password_confirmation: ""
-            },
-
+            form: this.$inertia.form(
+                {
+                    title: "",
+                    message_before_options: "",
+                    message_after_options: "",
+                    message_invalid_response: "",
+                    has_options: true,
+                    step_before_invalid_response: null
+                },
+                {
+                    bag: "createRoadmapStep",
+                    resetOnSuccess: true
+                }
+            ),
+            roadmapStepsNoOptions: this.$page.roadmapStepsNoOptions
         };
     },
     mounted() {
 
     },
     methods: {
-
         async sendForm() {
-            let response = await this.$inertia.post(route("storeUser"), this.form);
-        },
-
+            if (this.form.step_before_invalid_response)
+                this.form.step_before_invalid_response = this.form.step_before_invalid_response.id;
+            const response = await this.form.post(route("storeRoadmapStep", this.$page.roadmap.id), {
+                onFinish: () => {
+                    this.$notify({
+                        group: 'app',
+                        title: 'Etapa criada',
+                        text: 'Sua etapa foi criada com sucesso',
+                        type: 'success'
+                    })
+                }
+            })
+        }
     }
 };
 </script>

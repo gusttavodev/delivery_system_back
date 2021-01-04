@@ -10,10 +10,11 @@ import Notifications from 'vue-notification/dist/ssr.js'
 import velocity from 'velocity-animate'
 import Unicon from 'vue-unicons'
 import { uniCheckCircle, uniTimesCircle } from 'vue-unicons/src/icons'
+import vSelect from 'vue-select'
 
 
+// Components
 Vue.component('multiselect', require('vue-multiselect'));
-
 Vue.mixin({ methods: { route } });
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
@@ -21,9 +22,13 @@ Vue.use(PortalVue);
 Vue.use(Notifications, { velocity })
 Unicon.add([uniCheckCircle, uniTimesCircle])
 Vue.use(Unicon)
+Vue.component('v-select', vSelect)
 
+// CSS
 import '../css/vue_notification.scss'
+import 'vue-select/dist/vue-select.css';
 
+// Vue instance
 const app = document.getElementById('app');
 
 new Vue({

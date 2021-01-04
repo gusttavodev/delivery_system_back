@@ -8,7 +8,7 @@
                 <div class="bg-white shadow-xl rounded-lg w-1/2">
                     <ul class="divide-y divide-gray-300">
                         <draggable
-                            v-model="roadmapStepsList"
+                            v-model="$page.roadmapSteps"
                             group="people"
                             @start="drag = true"
                             @change="onDrag"
@@ -18,7 +18,7 @@
                                 :name="'flip-list'"
                             >
                                 <li
-                                    v-for="roadmapStep in roadmapStepsList"
+                                    v-for="roadmapStep in $page.roadmapSteps"
                                     :key="roadmapStep.id"
                                     class="px-2 py-2 whitespace-no-wrap hover:bg-gray-50 cursor-pointer border-b-2 border-blue-100"
                                 >
@@ -49,19 +49,19 @@ export default {
         draggable,
         JetButton
     },
-    props: ["users", "roadmap", "roadmapSteps"],
+    props: ["roadmap", "roadmapSteps"],
     data() {
         return {
-            roadmapStepsList: this.$page.roadmapSteps,
+
         };
     },
     methods: {
         async saveOrder(){
             const response = await axios.post(route('storeOrderRoadmapStep', this.$page.roadmap.id), {
-                roadmapStepsList: this.roadmapStepsList
+                roadmapStepsList: this.$page.roadmapSteps
             });
             if(response.status === 200){
-                this.roadmapStepsList = response.data
+                this.$page.roadmapSteps = response.data
             }
         },
         onDrag(){

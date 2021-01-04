@@ -7,6 +7,7 @@ use App\Models\Roadmap;
 use App\Models\RoadmapStep;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\RoadmapStep\RoadmapStepCreateRequest;
 class RoadmapStepController extends Controller
 {
     /**
@@ -30,9 +31,13 @@ class RoadmapStepController extends Controller
         $roadmapSteps = RoadmapStep::where('roadmap_id', $roadmap_id)
         ->where('has_options', true)->orderBy('order', 'asc')->get();
 
+        $roadmapStepsNoOptions = RoadmapStep::where('roadmap_id', $roadmap_id)
+        ->where('has_options', false)->orderBy('order', 'asc')->get();
+
         return Inertia::render('RoadmapStep/Create', [
             'roadmap' => $roadmap,
-            'roadmapSteps' => $roadmapSteps
+            'roadmapSteps' => $roadmapSteps,
+            'roadmapStepsNoOptions' => $roadmapStepsNoOptions
         ]);
     }
 
@@ -42,9 +47,24 @@ class RoadmapStepController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($roadmap_id, RoadmapStepCreateRequest $request)
     {
-        //
+        $maxOrder = RoadmapStep::where('roadmap_id', $roadmap_id)->where('has_options', true)->max('order');
+
+        $roadmapStep = new RoadmapStep();
+
+        $roadmapStep->roadmap_id = $roadmap_id;
+        $roadmapStep->order = $maxOrder+1;
+        $roadmapStep->title = $request->title;
+        $roadmapStep->message_before_options = $request->message_before_options;
+        $roadmapStep->message_after_options = $request->message_after_options;
+        $roadmapStep->message_invalid_response = $request->message_invalid_response;
+        $roadmapStep->has_options = $request->has_options == 'true' ? true : false;
+        $roadmapStep->step_before_invalid_response = $request->step_before_invalid_response;
+        $roadmapStep->save();
+
+        $roadmapSteps = RoadmapStep::where('roadmap_id', $roadmap_id)->where('has_options', true)->orderBy('order', 'asc')->get();
+        return redirect()->back()->with('message', 'Etapa criada com sucesso.');
     }
 
     /**
