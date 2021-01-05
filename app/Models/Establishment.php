@@ -29,4 +29,13 @@ class Establishment extends Model
     {
         return $this->hasMany(OpeningHour::class);
     }
+
+    static function findByUser($id, $user_id) {
+        $response = self::where('id', $id)->where('user_id', $user_id)->first();
+        if(isset($response)){
+            return $response;
+        }else {
+            abort(404);
+        }
+    }
 }

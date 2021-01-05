@@ -15,7 +15,7 @@
                         <div class="block px-4 py-2 text-xs text-gray-400">
                             Escolha uma ação
                         </div>
-                        <jet-dropdown-link :href="route('editCategory', id)">
+                        <jet-dropdown-link :href="route('editEstablishment', id)">
                             Editar
                         </jet-dropdown-link>
                         <span @click="actionDelete(id)">

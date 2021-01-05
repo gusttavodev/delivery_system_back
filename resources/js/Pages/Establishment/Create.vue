@@ -18,6 +18,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <address-form />
+                </div>
+            </div>
+        </div>
     </app-layout>
 </template>
 
@@ -27,12 +35,14 @@
     import JetButton from "@/Jetstream/Button";
     import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink";
 
+    import AddressForm from '../Address/AddressForm'
     export default {
         components: {
             AppLayout,
             EstablishmentForm,
             JetButton,
-            JetResponsiveNavLink
+            JetResponsiveNavLink,
+            AddressForm
         },
     }
 </script>

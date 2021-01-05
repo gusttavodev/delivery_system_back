@@ -6,8 +6,8 @@ use App\Models\Establishment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-
 use App\Http\Requests\Establishment\EstablishmentCreateRequest;
+use App\Http\Requests\Establishment\EstablishmentUpdateRequest;
 
 use App\Http\Resources\Establishment as EstablishmentResource;
 
@@ -35,6 +35,11 @@ class EstablishmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+    {
+        return Inertia::render('Establishment/Create');
+    }
+
+    public function storeAddress()
     {
         return Inertia::render('Establishment/Create');
     }
@@ -86,9 +91,14 @@ class EstablishmentController extends Controller
      * @param  \App\Models\Establishment  $establishment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Establishment $establishment)
+    public function edit($id, Request $request)
     {
-        //
+        $user_id =  $request->user()->id;
+        $establishment = Establishment::findByUser($id, $user_id);
+
+        return Inertia::render('Establishment/Edit', [
+            'establishment' => EstablishmentResource::make($establishment)
+        ]);
     }
 
     /**
@@ -98,9 +108,31 @@ class EstablishmentController extends Controller
      * @param  \App\Models\Establishment  $establishment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Establishment $establishment)
+    public function update($id,  EstablishmentUpdateRequest $request)
     {
-        //
+        $user_id =  $request->user()->id;
+        $establishment = Establishment::findByUser($id, $user_id);
+
+        $establishment->name = $request->name;
+        $establishment->description = $request->description;
+        $establishment->delivery_time = $request->delivery_time;
+        $establishment->min_value = $request->min_value;
+        $establishment->phone = $request->phone;
+
+        if($request->picture) {
+            $picturePath = $request->file('picture')->store('images', 'public');
+            $establishment->picture = $picturePath;
+        }
+        if($request->background_picture) {
+            $backgroundPicturePath = $request->file('background_picture')->store('images', 'public');
+            $establishment->background_picture = $backgroundPicturePath;
+        }
+
+        $establishment->public_link_name = strtolower(str_replace(' ', '_', $request->name));
+        $establishment->save();
+
+        return redirect()->back()->with('message', 'Estabelecimento atualizado com sucesso!');
+
     }
 
     /**

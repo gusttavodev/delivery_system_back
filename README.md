@@ -51,3 +51,4 @@ Rota para listar canais
 
 ## APIs Públicas
 https://postmon.com.br/ ZIPCODE SEARCH
+Lib CEP Canducci\Cep\Facades\Cep

@@ -8,6 +8,8 @@
                             v-model="form.picture"
                             :errors="$page.errors.picture"
                             label="Foto"
+                            :isEdit="isEdit"
+                            :defaultImageUrl="editData.data.picture"
                         />
                     </div>
                      <div class="col">
@@ -15,6 +17,8 @@
                             v-model="form.background_picture"
                             :errors="$page.errors.background_picture"
                             label="Foto de Fundo"
+                            :isEdit="isEdit"
+                            :defaultImageUrl="editData.data.background_picture"
                         />
                     </div>
                 </div>
@@ -73,7 +77,7 @@
                         <jet-input
                             id="min_value"
                             type="number"
-                            step="0.50"
+                            step="0.01"
                             class="mt-1 block w-full"
                             v-model="form.min_value"
                         />
@@ -157,11 +161,16 @@ export default {
     },
     mounted() {
         if(this.isEdit){
+            console.log(this.editData);
             this.form = this.editData.data
         }
     },
     methods: {
         async createCategory() {
+            if (this.isEdit) {
+                return await this.updateProduct();
+            }
+
             var data = new FormData()
 
             data.append('name', this.form.name || '')
@@ -175,7 +184,34 @@ export default {
             const response = await this.$inertia.post(route("storeEstablishment"), data)
 
             this.$inertia.replace(route("indexEstablishment"))
-        }
+        },
+         async updateProduct() {
+            if(typeof this.form.picture === 'string'){
+                this.form.picture = false
+            }
+            if(typeof this.form.background_picture === 'string'){
+                this.form.background_picture = false
+            }
+
+            var data = new FormData()
+
+            data.append('name', this.form.name || '')
+            data.append('description', this.form.description || '')
+            data.append('picture', this.form.picture || '')
+            data.append('delivery_time', this.form.delivery_time || '')
+            data.append('min_value', this.form.min_value || '')
+            data.append('background_picture', this.form.background_picture || '')
+            data.append('phone', this.form.phone || '')
+
+            const response = await this.$inertia.post(route("updateEstablishment", this.form.id), data)
+
+            this.$notify({
+                group: 'app',
+                title: 'Estabelecimento',
+                text: 'Estabelecimento Atualizado com Sucesso!',
+                type: 'success'
+            })
+        },
     }
 };
 </script>

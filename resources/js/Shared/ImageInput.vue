@@ -31,12 +31,11 @@
             </div>
         </div>
 
-        <jet-secondary-button type="button" class="mt-2" @click.native.prevent="remove" v-if="photoPreview">
+        <!-- <jet-secondary-button type="button" class="mt-2" @click.native.prevent="remove" v-if="photoPreview">
             Remover Foto
-        </jet-secondary-button>
+        </jet-secondary-button> -->
 
         <jet-secondary-button
-            v-else
             class="mt-2 mr-2"
             type="button"
             @click.native.prevent="selectNewPhoto"
@@ -65,7 +64,7 @@ export default {
     },
     props: {
         value: {
-            type: File
+            type: [File, String, Boolean]
         },
         label: {
             type: String,
@@ -77,7 +76,7 @@ export default {
             default: false
         },
         defaultImageUrl: {
-            type: String,
+            type: [File, String, Boolean],
             default: ""
         },
 
