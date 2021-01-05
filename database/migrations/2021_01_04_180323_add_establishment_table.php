@@ -26,7 +26,7 @@ class AddEstablishmentTable extends Migration
             $table->string('delivery_time')->nullable();
             $table->decimal('min_value', 8, 2)->nullable();
 
-            $table->foreignId('address_id')->references('id')->on('addresses');
+            $table->foreignId('address_id')->nullable()->references('id')->on('addresses');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();

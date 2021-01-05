@@ -11,6 +11,7 @@ import velocity from 'velocity-animate'
 import Unicon from 'vue-unicons'
 import { uniCheckCircle, uniTimesCircle } from 'vue-unicons/src/icons'
 import vSelect from 'vue-select'
+import VueTheMask from 'vue-the-mask'
 
 
 // Components
@@ -23,6 +24,7 @@ Vue.use(Notifications, { velocity })
 Unicon.add([uniCheckCircle, uniTimesCircle])
 Vue.use(Unicon)
 Vue.component('v-select', vSelect)
+Vue.use(VueTheMask)
 
 // CSS
 import '../css/vue_notification.scss'

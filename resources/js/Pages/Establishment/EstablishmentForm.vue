@@ -4,6 +4,25 @@
             <div class="col-span-6 sm:col-span-4">
                 <div class="row">
                     <div class="col">
+                        <image-input
+                            v-model="form.picture"
+                            :errors="$page.errors.picture"
+                            label="Foto"
+                        />
+                    </div>
+                     <div class="col">
+                        <image-input
+                            v-model="form.background_picture"
+                            :errors="$page.errors.background_picture"
+                            label="Foto de Fundo"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <div class="row">
+                    <div class="col">
                         <jet-label for="name" value="Nome" />
                         <jet-input
                             id="name"
@@ -35,35 +54,6 @@
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <input type="file" class="hidden"
-                            ref="picture"
-                            @change="updatePhotoPreview">
-
-                <jet-label for="picture" value="Foto" />
-
-                <div class="mt-2" v-show="photoPreview">
-                    <div v-if="isEdit && !editPhotoPreview">
-                        <img id="old_image" :src="getCategoryPhoto(form.picture)" class="block rounded-full w-40 h-40" :alt="form.name" />
-                    </div>
-                    <div v-else>
-                        <span class="block rounded-full w-40 h-40"
-                          :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
-                        </span>
-                    </div>
-                </div>
-
-                <jet-secondary-button class="mt-2 mr-2" type="button" @click.native.prevent="selectNewPhoto">
-                    Escolha uma Foto
-                </jet-secondary-button>
-
-                <jet-secondary-button type="button" class="mt-2" @click.native.prevent="deletePhoto" v-if="form.picture">
-                    Remover Foto
-                </jet-secondary-button>
-
-                <jet-input-error :message="$page.errors.picture" class="mt-2" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4">
                 <div class="row">
                     <div class="col">
                         <jet-label for="delivery_time" value="Tempo de entrega" />
@@ -79,11 +69,11 @@
                         />
                     </div>
                     <div class="col">
-                        <jet-label for="min_value" value="Preço" />
+                        <jet-label for="min_value" value="Preço Minimo" />
                         <jet-input
                             id="min_value"
                             type="number"
-                            step="0.01"
+                            step="0.50"
                             class="mt-1 block w-full"
                             v-model="form.min_value"
                         />
@@ -92,9 +82,23 @@
                             class="mt-2"
                         />
                     </div>
+
+                    <div class="col">
+                        <jet-label for="phone" value="Telefone" />
+                        <the-mask
+                            id="phone"
+                            type="text"
+                            v-model="form.phone"
+                            :mask="['(##) ####-####', '(##) #####-####']"
+                            class="form-input rounded-md shadow-sm mt-1 block w-full"
+                        />
+                        <jet-input-error
+                            :message="$page.errors.phone"
+                            class="mt-2"
+                        />
+                    </div>
                 </div>
             </div>
-
         </template>
 
         <template #actions>
@@ -122,6 +126,7 @@ import JetLabel from "@/Jetstream/Label";
 import FormLayout from "@/Layouts/FormLayout";
 import JetSecondaryButton from '@/Jetstream/SecondaryButton'
 import TextAreaInput from "@/Shared/TextAreaInput";
+import ImageInput from "@/Shared/ImageInput"
 
 export default {
     components: {
@@ -133,7 +138,8 @@ export default {
         JetLabel,
         FormLayout,
         JetSecondaryButton,
-        TextAreaInput
+        TextAreaInput,
+        ImageInput
     },
     props: ['errors', 'isEdit', 'editData'],
     data() {
@@ -141,12 +147,12 @@ export default {
             form: {
                 name: "",
                 description: "",
-                picture: "",
+                picture: null,
                 delivery_time: "",
-                min_value: null
-            },
-            editPhotoPreview: false,
-            photoPreview: null
+                min_value: null,
+                background_picture: null,
+                phone: ""
+            }
         };
     },
     mounted() {
@@ -155,58 +161,21 @@ export default {
         }
     },
     methods: {
-        getCategoryPhoto(photoPath) {
-            const host = window.location.host;
-            const picture = `http://${host}/storage/${photoPath}`;
-            this.photoPreview = true
-            return picture;
-        },
         async createCategory() {
-            if(this.isEdit){
-                return await this.updateCategory()
-            }
-            if (this.$refs.picture) {
-                    this.form.picture = this.$refs.picture.files[0]
-            }
             var data = new FormData()
+
             data.append('name', this.form.name || '')
+            data.append('description', this.form.description || '')
             data.append('picture', this.form.picture || '')
-            data.append('priority', this.form.priority || '')
-            data.append('enable', this.form.enable)
+            data.append('delivery_time', this.form.delivery_time || '')
+            data.append('min_value', this.form.min_value || '')
+            data.append('background_picture', this.form.background_picture || '')
+            data.append('phone', this.form.phone || '')
 
-            await this.$inertia.post(route("storeCategory"), data)
+            const response = await this.$inertia.post(route("storeEstablishment"), data)
 
-            this.$inertia.replace(route("indexCategory"))
-        },
-        async updateCategory() {
-            let updateImage = true
-            if (this.$refs.picture && this.editPhotoPreview) {
-               this.form.picture = this.$refs.picture.files[0]
-            }else{
-               updateImage = false
-            }
-
-            var data = new FormData()
-            data.append('name', this.form.name)
-            data.append('picture', this.form.picture)
-            data.append('priority', this.form.priority)
-            data.append('enable', this.form.enable)
-            data.append('updateImage', updateImage)
-
-            await this.$inertia.post(route("updateCategory", this.form.id), data)
-        },
-        updatePhotoPreview() {
-                const reader = new FileReader();
-
-                reader.onload = (e) => {
-                    this.photoPreview = e.target.result;
-                };
-                if(this.isEdit) this.editPhotoPreview = true
-                reader.readAsDataURL(this.$refs.picture.files[0]);
-        },
-        selectNewPhoto() {
-            this.$refs.picture.click();
-        },
+            this.$inertia.replace(route("indexEstablishment"))
+        }
     }
 };
 </script>

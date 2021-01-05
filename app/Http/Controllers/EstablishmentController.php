@@ -6,6 +6,9 @@ use App\Models\Establishment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+
+use App\Http\Requests\Establishment\EstablishmentCreateRequest;
+
 use App\Http\Resources\Establishment as EstablishmentResource;
 
 class EstablishmentController extends Controller
@@ -39,12 +42,31 @@ class EstablishmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  EstablishmentCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EstablishmentCreateRequest $request)
     {
-        //
+        $picturePath = $request->file('picture')->store('images', 'public');
+        $backgroundPicturePath = $request->file('background_picture')->store('images', 'public');
+
+        $establishment = new Establishment();
+
+        $establishment->name = $request->name;
+        $establishment->description = $request->description;
+        $establishment->delivery_time = $request->delivery_time;
+        $establishment->min_value = $request->min_value;
+        $establishment->phone = $request->phone;
+
+        $establishment->picture = $picturePath;
+        $establishment->background_picture = $backgroundPicturePath;
+        $establishment->user_id = $request->user()->id;
+
+        $establishment->public_link_name = strtolower(str_replace(' ', '_', $request->name));
+
+        $establishment->save();
+
+        return redirect()->back()->with('message', 'Estabelecimento criado com sucesso!');
     }
 
     /**
