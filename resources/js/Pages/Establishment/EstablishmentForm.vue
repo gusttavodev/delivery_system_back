@@ -9,7 +9,7 @@
                             :errors="$page.errors.picture"
                             label="Foto"
                             :isEdit="isEdit"
-                            :defaultImageUrl="editData.data.picture"
+                            :defaultImageUrl="form.picture"
                         />
                     </div>
                      <div class="col">
@@ -18,7 +18,7 @@
                             :errors="$page.errors.background_picture"
                             label="Foto de Fundo"
                             :isEdit="isEdit"
-                            :defaultImageUrl="editData.data.background_picture"
+                            :defaultImageUrl="form.background_picture"
                         />
                     </div>
                 </div>
@@ -161,7 +161,6 @@ export default {
     },
     mounted() {
         if(this.isEdit){
-            console.log(this.editData);
             this.form = this.editData.data
         }
     },
@@ -186,24 +185,26 @@ export default {
             this.$inertia.replace(route("indexEstablishment"))
         },
          async updateProduct() {
-            if(typeof this.form.picture === 'string'){
-                this.form.picture = false
+            let picture = false
+            let backgroundPicture = false
+            if(typeof this.form.picture === 'object'){
+                picture = this.form.picture
             }
-            if(typeof this.form.background_picture === 'string'){
-                this.form.background_picture = false
+            if(typeof this.form.background_picture === 'object'){
+                backgroundPicture = this.form.background_picture
             }
 
             var data = new FormData()
 
             data.append('name', this.form.name || '')
             data.append('description', this.form.description || '')
-            data.append('picture', this.form.picture || '')
+            data.append('picture', picture || '')
             data.append('delivery_time', this.form.delivery_time || '')
             data.append('min_value', this.form.min_value || '')
-            data.append('background_picture', this.form.background_picture || '')
+            data.append('background_picture', backgroundPicture || '')
             data.append('phone', this.form.phone || '')
 
-            const response = await this.$inertia.post(route("updateEstablishment", this.form.id), data)
+            await this.$inertia.post(route("updateEstablishment", this.form.id), data)
 
             this.$notify({
                 group: 'app',
