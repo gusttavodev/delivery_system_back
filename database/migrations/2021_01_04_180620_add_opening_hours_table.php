@@ -19,7 +19,10 @@ class AddOpeningHoursTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
 
-            $table->enum('day', array('monday','tuesday','wednesday','thursday','friday','saturday','sunday'));
+            $table->enum('day', array('monday','tuesday','wednesday',
+            'thursday','friday','saturday','sunday'));
+
+            $table->boolean('not_open')->default(0);
 
             $table->foreignId('establishment_id')->references('id')->on('establishments')->onDelete('cascade');
 

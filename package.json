@@ -39,6 +39,7 @@
         "vue-select": "^3.11.2",
         "vue-the-mask": "^0.11.1",
         "vue-unicons": "^2.3.0",
+        "vue2-datepicker": "^3.8.2",
         "vuedraggable": "^2.24.3"
     }
 }

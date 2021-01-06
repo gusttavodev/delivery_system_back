@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Address;
-use Illuminate\Http\Request;
+use App\Enums\DaysOfWeek;
 
+use Illuminate\Http\Request;
 use App\Models\Establishment;
 use App\Http\Resources\Establishment as EstablishmentResource;
-use App\Http\Requests\Establishment\EstablishmentCreateRequest;
 
+use App\Http\Requests\Establishment\EstablishmentCreateRequest;
 use App\Http\Requests\Establishment\EstablishmentUpdateRequest;
 use App\Http\Requests\Establishment\EstablishmentAddressCreateRequest;
 
@@ -93,8 +94,11 @@ class EstablishmentController extends Controller
         $user_id =  $request->user()->id;
         $establishment = Establishment::findByUser($id, $user_id);
 
+        $daysOfWeek = DaysOfWeek::List;
+
         return Inertia::render('Establishment/Edit', [
-            'establishment' => EstablishmentResource::make($establishment)
+            'establishment' => EstablishmentResource::make($establishment),
+            'daysOfWeek' => $daysOfWeek
         ]);
     }
 

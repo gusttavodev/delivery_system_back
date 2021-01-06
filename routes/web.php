@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,22 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Category;
+use App\Enums\DaysOfWeek;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
-use Spatie\Permission\Models\Role;
-
-use App\Models\WppSession;
-use App\Http\Requests\WppSession\WppSessionCreate;
-use App\Events\WppSessionEvent;
-
-Route::post('/gustavo', function (Request $request) {
-    $wppSession = WppSession::first();
-    $wppSession->is_auth = $request->qrCode ? true : false;
-    $wppSession->save();
-    WppSessionEvent::dispatch($wppSession);
+Route::get('/gustavo', function (Request $request) {
+    return DaysOfWeek::List;
 });
 
 
@@ -138,5 +130,6 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/establishment',
 
     //Store Address
     Route::post('/create/address', array('as' => 'storeEstablishmentAddress', 'uses' => 'EstablishmentController@storeAddress'));
+    //Store OpeningHour
+    Route::post('/create/opening_hours', array('as' => 'storeEstablishmentOpeningHour', 'uses' => 'OpeningHourController@store'));
 });
-

@@ -22,8 +22,8 @@ class OpeningHourFactory extends Factory
     public function definition()
     {
         return [
-            'start_time' => '1:20:45',
-            'end_time' => '1:20:45',
+            'start_time' => "05:05",
+            'end_time' => "05:05",
             'day' =>  "monday",
         ];
     }
