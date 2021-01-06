@@ -7,41 +7,20 @@
                 :name="establishment.name"
                 :picture="getPicture(establishment.picture)"
                 :id="establishment.id"
-                @confirm-delete="confirmDelete(category.id)"
+                @confirm-delete="confirmDelete"
             />
         </div>
+
         <div class="p-3">
             <pagination :links="$page.establishments.links" />
         </div>
 
-        <!-- Delete Account Confirmation Modal -->
-        <jet-dialog-modal
-            :show="confirmingCategoryDeletion"
-            @close="confirmingCategoryDeletion = false"
-        >
-            <template #title>
-                Deletar Categoria
-            </template>
+        <confirm-delete-modal
+            :show-modal="showRemoveModal"
+            @accept-delete="deleteData"
+            @cancel-delete="cancelDelete"
+        />
 
-            <template #content>
-                Deseja realmente deletar essa categoria
-            </template>
-
-            <template #footer>
-                <jet-secondary-button
-                    @click.native="confirmingCategoryDeletion = false"
-                >
-                    Cancelar
-                </jet-secondary-button>
-
-                <jet-danger-button
-                    class="ml-2"
-                    @click.native="deleteCategory"
-                >
-                    Deletar Categoria
-                </jet-danger-button>
-            </template>
-        </jet-dialog-modal>
     </div>
 </template>
 
@@ -58,6 +37,7 @@ import JetDangerButton from "@/Jetstream/DangerButton";
 
 import EstablishmentCard from "./EstablishmentCard";
 import Pagination from '@/Shared/Pagination'
+import ConfirmDeleteModal from '@/Shared/ConfirmDeleteModal'
 
 export default {
     components: {
@@ -71,13 +51,14 @@ export default {
         EstablishmentCard,
         JetDialogModal,
         JetDangerButton,
-        Pagination
+        Pagination,
+        ConfirmDeleteModal
     },
     props: ["establishments"],
     data() {
         return {
-            confirmingCategoryDeletion: false,
-            categeoryToDelete: null,
+            showRemoveModal: false,
+            itemIdToRemove: null,
 
             form: this.$inertia.form({
                 '_method': 'DELETE',
@@ -95,30 +76,31 @@ export default {
             return photo;
         },
         confirmDelete(id) {
-            this.confirmingCategoryDeletion = true;
-            this.categeoryToDelete = id;
+           this.showRemoveModal = true
+           this.itemIdToRemove = id
         },
-        async deleteCategory() {
-            this.form.post(route("deleteCategory", this.categeoryToDelete), {
-                    preserveScroll: true
-                }).then(response => {
-                    if (! this.form.hasErrors()) {
-                        this.confirmingCategoryDeletion = false;
-                        this.categeoryToDelete = null;
-                        this.$inertia.replace(route("indexCategory"))
-                    }
-                })
+        cancelDelete() {
+           this.showRemoveModal = false
+           this.itemIdToRemove = null
+        },
+
+        async deleteData() {
+            await this.form.delete(route("deleteEstablishment", this.itemIdToRemove), {
+                onFinish: () => {
+                    this.$notify({
+                        group: "app",
+                        title: "Estabelecimento Removido",
+                        text: "Estabelecimento Removido Com sucesso",
+                        type: "success"
+                    });
+                }
+            });
 
         }
     },
     mounted(){
-        console.log("$page.establishments", this.$page.establishments);
+
     }
 
 };
 </script>
-
-<style>
-#cards-container-category {
-}
-</style>

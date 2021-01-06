@@ -34,18 +34,20 @@
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetDropdown from "@/Jetstream/Dropdown";
 import JetDropdownLink from "@/Jetstream/DropdownLink";
+import ConfirmDeleteModal from '@/Shared/ConfirmDeleteModal'
 
 export default {
     props: ["name", "picture", "id",],
     components: {
         JetSecondaryButton,
         JetDropdown,
-        JetDropdownLink
+        JetDropdownLink,
+        ConfirmDeleteModal
     },
     computed: {},
     methods: {
         async actionDelete(id){
-           this.$emit('confirm-delete');
+           this.$emit('confirm-delete', id);
         },
     }
 };

@@ -141,8 +141,11 @@ class EstablishmentController extends Controller
      * @param  \App\Models\Establishment  $establishment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Establishment $establishment)
+    public function destroy($id, Request $request)
     {
-        //
+        $user_id =  $request->user()->id;
+        $establishment = Establishment::findByUser($id, $user_id);
+
+        return redirect()->back();
     }
 }
