@@ -22,10 +22,9 @@ class OpeningHourFactory extends Factory
     public function definition()
     {
         return [
-            'start_time' => "17",
-            'end_time' => "22",
-            'start_day' =>  "monday",
-            'end_day' =>  "friday"
+            'start_time' => '1:20:45',
+            'end_time' => '1:20:45',
+            'day' =>  "monday",
         ];
     }
 }

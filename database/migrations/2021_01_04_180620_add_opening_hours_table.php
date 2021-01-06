@@ -16,11 +16,10 @@ class AddOpeningHoursTable extends Migration
         Schema::create('establishment_opening_hours', function (Blueprint $table) {
             $table->id();
 
-            $table->string('start_time');
-            $table->string('end_time');
+            $table->time('start_time');
+            $table->time('end_time');
 
-            $table->enum('start_day', array('monday','tuesday','wednesday','thursday','friday','saturday','sunday'));
-            $table->enum('end_day', array('monday','tuesday','wednesday','thursday','friday','saturday','sunday'))->nullable();
+            $table->enum('day', array('monday','tuesday','wednesday','thursday','friday','saturday','sunday'));
 
             $table->foreignId('establishment_id')->references('id')->on('establishments')->onDelete('cascade');
 

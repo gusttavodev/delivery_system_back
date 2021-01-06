@@ -17,7 +17,7 @@ class OpeningHour extends Model
      * @var array
     */
     protected $fillable = [
-        'start_time', 'name', 'end_time', 'start_day', 'end_day', 'establishment_id'
+        'start_time', 'end_time', 'day'
     ];
 
     public function establishment()
