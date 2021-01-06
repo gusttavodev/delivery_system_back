@@ -55,7 +55,7 @@
                     <div class="col">
                         <jet-label
                             for="district"
-                            value="Bairro/Logradouro"
+                            value="Bairro"
                         />
                         <jet-input
                             id="district"
@@ -65,6 +65,23 @@
                         />
                         <jet-input-error
                             :message="$page.errors.district"
+                            class="mt-2"
+                        />
+                    </div>
+
+                    <div class="col">
+                        <jet-label
+                            for="number"
+                            value="Numero"
+                        />
+                        <jet-input
+                            id="district"
+                            type="text"
+                            class="mt-1 block w-full"
+                            v-model="form.number"
+                        />
+                        <jet-input-error
+                            :message="$page.errors.number"
                             class="mt-2"
                         />
                     </div>
@@ -158,29 +175,24 @@ export default {
         JetSecondaryButton,
         TextAreaInput
     },
-    props: ["errors", "roadmap", "roadmapSteps"],
+    props: ["errors", "establishment"],
     data() {
         return {
-            form: this.$inertia.form(
-                {
-                    zip_code: "",
-                    street: "",
-                    city: "",
-                    country: "",
-                    district: "",
-                    state: "",
-                    number: "",
-                    complement: "",
-                },
-                {
-                    bag: "saveEstablishmentAddress",
-                    resetOnSuccess: true
-                }
-            )
+            form: {
+                establishment_id: null,
+                zip_code: "",
+                street: "",
+                city: "",
+                country: "",
+                district: "",
+                state: "",
+                number: "",
+                complement: "",
+            }
         };
     },
     mounted() {
-
+        if(this.establishment.address) this.form = this.establishment.address
     },
     methods: {
         async getZipcodeInfo() {
@@ -188,16 +200,32 @@ export default {
           // Clear Headers
           delete instance.defaults.headers.common["X-Requested-With"];
 
-          const result = await instance.get(`https://api.postmon.com.br/v1/cep/33030120`)
-          console.log("RESULT", result);
+          const response = await instance.get(`https://api.postmon.com.br/v1/cep/33030120`)
+          if(response.status === 200){
+              const address = response.data
+              this.form.zip_code = address.cep
+              this.form.street = address.logradouro
+              this.form.city = address.cidade
+              this.form.district = address.bairro
+              this.form.state = address.estado
+          }
         },
         async sendForm() {
-            const response = await this.form.post(route("storeRoadmapStep"), {
+            this.form.establishment_id = this.establishment.id
+
+            let inertiaForm = this.$inertia.form(
+                this.form,
+                {
+                    bag: "saveEstablishmentAddress",
+                    resetOnSuccess: true
+                }
+            )
+            const response = await inertiaForm.post(route("storeEstablishmentAddress"), {
                 onFinish: () => {
                     this.$notify({
                         group: 'app',
-                        title: 'Etapa criada',
-                        text: 'Endereço adicionado com sucesso',
+                        title: 'Endereço Salvo',
+                        text: 'Seu Endereço foi salvo com sucesso',
                         type: 'success'
                     })
                 }
@@ -206,5 +234,3 @@ export default {
     }
 };
 </script>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

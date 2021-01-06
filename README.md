@@ -28,6 +28,12 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [] Tratar a modal do QR code para os momentos onde não tem sessão ou ela foi encerrada
 - [] Desconectar socket ao scanear o QR code
 
+# Melhorias
+- [] Fazer uma Rule que proucura se o estabelecimento é desse user ou o user é admin caso não retorna 404/403 caso sim adiciona o estabelecimento na request(EstablishmentAddressCreateRequest)
+- [] Tratar e instanciar os parametros na request
+- [] Criar uma Exception Para esse caso
+- [] Remover Imports não usados VueJs
+- [] Adicionar uma camada de serviços
 
 # Interação entre os dados 
 É criado uma sessão na rota http://localhost:3000/api/start?sessionName=session_userId 

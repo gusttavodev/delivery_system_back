@@ -135,4 +135,8 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/establishment',
     Route::delete('/{id}', array('as' => 'deleteEstablishment', 'uses' => 'EstablishmentController@destroy'));
     Route::get('/edit/{id}', array('as' => 'editEstablishment', 'uses' => 'EstablishmentController@edit'));
     Route::post('/edit/{id}', array('as' => 'updateEstablishment', 'uses' => 'EstablishmentController@update'));
+
+    //Store Address
+    Route::post('/create/address', array('as' => 'storeEstablishmentAddress', 'uses' => 'EstablishmentController@storeAddress'));
 });
+

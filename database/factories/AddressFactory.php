@@ -25,7 +25,7 @@ class AddressFactory extends Factory
             'zip_code' => "33030120",
             'street' => "Rua alto do tanque",
             'city' =>  "Santa Luzia",
-            'country' =>  "Minas Gerais",
+            'country' =>  "Brasil",
             'district' => "Nossa Senhora das Graças",
             'state' => "Minas Gerais",
             'number' => "780",

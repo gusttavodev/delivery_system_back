@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Establishment;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Address;
+use Illuminate\Http\Request;
 
-use App\Http\Requests\Establishment\EstablishmentCreateRequest;
-use App\Http\Requests\Establishment\EstablishmentUpdateRequest;
-
+use App\Models\Establishment;
 use App\Http\Resources\Establishment as EstablishmentResource;
+use App\Http\Requests\Establishment\EstablishmentCreateRequest;
+
+use App\Http\Requests\Establishment\EstablishmentUpdateRequest;
+use App\Http\Requests\Establishment\EstablishmentAddressCreateRequest;
 
 class EstablishmentController extends Controller
 {
@@ -35,11 +37,6 @@ class EstablishmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return Inertia::render('Establishment/Create');
-    }
-
-    public function storeAddress()
     {
         return Inertia::render('Establishment/Create');
     }
@@ -145,6 +142,32 @@ class EstablishmentController extends Controller
     {
         $user_id =  $request->user()->id;
         $establishment = Establishment::findByUser($id, $user_id);
+
+        return redirect()->back();
+    }
+
+    public function storeAddress(EstablishmentAddressCreateRequest $request)
+    {
+        $establishment = $request->establishment;
+
+        if($establishment->address_id){
+            $address = Address::find($establishment->address_id);
+        }else {
+            $address = new Address();
+        }
+
+        $address->zip_code = $request->zip_code;
+        $address->street = $request->street;
+        $address->city = $request->city;
+        $address->country = $request->country;
+        $address->district = $request->district;
+        $address->state = $request->state;
+        $address->number = $request->number;
+        $address->complement = $request->complement;
+        $address->save();
+
+        $establishment->address_id = $address->id;
+        $establishment->save();
 
         return redirect()->back();
     }
