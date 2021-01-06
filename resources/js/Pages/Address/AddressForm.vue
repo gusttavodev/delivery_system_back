@@ -184,7 +184,11 @@ export default {
     },
     methods: {
         async getZipcodeInfo() {
-          const result = await axios.get(`https://viacep.com.br/ws/33030120/json/`)
+          let instance = axios.create();
+          // Clear Headers
+          delete instance.defaults.headers.common["X-Requested-With"];
+
+          const result = await instance.get(`https://api.postmon.com.br/v1/cep/33030120`)
           console.log("RESULT", result);
         },
         async sendForm() {
