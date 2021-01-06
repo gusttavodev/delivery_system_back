@@ -184,8 +184,8 @@ export default {
     },
     methods: {
         async getZipcodeInfo() {
-        //   const result = await axios.get(`http://api.postmon.com.br/v1/cep/${this.form.zip_code}`)
-        //   console.log("RESULT", result);
+          const result = await axios.get(`https://viacep.com.br/ws/33030120/json/`)
+          console.log("RESULT", result);
         },
         async sendForm() {
             const response = await this.form.post(route("storeRoadmapStep"), {
