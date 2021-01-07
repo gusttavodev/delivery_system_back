@@ -16,8 +16,8 @@ class AddOpeningHoursTable extends Migration
         Schema::create('establishment_opening_hours', function (Blueprint $table) {
             $table->id();
 
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('start_time')->nullable()->default(null);
+            $table->time('end_time')->nullable()->default(null);
 
             $table->enum('day', array('monday','tuesday','wednesday',
             'thursday','friday','saturday','sunday'));

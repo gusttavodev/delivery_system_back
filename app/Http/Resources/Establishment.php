@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\OpeningHours as OpeningHoursResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Address as AddressResource;
 
@@ -27,6 +28,7 @@ class Establishment extends JsonResource
             'min_value' => $this->min_value,
 
             'address' => new  AddressResource($this->address),
+            'opening_hours' => OpeningHoursResource::collection($this->openingHours),
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

@@ -15,12 +15,35 @@ use App\Models\Product;
 
 use App\Models\Category;
 use App\Enums\DaysOfWeek;
+use App\Models\OpeningHour;
 use Illuminate\Http\Request;
+use App\Models\Establishment;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
-Route::get('/gustavo', function (Request $request) {
-    return DaysOfWeek::List;
+Route::post('/gustavo', function (Request $request) {
+    $establishment = Establishment::find($request->establishment_id);
+
+    $daysOfWeek = $request->openingHour;
+    //Regra de Negocio
+    foreach ($daysOfWeek as $key => $value) {
+            $openingHour = OpeningHour::where('day', $value['day'])
+
+            ->where('establishment_id', $establishment->id)->first();
+
+                if(!$openingHour){
+                    $openingHour = new OpeningHour();
+                    $openingHour->day = $value['day'];
+                    $openingHour->establishment_id = $establishment->id;
+                }
+                $openingHour->start_time = $value['start_time'];
+                $openingHour->end_time = $value['end_time'];
+                $openingHour->not_open = $value['not_open'];
+
+                $openingHour->save();
+
+    }
+
 });
 
 

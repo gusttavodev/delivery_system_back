@@ -93,7 +93,6 @@ class EstablishmentController extends Controller
     {
         $user_id =  $request->user()->id;
         $establishment = Establishment::findByUser($id, $user_id);
-
         $daysOfWeek = DaysOfWeek::List;
 
         return Inertia::render('Establishment/Edit', [

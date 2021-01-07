@@ -20,23 +20,21 @@ class OpeningHourController extends Controller
 
         //Regra de Negocio
         foreach ($daysOfWeek as $key => $value) {
-            if($value['start_time'] && $value['not_open']){
-                $openingHour = OpeningHour::where('day', $value['day'])
-                ->where('establishment_id', $establishment->id)->first();
+            $openingHour = OpeningHour::where('day', $value['day'])
+            ->where('establishment_id', $establishment->id)->first();
 
-                 if(!$openingHour){
-                     $openingHour = new OpeningHour();
-                     $openingHour->day = $value['day'];
-                     $openingHour->establishment_id = $establishment->id;
-                 }
-                 $openingHour->start_time = $value['start_time'];
-                 $openingHour->end_time = $value['end_time'];
-                 $openingHour->not_open = $value['not_open'];
-
-                 $openingHour->save();
+            if(!$openingHour){
+                $openingHour = new OpeningHour();
+                $openingHour->day = $value['day'];
+                $openingHour->establishment_id = $establishment->id;
             }
+            $openingHour->start_time = $value['start_time'];
+            $openingHour->end_time = $value['end_time'];
+            $openingHour->not_open = $value['not_open'];
+
+            $openingHour->save();
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Estabelecimento atualizado com sucesso!');
     }
 }

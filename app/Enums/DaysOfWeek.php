@@ -6,63 +6,77 @@ use BenSampo\Enum\Enum;
 
 final class DaysOfWeek extends Enum
 {
-    const Monday =   [
+    const monday =   [
         'day' => 'monday',
         'label' => 'Segunda',
         'start_time' => null,
         'end_time' => null,
-        'not_open' => false
+        'not_open' => false,
+        'start_time_error' => false,
+        'end_time_error' => false
     ];
-    const Tuesday =   [
+    const tuesday =   [
         'day' => 'tuesday',
         'label' => 'Terça',
         'start_time' => null,
         'end_time' => null,
-        'not_open' => false
+        'not_open' => false,
+        'start_time_error' => false,
+        'end_time_error' => false
     ];
-    const Wednesday =   [
+    const wednesday =   [
         'day' => 'wednesday',
         'label' => 'Quarta',
         'start_time' => null,
         'end_time' => null,
-        'not_open' => false
+        'not_open' => false,
+        'start_time_error' => false,
+        'end_time_error' => false
     ];
-    const Thursday =   [
+    const thursday =   [
         'day' => 'thursday',
         'label' => 'Quinta',
         'start_time' => null,
         'end_time' => null,
-        'not_open' => false
+        'not_open' => false,
+        'start_time_error' => false,
+        'end_time_error' => false
     ];
-    const Friday =   [
+    const friday =   [
         'day' => 'friday',
         'label' => 'Sexta',
         'start_time' => null,
         'end_time' => null,
-        'not_open' => false
+        'not_open' => false,
+        'start_time_error' => false,
+        'end_time_error' => false
     ];
-    const Saturday =   [
+    const saturday =   [
         'day' => 'saturday',
         'label' => 'Sabado',
         'start_time' => null,
         'end_time' => null,
-        'not_open' => false
+        'not_open' => false,
+        'start_time_error' => false,
+        'end_time_error' => false
     ];
-    const Sunday =   [
+    const sunday =   [
         'day' => 'sunday',
         'label' => 'Domingo',
         'start_time' => null,
         'end_time' => null,
-        'not_open' => false
+        'not_open' => false,
+        'start_time_error' => false,
+        'end_time_error' => false
     ];
 
     const List =   [
-        self::Monday,
-        self::Tuesday,
-        self::Wednesday,
-        self::Thursday,
-        self::Friday,
-        self::Saturday,
-        self::Sunday
+        self::monday,
+        self::tuesday,
+        self::wednesday,
+        self::thursday,
+        self::friday,
+        self::saturday,
+        self::sunday
     ];
 }

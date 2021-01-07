@@ -58,3 +58,6 @@ Rota para listar canais
 ## APIs Públicas
 https://postmon.com.br/ ZIPCODE SEARCH
 Lib CEP Canducci\Cep\Facades\Cep
+
+## Manter valores do form(Importate para telas de update)
+Colocar resetOnSuccess: false no form, caso seja true ele atualiza a tela porem n chama o mount do vue, nem puxa os dados novamente

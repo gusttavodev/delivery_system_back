@@ -25,11 +25,13 @@
                     <div class="col" v-show="!input.not_open">
                         <jet-label for="start_time" value="Inicio" />
                         <date-picker valueType="format" format="HH:mm" v-model="input.start_time" type="time"/>
+                        <jet-input-error :message="input.start_time_error" />
                     </div>
 
                     <div class="col" v-show="!input.not_open">
                         <jet-label for="end_time" value="Fim" />
                         <date-picker valueType="format" format="HH:mm" v-model="input.end_time" type="time"/>
+                        <jet-input-error :message="input.end_time_error" />
                     </div>
 
                 </div>
@@ -86,21 +88,77 @@ export default {
         return {
             form: this.$inertia.form(
                 {
-                    openingHour: this.$page.daysOfWeek,
+                    openingHour: this.$page.establishment.data.opening_hours.length > 5 ? this.$page.establishment.data.opening_hours : this.$page.daysOfWeek,
                     establishment_id: this.$page.establishment.data.id
                 },
                 {
                     bag: "createOpeningHours",
-                    resetOnSuccess: true
+                    resetOnSuccess: false
                 }
             ),
         };
     },
-    mounted() {
+    created() {
+
     },
     methods: {
+        validate() {
+            const required = "Preencha este campo"
+            const mustBeBigger = "Precisa ser maior que o inicio"
+            this.form.openingHour.forEach(element => {
+                if(!element.not_open){
+                    //Required
+                    if(element.start_time == null){
+                        element.start_time_error = required
+                    }else{
+                        element.start_time_error = null
+                    }
+
+                    if(element.end_time == null){
+                        element.end_time_error = required
+                    }else{
+                        element.end_time_error = null
+                        //MustBeBigger
+                        if(element.start_time != null){
+                            const startTime = new Date(`01/01/1970 ${element.start_time}`);
+                            const endTime = new Date(`01/01/1970 ${element.end_time}`);
+                            const timeDiff = endTime.getTime() - startTime.getTime()
+                            if(timeDiff < 0){
+                                element.end_time_error = mustBeBigger
+                            } else{
+                                element.end_time_error = null
+                            }
+
+                        }
+                    }
+                }else {
+                    element.start_time_error = null
+                    element.end_time_error = null
+                }
+            });
+
+            let valid = true
+            this.form.openingHour.forEach(element => {
+                if(element.start_time_error !== null || element.end_time_error !== null ){
+                    valid = false
+                }
+            })
+
+            return valid
+        },
         async sendForm() {
-            const response = await this.form.post(route("storeEstablishmentOpeningHour"));
+            if(this.validate()){
+                const response = await this.form.post(route("storeEstablishmentOpeningHour"), {
+                    onFinish: () => {
+                        this.$notify({
+                            group: "app",
+                            title: "Horarios Atualizados",
+                            text: "Seus horarios foram atualizados com sucesso!!",
+                            type: "success"
+                        });
+                    }
+                });
+            }
         }
     }
 };
