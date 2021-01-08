@@ -34,6 +34,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [] Criar uma Exception Para esse caso
 - [] Remover Imports não usados VueJs
 - [] Adicionar uma camada de serviços
+- [] Adicionar acrecimos, onde cada produto vai ter um select de acrescimos Acrecimos tem preço ou não, Nome e quantidade limite
+- [] Remover ç e acentos do link publico do estabellecimento
+- [] Ajustar todas as imagens com image cache do laravel pacote
 
 # Interação entre os dados 
 É criado uma sessão na rota http://localhost:3000/api/start?sessionName=session_userId 

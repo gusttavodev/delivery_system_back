@@ -22,14 +22,15 @@ class EstablishmentFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->name;
         return [
-            'public_link_name' => $this->faker->name,
-            'name' => $this->faker->name,
+            'public_link_name' => strtolower(str_replace(' ', '_', $name)),
+            'name' => $name,
             'description' =>  Str::random(10),
             'phone' =>  "31987110017",
 
-            'picture' => "images/TPtdcnzl5eFhlEvB6cBAw5bQtMlIVMeBsLGwo2hm.jpeg",
-            'background_picture' => "images/TPtdcnzl5eFhlEvB6cBAw5bQtMlIVMeBsLGwo2hm.jpeg",
+            'picture' => "images/AFrAKXdnmXcyIsU21PrQZKIxvrmurFfoM4QAl7Ds.png",
+            'background_picture' => "images/AFrAKXdnmXcyIsU21PrQZKIxvrmurFfoM4QAl7Ds.png",
 
             'delivery_time' => "1H - 40M",
             'min_value' => 10.12,

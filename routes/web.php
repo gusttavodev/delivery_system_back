@@ -156,3 +156,8 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/establishment',
     //Store OpeningHour
     Route::post('/create/opening_hours', array('as' => 'storeEstablishmentOpeningHour', 'uses' => 'OpeningHourController@store'));
 });
+
+
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/menu/establishment'], function () {
+    Route::get('/{public_link_name}', array('as' => 'indexPublicEstablishment', 'uses' => 'PublicEstablishmentController@home'));
+});
