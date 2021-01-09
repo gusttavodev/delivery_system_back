@@ -157,6 +157,15 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/establishment',
     Route::post('/create/opening_hours', array('as' => 'storeEstablishmentOpeningHour', 'uses' => 'OpeningHourController@store'));
 });
 
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/addition', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexAddition', 'uses' => 'AdditionalController@index'));
+    Route::get('/create', array('as' => 'createAddition', 'uses' => 'AdditionalController@create'));
+    Route::post('/create', array('as' => 'storeAddition', 'uses' => 'AdditionalController@store'));
+    Route::delete('/{id}', array('as' => 'deleteAddition', 'uses' => 'AdditionalController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editAddition', 'uses' => 'AdditionalController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateAddition', 'uses' => 'AdditionalController@update'));
+});
+
 
 Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/menu/establishment'], function () {
     Route::get('/{public_link_name}', array('as' => 'indexPublicEstablishment', 'uses' => 'PublicEstablishmentController@home'));

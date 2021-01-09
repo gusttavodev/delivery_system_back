@@ -2,22 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Additional;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Product extends Model
+class Additional extends Model
 {
     use HasFactory;
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class, 'category_product');
-    }
-
     public function additionals()
     {
-        return $this->belongsToMany(Additional::class, 'product_additionals');
+        return $this->belongsToMany(Product::class, 'product_additionals');
     }
 
     static function findByUser($id, $user_id) {

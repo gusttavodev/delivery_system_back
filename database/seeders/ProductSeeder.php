@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\User;
+use App\Models\Additional;
+use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
@@ -20,10 +21,14 @@ class ProductSeeder extends Seeder
         User::all()->each(function($user) {
             $user->categories()->saveMany(
                 Category::factory(2)->make()
-            )->each(function($todo) {
-                $todo->products()->saveMany(
-                    Product::factory(1)->make(['user_id' => $todo->user_id])
-                );
+            )->each(function($category) {
+                $category->products()->saveMany(
+                    Product::factory(1)->make(['user_id' => $category->user_id])
+                )->each(function($product) {
+                    $product->additionals()->saveMany(
+                        Additional::factory(1)->make(['user_id' => $product->user_id])
+                    );
+                });
             });
         });
     }
