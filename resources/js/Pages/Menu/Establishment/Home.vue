@@ -6,10 +6,10 @@
         />
 
         <div
-            class="bg-white text-gray-600 work-sans leading-normal text-base tracking-normal"
+            class="bg-white text-white work-sans leading-normal text-base tracking-normal "
         >
             <!--Nav-->
-            <nav id="header" class="w-full z-30 top-0 py-1">
+            <nav id="header" class="w-full z-30 top-0 py-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
                 <div
                     class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3"
                 >
@@ -18,7 +18,7 @@
                         class="cursor-pointer md:hidden block"
                     >
                         <svg
-                            class="fill-current text-gray-900"
+                            class="fill-current text-white"
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
                             height="20"
@@ -38,7 +38,7 @@
                     >
                         <nav>
                             <ul
-                                class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0"
+                                class="md:flex items-center justify-between text-base text-white pt-4 md:pt-0"
                             >
                                 <li>
                                     <a
@@ -60,7 +60,7 @@
 
                     <div class="order-1 md:order-2">
                         <a
-                            class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
+                            class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-white text-xl "
                             href="#"
                         >
                             <img :src="getPhoto($page.establishment.data.picture)" id="product-card" class="block rounded-full max-h-15 max-w-15"  />
@@ -114,21 +114,18 @@
             </nav>
 
             <section
-                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded"
+                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded m-3"
                 :style="{'background-image':`url(${getPhoto($page.establishment.data.background_picture)})`}"
                 style="max-width:1600px; height: 32rem;"
             >
 
                    <!-- component -->
             <!-- Collapsible card by Julian Rachele -->
-            <div class="shadow-md bg-gray-50 text-gray-600 m-2 rounded">
+            <div class="shadow-md bg-gray-50 text-black m-2 rounded">
                 <div class="flex items-center">
                 <img :src="getPhoto($page.establishment.data.picture)" id="product-card" class="w-auto h-20 mr-4"  />
 
                 <div class="description">
-                    <div class="flex flex-row items-center">
-                        <h1 class="text-2xl font-semibold mr-4">{{$page.establishment.data.name}}</h1>
-                    </div>
                     <p>{{$page.establishment.data.description}}</p>
                 </div>
 
@@ -194,7 +191,7 @@
             </section>
 
             <footer
-                class="container mx-auto bg-white py-8"
+                class="container mx-auto bg-white py-8 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
             >
                 <div class="container flex px-3 py-8 ">
                     <div class="w-full mx-auto flex flex-wrap">
@@ -238,9 +235,6 @@ export default {
     props: ["errors"],
     components: {
         ProductCard
-    },
-    mounted() {
-        console.log("PAGE", this.$page);
     },
     data() {
         return {

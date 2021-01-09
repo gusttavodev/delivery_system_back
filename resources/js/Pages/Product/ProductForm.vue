@@ -212,7 +212,6 @@ export default {
     },
     mounted() {
         if (this.isEdit) {
-            console.log("categories", this.editData);
             this.form = this.editData.data
             this.selectedCategories = this.editData.data.categories
         }

@@ -133,19 +133,7 @@ export default {
                     }
                 })
 
-        },
-        async changePage(page = 1,){
-            this.$inertia.replace('/product?page='+page)
         }
-    },
-    mounted(){
-        console.log("$page.roadmaps", this.$page.roadmaps);
     }
-
 };
 </script>
-
-<style>
-#cards-container-product {
-}
-</style>

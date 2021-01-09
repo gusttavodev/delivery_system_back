@@ -110,19 +110,7 @@ export default {
                     }
                 })
 
-        },
-        async changePage(page = 1,){
-            this.$inertia.replace('/product?page='+page)
         }
-    },
-    mounted(){
-
     }
-
 };
 </script>
-
-<style>
-#cards-container-product {
-}
-</style>

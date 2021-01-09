@@ -69,10 +69,7 @@ export default {
         };
     },
     methods: {
-        async changePage(page = 1,){
-            this.$inertia.replace('/product?page='+page)
-        },
-         async startSession(wppSession){
+        async startSession(wppSession){
             const { data } = await axios.get(`http://localhost:3000/api/start?sessionName=${wppSession.name}`);
             if(data.success){
                 this.$notify({
@@ -83,15 +80,6 @@ export default {
                 })
             }
         },
-    },
-    mounted(){
-
     }
-
 };
 </script>
-
-<style>
-#cards-container-product {
-}
-</style>

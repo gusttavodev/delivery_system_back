@@ -115,9 +115,6 @@ export default {
             });
 
         }
-    },
-    mounted() {
-        console.log("PAGE ", this.$page.additionals.data);
     }
 };
 </script>

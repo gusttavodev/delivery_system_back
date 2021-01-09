@@ -119,7 +119,6 @@ export default {
     mounted() {
         if(this.isEdit){
             this.form = this.editData.data
-            console.log("FORM", this.form);
         }
     },
     methods: {
