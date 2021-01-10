@@ -73,6 +73,13 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the phone record associated with the User Categories.
+    */
+    public function additionals(){
+        return $this->HasMany(Additional::class);
+    }
+
+    /**
      * Get the phone record associated with the User Products.
     */
     public function products(){

@@ -66,3 +66,8 @@ Lib CEP Canducci\Cep\Facades\Cep
 
 ## Manter valores do form(Importate para telas de update)
 Colocar resetOnSuccess: false no form, caso seja true ele atualiza a tela porem n chama o mount do vue, nem puxa os dados novamente
+
+# Remake
+- [] Usar a função create passando a var $request validada ao invez de New no Model
+- [] Caso edit, dar um find no FormRequest e passar a instancia para poder usar a função Update
+- [] Adicionar Regra de Negocio em um camada de services

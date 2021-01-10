@@ -13,6 +13,7 @@ use App\Http\Requests\Product\ProductCreateRequest;
 use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Http\Resources\Product as ProductResource;
 use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\Additional as AdditionalResource;
 
 class ProductController extends Controller
 {
@@ -39,9 +40,14 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-        $user_id =  $request->user()->id;
+        $user =  $request->user();
+
+        $categories = CategoryResource::collection($user->categories);
+        $additionals = AdditionalResource::collection($user->additionals);
+
         return Inertia::render('Product/Create', [
-            'categories' => CategoryResource::collection(Category::where('user_id', $user_id)->get())
+            'categories' => $categories,
+            'additionals' => $additionals
         ]);
     }
 
@@ -57,8 +63,6 @@ class ProductController extends Controller
 
         $product = new Product();
 
-        $categoryArray = json_decode($request->category);
-
         $product->name = $request->name;
         $product->priority = $request->priority;
         $product->price = $request->price;
@@ -71,11 +75,10 @@ class ProductController extends Controller
 
         $product->save();
 
-        foreach ($categoryArray as $value) {
-            $product->categories()->sync($value, false);
-        }
+        $product->categories()->sync($request->category);
+        $product->additionals()->sync($request->additionals);
 
-        return redirect()->back()->with('message', 'Post Created Successfully.');
+        return redirect()->back();
     }
 
     /**
@@ -100,13 +103,19 @@ class ProductController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $user_id =  $request->user()->id;
-        $product = Product::findByUser($id, $user_id);
-        $categories = CategoryResource::collection(Category::all());
+        $user =  $request->user();
+
+        // Find
+        $product = $user->products->where('id', $id)->first();
+        if(!isset($product)) abort(404);
+
+        $categories = CategoryResource::collection($user->categories);
+        $additionals = AdditionalResource::collection($user->additionals);
 
         return Inertia::render('Product/Edit', [
             'product' => new ProductResource($product),
-            'categories' => $categories
+            'categories' => $categories,
+            'additionals' => $additionals
         ]);
     }
 
@@ -127,11 +136,9 @@ class ProductController extends Controller
             $product->photo = $pathName;
         }
 
-        $categoryArray = json_decode($request->category);
+        $product->categories()->sync($request->category);
+        $product->additionals()->sync($request->additionals);
 
-        foreach ($categoryArray as $value) {
-            $product->categories()->sync($value, false);
-        }
         $product->name = $request->name;
         $product->priority = $request->priority;
         $product->price = $request->price;

@@ -14,6 +14,9 @@ class ProductCreateRequest extends FormRequest
 
     public function rules()
     {
+        $this->category = json_decode($this->category);
+        $this->additionals = json_decode($this->additionals);
+
         return [
             'name' => 'required',
             'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
@@ -22,6 +25,7 @@ class ProductCreateRequest extends FormRequest
             'price' => 'required',
             'description' => 'required',
             'category' => 'required|min:3',
+            'additionals' => 'required|min:3'
 		];
     }
 }

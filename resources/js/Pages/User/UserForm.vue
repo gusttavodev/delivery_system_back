@@ -128,7 +128,7 @@ export default {
     methods: {
 
         async sendForm() {
-            let response = await this.$inertia.post(route("storeUser"), this.form);
+            await this.$inertia.post(route("storeUser"), this.form);
         },
 
     }

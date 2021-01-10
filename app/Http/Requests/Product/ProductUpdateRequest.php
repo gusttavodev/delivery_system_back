@@ -14,6 +14,9 @@ class ProductUpdateRequest extends FormRequest
 
     public function rules()
     {
+        $this->category = json_decode($this->category);
+        $this->additionals = json_decode($this->additionals);
+
         if($this->updateImage != "false"){
             return [
                 'name' => 'required',

@@ -141,9 +141,11 @@ export default {
             data.append('priority', this.form.priority || '')
             data.append('enable', this.form.enable)
 
-            await this.$inertia.post(route("storeCategory"), data)
-
-            this.$inertia.replace(route("indexCategory"))
+            await this.$inertia.post(route("storeCategory"), data, {
+                onFinish: () => {
+                  if(this.$page.errorBags.length <= 0)  this.$inertia.replace(route("indexCategory"));
+                }
+            })
         },
         async updateCategory() {
             let updateImage = true

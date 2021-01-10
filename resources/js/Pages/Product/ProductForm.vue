@@ -91,20 +91,52 @@
                                 ><strong> {{ option.name }}</strong></template
                             >
                         </multiselect>
-                        <jet-input-error :message="$page.errors.category" class="mt-2" />
+                        <jet-input-error
+                            :message="$page.errors.category"
+                            class="mt-2"
+                        />
                     </div>
                 </div>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="description" value="Descrição" />
-                <text-area-input
-                    id="description"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.description"
-                />
-                <jet-input-error :message="$page.errors.description" class="mt-2" />
+                <div class="row">
+                    <div class="col">
+                        <jet-label for="name" value="Adicionais" />
+                        <multiselect
+                            :multiple="true"
+                            v-model="selectedAdditionals"
+                            deselect-label="Remover"
+                            select-label="Selecionar"
+                            track-by="id"
+                            label="name"
+                            placeholder="Selecione os adicionais"
+                            :options="$page.additionals.data"
+                            :allow-empty="false"
+                        >
+                            <template slot="singleLabel" slot-scope="{ option }">
+                                <strong> {{ option.name }}</strong>
+                            </template>
+                        </multiselect>
+                        <jet-input-error
+                            :message="$page.errors.additionals"
+                            class="mt-2"
+                        />
+                    </div>
+                    <div class="col">
+                        <jet-label for="description" value="Descrição" />
+                        <text-area-input
+                            id="description"
+                            type="text"
+                            class="mt-1 block w-full"
+                            v-model="form.description"
+                        />
+                        <jet-input-error
+                            :message="$page.errors.description"
+                            class="mt-2"
+                        />
+                    </div>
+                </div>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
@@ -193,7 +225,7 @@ export default {
         Multiselect,
         TextAreaInput
     },
-    props: ["errors", "isEdit", "editData", "categories"],
+    props: ["errors", "isEdit", "editData"],
     data() {
         return {
             form: {
@@ -203,17 +235,21 @@ export default {
                 priority: "",
                 enable: true,
                 category: null,
-                price: null
+                price: null,
+                additionals: null,
             },
             editPhotoPreview: false,
             photoPreview: null,
-            selectedCategories: []
+            selectedCategories: [],
+            selectedAdditionals: []
         };
     },
     mounted() {
         if (this.isEdit) {
-            this.form = this.editData.data
-            this.selectedCategories = this.editData.data.categories
+            console.log("this.editData",this.editData);
+            this.form = this.editData.data;
+            this.selectedCategories = this.editData.data.categories;
+            this.selectedAdditionals = this.editData.data.additionals;
         }
     },
     methods: {
@@ -224,7 +260,12 @@ export default {
             return photo;
         },
         async sendForm() {
-            this.form.category = this.selectedCategories.map(category => category.id);
+            this.form.category = this.selectedCategories.map(
+                category => category.id
+            );
+            this.form.additionals = this.selectedAdditionals.map(
+                additional => additional.id
+            );
 
             if (this.isEdit) {
                 return await this.updateProduct();
@@ -238,17 +279,18 @@ export default {
             data.append("photo", this.form.photo);
             data.append("priority", this.form.priority);
             data.append("category", JSON.stringify(this.form.category));
+            data.append("additionals", JSON.stringify(this.form.additionals));
             data.append("price", this.form.price);
             data.append("description", this.form.description);
             data.append("enable", this.form.enable);
 
-            let response = await this.$inertia.post(route("storeProduct"), data);
-
-            this.$inertia.replace(route("indexProduct"));
+            await this.$inertia.post(route("storeProduct"), data, {
+                onFinish: () => {
+                    if (this.$page.errorBags.length <= 0) this.$inertia.replace(route("indexProduct"));
+                }
+            });
         },
         async updateProduct() {
-            this.form.category = this.selectedCategories.map(category => category.id);
-
             let updateImage = true;
             if (this.$refs.photo && this.editPhotoPreview) {
                 this.form.photo = this.$refs.photo.files[0];
@@ -260,6 +302,7 @@ export default {
             data.append("name", this.form.name);
             data.append("photo", this.form.photo);
             data.append("category", JSON.stringify(this.form.category));
+            data.append("additionals", JSON.stringify(this.form.additionals));
             data.append("price", this.form.price);
             data.append("description", this.form.description);
             data.append("priority", this.form.priority);
@@ -268,9 +311,13 @@ export default {
 
             await this.$inertia.post(
                 route("updateProduct", this.form.id),
-                data
+                data,
+                {
+                    preserveScroll: true
+                }
             );
         },
+
         updatePhotoPreview() {
             const reader = new FileReader();
 
