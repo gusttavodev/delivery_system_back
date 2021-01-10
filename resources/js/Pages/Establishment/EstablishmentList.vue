@@ -7,6 +7,7 @@
                 :name="establishment.name"
                 :picture="getPicture(establishment.picture)"
                 :id="establishment.id"
+                :link="establishment.public_link_name"
                 @confirm-delete="confirmDelete"
             />
         </div>

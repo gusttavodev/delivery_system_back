@@ -23,6 +23,9 @@
                                     Remover
                             </jet-dropdown-link>
                         </span>
+                        <jet-dropdown-link :href="route('indexPublicEstablishment', link)">
+                            Link Publico
+                        </jet-dropdown-link>
                     </template>
                 </jet-dropdown>
             </div>
@@ -37,14 +40,13 @@ import JetDropdownLink from "@/Jetstream/DropdownLink";
 import ConfirmDeleteModal from '@/Shared/ConfirmDeleteModal'
 
 export default {
-    props: ["name", "picture", "id",],
+    props: ["name", "picture", "id", "link"],
     components: {
         JetSecondaryButton,
         JetDropdown,
         JetDropdownLink,
         ConfirmDeleteModal
     },
-    computed: {},
     methods: {
         async actionDelete(id){
            this.$emit('confirm-delete', id);
