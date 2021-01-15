@@ -6,7 +6,7 @@
         />
 
         <div
-            class="bg-white text-white work-sans leading-normal text-base tracking-normal "
+            class="bg-gray-200 text-white work-sans leading-normal text-base tracking-normal "
         >
             <!--Nav-->
             <nav id="header" class="w-full z-30 top-0 py-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
@@ -159,7 +159,7 @@
 
             </section>
 
-            <section class="bg-white" v-for="category in $page.categories.data" :key="category.id">
+            <section v-for="category in $page.categories.data" :key="category.id">
                 <div
                     class="container mx-auto flex items-center flex-wrap pt-4 pb-12 border-b border-gray-400"
                 >
