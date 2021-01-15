@@ -114,8 +114,7 @@
             </nav>
 
             <section
-                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded m-3"
-                :style="{'background-image':`url(${getPhoto($page.establishment.data.background_picture)})`}"
+                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded m-3 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
                 style="max-width:1600px; height: 32rem;"
             >
 
@@ -179,7 +178,7 @@
                     </nav>
 
                     <ProductCard
-                        class="shadow-xl rounded bg-gray-50"
+                        class="shadow-xl rounded bg-gray-50 p-10"
                         v-for="product in category.products"
                         :key="product.id"
                         :name="product.name"
@@ -244,7 +243,7 @@ export default {
     methods: {
         getPhoto(photoPath) {
             const host = window.location.host;
-            const photo = `http://${host}/storage/${photoPath}`;
+            const photo = `http://${host}/img/cache/thumb/${photoPath}`;
 
             return photo;
         },
