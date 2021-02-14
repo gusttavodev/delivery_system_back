@@ -30,6 +30,8 @@ class AddOrderTable extends Migration
             $table->foreignId('payment_mode_id')->references('id')->on('payment_modes');
             $table->foreignId('status_id')->references('id')->on('status_orders');
 
+            $table->foreignId('address_id')->nullable()->references('id')->on('addresses');
+
             $table->timestamps();
         });
     }

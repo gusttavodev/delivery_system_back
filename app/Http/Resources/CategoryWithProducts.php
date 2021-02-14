@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\Product as ProductResource;
 class CategoryWithProducts extends JsonResource
 {
     /**
@@ -21,7 +21,7 @@ class CategoryWithProducts extends JsonResource
             'photo' => $this->photo,
             'priority' => $this->priority,
             'enable' => $this->enable,
-            'products' => $this->products,
+            'products' => ProductResource::collection($this->products),
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

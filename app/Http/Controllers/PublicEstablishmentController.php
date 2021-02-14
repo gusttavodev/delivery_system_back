@@ -20,7 +20,6 @@ class PublicEstablishmentController extends Controller
         $userId = $establishment->user_id;
         $user = User::find($userId);
         $categories = $user->categories;
-
         return Inertia::render('Menu/Establishment/Home', [
             'categories' =>  CategoryWithProducts::collection($categories),
             'establishment' => new EstablishmentResource($establishment)

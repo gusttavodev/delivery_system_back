@@ -2,6 +2,8 @@ require('./bootstrap');
 
 import Vue from 'vue';
 
+import store from './store';
+
 import { InertiaApp } from '@inertiajs/inertia-vue';
 import { InertiaForm } from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
@@ -12,10 +14,12 @@ import Unicon from 'vue-unicons'
 import { uniCheckCircle, uniTimesCircle } from 'vue-unicons/src/icons'
 import vSelect from 'vue-select'
 import VueTheMask from 'vue-the-mask'
+import VueNumberInput from '@chenfengyuan/vue-number-input';
 
 
 // Components
 Vue.component('multiselect', require('vue-multiselect'));
+Vue.component('vue-number-input', VueNumberInput);
 Vue.mixin({ methods: { route } });
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
@@ -33,7 +37,11 @@ import 'vue-select/dist/vue-select.css';
 // Vue instance
 const app = document.getElementById('app');
 
+//Utils
+import '../utils/currency'
+
 new Vue({
+    store,
     render: (h) =>
         h(InertiaApp, {
             props: {

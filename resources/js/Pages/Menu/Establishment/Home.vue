@@ -5,11 +5,17 @@
             rel="stylesheet"
         />
 
+
+
         <div
             class="bg-gray-200 text-white work-sans leading-normal text-base tracking-normal "
         >
+
             <!--Nav-->
-            <nav id="header" class="w-full z-30 top-0 py-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+            <nav
+                id="header"
+                class="w-full z-30 top-0 py-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+            >
                 <div
                     class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3"
                 >
@@ -63,9 +69,15 @@
                             class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-white text-xl "
                             href="#"
                         >
-                            <img :src="getPhoto($page.establishment.data.picture)" id="product-card" class="block rounded-full max-h-15 max-w-15"  />
+                            <img
+                                :src="
+                                    getPhoto($page.establishment.data.picture)
+                                "
+                                id="product-card"
+                                class="block rounded-full max-h-15 max-w-15"
+                            />
 
-                             {{$page.establishment.data.name}}
+                            {{ $page.establishment.data.name }}
                         </a>
                     </div>
 
@@ -118,48 +130,77 @@
                 style="max-width:1600px; height: 32rem;"
             >
 
-                   <!-- component -->
-            <!-- Collapsible card by Julian Rachele -->
-            <div class="shadow-md bg-gray-50 text-black m-2 rounded">
-                <div class="flex items-center">
-                <img :src="getPhoto($page.establishment.data.picture)" id="product-card" class="w-auto h-20 mr-4"  />
+                <!-- component -->
+                <!-- Collapsible card by Julian Rachele -->
+                <div class="shadow-md bg-gray-50 text-black m-2 rounded">
+                    <div class="flex items-center">
+                        <img
+                            :src="getPhoto($page.establishment.data.picture)"
+                            id="product-card"
+                            class="w-auto h-20 mr-4"
+                        />
 
-                <div class="description">
-                    <p>{{$page.establishment.data.description}}</p>
-                </div>
-
-                </div>
-                <!-- Collapsed content -->
-                <div class="flex flex-col m-4" >
-                <hr class="mb-4 border-gray-700">
-                <p><span class="text-black">Endereço:</span> {{
-                    `${$page.establishment.data.address.street}, Número ${$page.establishment.data.address.number} ${$page.establishment.data.address.complement},
+                        <div class="description">
+                            <p>{{ $page.establishment.data.description }}</p>
+                        </div>
+                    </div>
+                    <!-- Collapsed content -->
+                    <div class="flex flex-col m-4">
+                        <hr class="mb-4 border-gray-700" />
+                        <p>
+                            <span class="text-black">Endereço:</span>
+                            {{
+                                `${$page.establishment.data.address.street}, Número ${$page.establishment.data.address.number} ${$page.establishment.data.address.complement},
                      ${$page.establishment.data.address.district} - ${$page.establishment.data.address.city} ${$page.establishment.data.address.state}`
-                }}</p>
-                <p><span class="text-black">Telefone:</span> {{$page.establishment.data.phone}}</p>
-                <p><span class="text-black">Tempo Médio:</span> {{$page.establishment.data.delivery_time}}</p>
-                <p><span class="text-black">Preço Mínimo:</span> R$ {{$page.establishment.data.min_value}}</p>
-                <p><span class="text-black">Horarios de Funcionamento:</span></p>
-                <ul class="list-disc ml-4 mt-1">
-                    <li v-for="openingHour in $page.establishment.data.opening_hours" :key="openingHour.id" >
-                        <div v-if="!openingHour.not_open">
-                            <span class="text-black">{{openingHour.label}}</span>
-                            {{openingHour.start_time}}
-                                <span class="text-black">Até</span>
-                            {{openingHour.end_time}}
-                        </div>
-                         <div v-else>
-                             <span class="text-black">{{openingHour.label}}</span> Não Funciona
-                        </div>
-
-                    </li>
-                </ul>
+                            }}
+                        </p>
+                        <p>
+                            <span class="text-black">Telefone:</span>
+                            {{ $page.establishment.data.phone }}
+                        </p>
+                        <p>
+                            <span class="text-black">Tempo Médio:</span>
+                            {{ $page.establishment.data.delivery_time }}
+                        </p>
+                        <p>
+                            <span class="text-black">Preço Mínimo:</span> R$
+                            {{ $page.establishment.data.min_value }}
+                        </p>
+                        <p>
+                            <span class="text-black"
+                                >Horarios de Funcionamento:</span
+                            >
+                        </p>
+                        <ul class="list-disc ml-4 mt-1">
+                            <li
+                                v-for="openingHour in $page.establishment.data
+                                    .opening_hours"
+                                :key="openingHour.id"
+                            >
+                                <div v-if="!openingHour.not_open">
+                                    <span class="text-black">{{
+                                        openingHour.label
+                                    }}</span>
+                                    {{ openingHour.start_time }}
+                                    <span class="text-black">Até</span>
+                                    {{ openingHour.end_time }}
+                                </div>
+                                <div v-else>
+                                    <span class="text-black">{{
+                                        openingHour.label
+                                    }}</span>
+                                    Não Funciona
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-
             </section>
 
-            <section v-for="category in $page.categories.data" :key="category.id">
+            <section
+                v-for="category in $page.categories.data"
+                :key="category.id"
+            >
                 <div
                     class="container mx-auto flex items-center flex-wrap pt-4 pb-12 border-b border-gray-400"
                 >
@@ -171,9 +212,8 @@
                                 class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
                                 href="#"
                             >
-                                {{category.name}}
+                                {{ category.name }}
                             </a>
-
                         </div>
                     </nav>
 
@@ -181,10 +221,7 @@
                         class="shadow-xl rounded bg-gray-50 p-10"
                         v-for="product in category.products"
                         :key="product.id"
-                        :name="product.name"
-                        :photo="getPhoto(product.photo)"
-                        :id="product.id"
-                        :price="product.price"
+                        :product="product"
                     />
                 </div>
             </section>
@@ -224,29 +261,54 @@
                     </div>
                 </div>
             </footer>
+            <!-- Setting panel button -->
+            <div
+                class="
+                fixed bottom-0 left-1/2 rigth-1/2
+                bg-gray-600 rounded-t-md
+                "
+            >
+                <button>
+                    Settings
+                </button>
+            </div>
+
+
+            <ProductModal />
+
         </div>
+
     </div>
 </template>
 
 <script>
 import ProductCard from "./ProductCard";
+import ProductModal from "./ProductModal";
+
 export default {
     props: ["errors"],
     components: {
-        ProductCard
+        ProductCard,
+        ProductModal
     },
     data() {
         return {
             establishment: null
         };
     },
+    created(){
+
+    },
     methods: {
+        addToCart() {
+            console.log();
+        },
         getPhoto(photoPath) {
             const host = window.location.host;
             const photo = `http://${host}/img/cache/thumb/${photoPath}`;
 
             return photo;
-        },
+        }
     }
 };
 </script>

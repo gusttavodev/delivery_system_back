@@ -109,4 +109,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Establishment::class, 'user_id');
     }
+
+    /**
+     * Get the user establishments.
+    */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
 }

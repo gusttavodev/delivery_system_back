@@ -1,0 +1,4 @@
+export const SET_PRODUCT = "SET_PRODUCT"
+export const GET_PRODUCT = "GET_PRODUCT"
+export const DELETE_PRODUCT = "DELETE_PRODUCT"
+export const HAS_PRODUCT = "HAS_PRODUCT"

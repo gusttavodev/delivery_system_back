@@ -25,10 +25,11 @@
         "sass-loader": "^8.0.2",
         "socket.io-client": "^2.3.1",
         "tailwindcss": "^1.8.0",
-        "vue": "^2.5.17",
+        "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@chenfengyuan/vue-number-input": "^1.2.1",
         "bootstrap": "^4.5.3",
         "jquery": "^3.5.1",
         "laravel-echo": "^1.10.0",
@@ -40,6 +41,7 @@
         "vue-the-mask": "^0.11.1",
         "vue-unicons": "^2.3.0",
         "vue2-datepicker": "^3.8.2",
-        "vuedraggable": "^2.24.3"
+        "vuedraggable": "^2.24.3",
+        "vuex": "^3.6.2"
     }
 }
