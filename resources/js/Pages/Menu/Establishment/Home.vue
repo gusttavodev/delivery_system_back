@@ -262,19 +262,10 @@
                 </div>
             </footer>
             <!-- Setting panel button -->
-            <div
-                class="
-                fixed bottom-0 left-1/2 rigth-1/2
-                bg-gray-600 rounded-t-md
-                "
-            >
-                <button>
-                    Settings
-                </button>
-            </div>
+            <Cart  v-if="!hasProduct"/>
 
-
-            <ProductModal />
+             <!-- Select Product Modal -->
+            <ProductModal/>
 
         </div>
 
@@ -284,12 +275,17 @@
 <script>
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
+import Cart from "./Cart";
+import {
+    HAS_PRODUCT
+} from "@/store/mutationsTypes/Product";
 
 export default {
     props: ["errors"],
     components: {
         ProductCard,
-        ProductModal
+        ProductModal,
+        Cart
     },
     data() {
         return {
@@ -298,6 +294,11 @@ export default {
     },
     created(){
 
+    },
+    computed: {
+        hasProduct() {
+            return this.$store.getters[HAS_PRODUCT];
+        }
     },
     methods: {
         addToCart() {

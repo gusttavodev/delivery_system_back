@@ -1,6 +1,6 @@
 <template>
     <Modal v-if="hasProduct" @close="closeModal">
-        <h3 slot="header">{{ selectedProduct.name }}</h3>
+        <h3 slot="header" class="text-2xl">{{ selectedProduct.name }}</h3>
         <div slot="body">
             <div
                 class="flex flex-col items-center justify-center text-gray-800 work-sans leading-normal text-base"
@@ -12,6 +12,27 @@
                 <h3 class="text-center pt-2">
                     {{ selectedProduct.description }}
                 </h3>
+
+                 <div class="pt-2 flex flex-row justify-center w-full p-2">
+                   <h2 class="p-2 flex-1 text-left">Quantidade:</h2>
+
+                    <vue-number-input
+                        v-model="selectedProduct.quantity"
+                        class="flex-2"
+                        rounded
+                        controls
+                        :min="1"
+                        :max="5"
+                        :inputtable="false"
+                    />
+
+                    <h2 v-if="selectedProduct.quantity" class="p-2 flex-1 text-right">{{ $currency_format(selectedProduct.price*selectedProduct.quantity) }}</h2>
+                    <h2 v-else class="p-2 flex-1 text-right">{{ $currency_format(selectedProduct.price) }}</h2>
+                </div>
+
+                <h1 class="text-2xl text-center pt-2">
+                    Acréssimos
+                </h1>
 
                 <div
                     v-for="additional in selectedProduct.additionals"
@@ -26,7 +47,7 @@
                         @change="event => changeCounter(event, additional)"
                         rounded
                         controls
-                        :min="1"
+                        :min="0"
                         :max="additional.quantity_limit"
                         :inputtable="false"
                     />
@@ -39,6 +60,7 @@
         </div>
         <div slot="footer">
             <PrimaryButton
+                @click.native="addToCart"
                 class="w-full h-full flex justify-center items-center p-3"
             >
                 Adicionar ao carrinho
@@ -49,8 +71,6 @@
 
 <script>
 import Modal from "@/Shared/Modal";
-import JetButton from "../../../Jetstream/Button";
-import JetSecondaryButton from "../../../Jetstream/SecondaryButton";
 
 import PrimaryButton from "@/Shared/Establishment/PrimaryButton";
 
@@ -60,6 +80,8 @@ import {
     HAS_PRODUCT
 } from "@/store/mutationsTypes/Product";
 
+import { GET_CART, ADD_ITEM, REMOVE_ITEM } from "@/store/mutationsTypes/StoreCart";
+
 export default {
     props: {},
     components: {
@@ -68,7 +90,6 @@ export default {
     },
     computed: {
         selectedProduct() {
-            console.log("MOUNTED", this.$store.getters[GET_PRODUCT]);
             return this.$store.getters[GET_PRODUCT];
         },
         hasProduct() {
@@ -104,8 +125,8 @@ export default {
             return photo;
         },
         addToCart() {
-            console.log(this.product);
-            // this.$emit("onSelectProduct", this.product);
+            this.$store.dispatch(ADD_ITEM, this.selectedProduct)
+            this.closeModal()
         }
     }
 };

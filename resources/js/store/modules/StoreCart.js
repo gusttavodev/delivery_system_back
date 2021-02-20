@@ -1,24 +1,33 @@
-export default {
-    namespaced: true,
-    state: () => ({
-        storeCart: {}
-    }),
-    mutations: {
-        ADD_Item(state, id) {
-            state.storeCart.push(id);
-        },
+import { GET_CART, ADD_ITEM, REMOVE_ITEM, CART_COUNT } from "@/store/mutationsTypes/StoreCart";
 
-        REMOVE_Item(state, index) {
-            state.storeCart.splice(index, 1);
+export default {
+    state: {
+        storeCart: []
+    },
+    mutations: {
+        [ADD_ITEM]: (state, product) => {
+            const foundIndex = state.storeCart.findIndex(data => data.id === product.id);
+            state.storeCart.push(product);
+        },
+        [REMOVE_ITEM]: (state, product) => {
+            const foundIndex = state.storeCart.findIndex(data => data.id === product.id);
+            state.storeCart.splice(foundIndex, 1);
+        }
+    },
+    getters: {
+        [GET_CART]: (state) => {
+            return state.storeCart
+        },
+        [CART_COUNT]: (state) => {
+            return state.storeCart.length
         }
     },
     actions: {
-        addItem(context, id) {
-            context.commit("ADD_Item", id);
+        [ADD_ITEM]: ({ commit }, product) => {
+            commit(ADD_ITEM, product)
         },
-
-        removeItem(context, index) {
-            context.commit("REMOVE_Item", index);
+        [REMOVE_ITEM]: ({ commit }, product) => {
+            commit(REMOVE_ITEM, {product})
         }
     }
 };
