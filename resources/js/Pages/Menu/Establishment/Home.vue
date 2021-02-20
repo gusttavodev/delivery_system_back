@@ -262,9 +262,11 @@
                 </div>
             </footer>
             <!-- Setting panel button -->
-            <Cart  v-if="!hasProduct"/>
+            <Cart  v-if="!hasProduct && !showOrder"/>
 
-             <!-- Select Product Modal -->
+            <OrderModal/>
+
+            <!-- Select Product Modal -->
             <ProductModal/>
 
         </div>
@@ -275,17 +277,20 @@
 <script>
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
+import OrderModal from "./OrderModal";
 import Cart from "./Cart";
 import {
     HAS_PRODUCT
 } from "@/store/mutationsTypes/Product";
+import { GET_SHOW_ORDER } from "@/store/mutationsTypes/Order";
 
 export default {
     props: ["errors"],
     components: {
         ProductCard,
         ProductModal,
-        Cart
+        Cart,
+        OrderModal
     },
     data() {
         return {
@@ -296,6 +301,9 @@ export default {
 
     },
     computed: {
+        showOrder() {
+            return this.$store.getters[GET_SHOW_ORDER];
+        },
         hasProduct() {
             return this.$store.getters[HAS_PRODUCT];
         }

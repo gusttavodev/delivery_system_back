@@ -9,6 +9,7 @@
         bg-pink-700 rounded-t-lg text-center text-gray-50 hover:bg-pink-600
         container flex flex-wrap items-center justify-center pt-2"
         style="z-index: 9999999999999999999999999"
+        @click="showOrder"
     >
         <h1 class="text-2xl p-2">Seu pedido</h1>
 
@@ -47,6 +48,7 @@ import Modal from "@/Shared/Modal";
 import PrimaryButton from "@/Shared/Establishment/PrimaryButton";
 
 import { GET_CART, CART_COUNT } from "@/store/mutationsTypes/StoreCart";
+import { SET_SHOW_ORDER } from "@/store/mutationsTypes/Order";
 
 export default {
     props: {},
@@ -68,7 +70,12 @@ export default {
     mounted() {
         console.log("storeCart ", this.storeCart);
     },
-    methods: {}
+    methods: {
+        showOrder() {
+            console.log("SHOW ORDER");
+            this.$store.dispatch(SET_SHOW_ORDER, true)
+        }
+    }
 };
 </script>
 
