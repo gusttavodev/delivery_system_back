@@ -1,5 +1,9 @@
 {
     "private": true,
+    "version": "1.0.0",
+    "engines": {
+        "node": "12.x"
+    },
     "scripts": {
         "postinstall": "npm run prod",
         "dev": "npm run development",

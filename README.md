@@ -75,3 +75,24 @@ Colocar resetOnSuccess: false no form, caso seja true ele atualiza a tela porem 
 
 # Image Cache
 - Tenho que adicionar a pasta Filters no composer.json para carregar elas
+
+
+# Heroku
+```
+    heroku config:set APP_KEY=$(php artisan --no-ansi key:generate --show).
+```
+```
+    git push heroku main 
+```
+```
+    heroku config:add APP_NAME=Laravel
+```
+- Adicione o Plugins Heroku Postgress que tem licença free
+- Execute para obter as cahves
+```
+    heroku pg:credentials:url
+```
+```
+    heroku run php artisan migrate
+```
+
