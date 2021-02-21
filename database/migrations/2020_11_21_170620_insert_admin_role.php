@@ -14,7 +14,7 @@ class InsertAdminRole extends Migration
      */
     public function up()
     {
-        // Role::create(['name' => 'admin']);
+        Role::create(['name' => 'admin']);
     }
 
     /**
