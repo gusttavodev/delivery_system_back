@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
-
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\UrlWindow;
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\UrlWindow;
+
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
         Inertia::share([
             'errors' => function () {
@@ -45,8 +46,8 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
-        if(env('APP_ENV' !== 'local')){
-            URL::forceScheme('https');
+        if (env('APP_ENV') !== 'local') {
+            $url->forceScheme('https');
         }
     }
 
