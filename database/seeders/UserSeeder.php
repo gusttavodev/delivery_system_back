@@ -30,8 +30,10 @@ class UserSeeder extends Seeder
                 ]));
             });
         });
+
         Role::create(['name' => 'admin']);
-        $user->assignRole('Admin');
+
+        $user->assignRole('admin');
 
         User::factory(1)->create();
     }
