@@ -93,6 +93,6 @@ Colocar resetOnSuccess: false no form, caso seja true ele atualiza a tela porem 
     heroku pg:credentials:url
 ```
 ```
-    heroku run php artisan migrate
+    heroku run php artisan migrate:fresh --seed
 ```
 
