@@ -15,13 +15,9 @@
 </template>
 
 <script>
-import ProductModal from './ProductModal'
 import { SET_PRODUCT, GET_PRODUCT } from "@/store/mutationsTypes/Product";
 
 export default {
-    components: {
-        ProductModal
-    },
     props: {
         product: {
             type: Object,
