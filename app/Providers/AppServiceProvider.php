@@ -44,6 +44,10 @@ class AppServiceProvider extends ServiceProvider
                 'message' => Session::get('message'),
             ];
         });
+
+        if(env('APP_ENV' !== 'local')){
+            URL::forceSchema('https');
+        }
     }
 
     protected function registerLengthAwarePaginator()
