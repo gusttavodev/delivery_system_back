@@ -5,7 +5,7 @@
                 v-for="product in $page.products.data"
                 :key="product.id"
                 :name="product.name"
-                :photo="getPhoto(product.photo)"
+                :photo="product.photo"
                 :id="product.id"
                 :enable="product.enable"
                 @confirm-delete="confirmDelete(product.id)"
@@ -89,12 +89,6 @@ export default {
         };
     },
     methods: {
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/storage/${photoPath}`;
-
-            return photo;
-        },
         confirmDelete(id) {
             this.confirmToDelete = true;
             this.toDelete = id;

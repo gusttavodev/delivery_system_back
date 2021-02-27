@@ -3,7 +3,7 @@
    <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container bg-grey-200 w-300  md:max-w-2xl">
+        <div class="modal-container bg-grey-200 w-full md:w-2/3 xl:w-3/4 h-full md:h-2/3 xl:h-3/4 overflow-y-auto p-0">
 
           <div class="modal-header">
               <unicon class="cursor-pointer" name="times-circle" fill="#ED422C" @click="$emit('close')"/>

@@ -1,20 +1,16 @@
 <template>
     <div>
-        <link
-            href="https://unpkg.com/tailwindcss/dist/tailwind.min.css"
-            rel="stylesheet"
-        />
-
-
 
         <div
-            class="bg-gray-200 text-white work-sans leading-normal text-base tracking-normal "
+            class="work-sans leading-normal text-base tracking-normal "
+            :class="`bg-${$page.background_color} text-${$page.text_color}`"
         >
 
             <!--Nav-->
             <nav
                 id="header"
-                class="w-full z-30 top-0 py-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+                class="w-full z-30 top-0 py-1"
+                :class="`bg-gradient-to-r from-${$page.primary_color}-400 via-${$page.primary_color}-500 to-${$page.primary_color}-600`"
             >
                 <div
                     class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3"
@@ -24,7 +20,7 @@
                         class="cursor-pointer md:hidden block"
                     >
                         <svg
-                            class="fill-current text-white"
+                            class="fill-current"
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
                             height="20"
@@ -39,26 +35,28 @@
                     <input class="hidden" type="checkbox" id="menu-toggle" />
 
                     <div
-                        class="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1"
+                        class="hidden md:flex md:items-center md:w-auto w-full order-1 md:order-1"
                         id="menu"
                     >
                         <nav>
                             <ul
-                                class="md:flex items-center justify-between text-base text-white pt-4 md:pt-0"
+                                class="md:flex items-center justify-between text-base pt-4 md:pt-0"
                             >
                                 <li>
                                     <a
-                                        class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
+                                        class="inline-block py-2 px-4 no-underline"
+                                        :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
                                         href="#"
                                         >Shop</a
                                     >
                                 </li>
                                 <li>
                                     <a
-                                        class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
+                                        class="inline-block py-2 px-4 no-underline"
+                                        :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
                                         href="#"
-                                        >About</a
-                                    >
+                                        >About
+                                    </a>
                                 </li>
                             </ul>
                         </nav>
@@ -66,13 +64,12 @@
 
                     <div class="order-1 md:order-2">
                         <a
-                            class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-white text-xl "
+                            class="flex items-center tracking-wide font-bold text-xl no-underline hover:no-underline"
+                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_color}`"
                             href="#"
                         >
                             <img
-                                :src="
-                                    getPhoto($page.establishment.data.picture)
-                                "
+                                :src="$page.establishment.data.picture"
                                 id="product-card"
                                 class="block rounded-full max-h-15 max-w-15"
                             />
@@ -86,11 +83,12 @@
                         id="nav-content"
                     >
                         <a
-                            class="inline-block no-underline hover:text-black"
+                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
+                            class="inline-block no-underline"
                             href="#"
                         >
                             <svg
-                                class="fill-current hover:text-black"
+                                class="fill-current"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
                                 height="24"
@@ -104,11 +102,12 @@
                         </a>
 
                         <a
-                            class="pl-3 inline-block no-underline hover:text-black"
+                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
+                            class="pl-3 inline-block no-underline"
                             href="#"
                         >
                             <svg
-                                class="fill-current hover:text-black"
+                                class="fill-current"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
                                 height="24"
@@ -126,21 +125,25 @@
             </nav>
 
             <section
-                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded m-3 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+                :class="`bg-gradient-to-r from-${$page.primary_color}-400 via-${$page.primary_color}-500 to-${$page.primary_color}-600`"
+                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded m-3"
                 style="max-width:1600px; height: 32rem;"
             >
 
                 <!-- component -->
                 <!-- Collapsible card by Julian Rachele -->
-                <div class="shadow-md bg-gray-50 text-black m-2 rounded">
+                <div
+                    class="shadow-md m-2 rounded"
+                    :class="`bg-${$page.background_color}`"
+                >
                     <div class="flex items-center">
                         <img
-                            :src="getPhoto($page.establishment.data.picture)"
+                            :src="$page.establishment.data.picture"
                             id="product-card"
                             class="w-auto h-20 mr-4"
                         />
 
-                        <div class="description">
+                        <div class="description" :class="`text-${$page.title_text_color}`">
                             <p>{{ $page.establishment.data.description }}</p>
                         </div>
                     </div>
@@ -148,28 +151,26 @@
                     <div class="flex flex-col m-4">
                         <hr class="mb-4 border-gray-700" />
                         <p>
-                            <span class="text-black">Endereço:</span>
+                            <span  :class="`text-${$page.title_text_color}`">Endereço:</span>
                             {{
                                 `${$page.establishment.data.address.street}, Número ${$page.establishment.data.address.number} ${$page.establishment.data.address.complement},
-                     ${$page.establishment.data.address.district} - ${$page.establishment.data.address.city} ${$page.establishment.data.address.state}`
+                                    ${$page.establishment.data.address.district} - ${$page.establishment.data.address.city} ${$page.establishment.data.address.state}`
                             }}
                         </p>
                         <p>
-                            <span class="text-black">Telefone:</span>
+                            <span :class="`text-${$page.title_text_color}`">Telefone:</span>
                             {{ $page.establishment.data.phone }}
                         </p>
                         <p>
-                            <span class="text-black">Tempo Médio:</span>
+                            <span :class="`text-${$page.title_text_color}`">Tempo Médio:</span>
                             {{ $page.establishment.data.delivery_time }}
                         </p>
                         <p>
-                            <span class="text-black">Preço Mínimo:</span> R$
+                            <span :class="`text-${$page.title_text_color}`">Preço Mínimo:</span> R$
                             {{ $page.establishment.data.min_value }}
                         </p>
                         <p>
-                            <span class="text-black"
-                                >Horarios de Funcionamento:</span
-                            >
+                            <span :class="`text-${$page.title_text_color}`">Horarios de Funcionamento:</span>
                         </p>
                         <ul class="list-disc ml-4 mt-1">
                             <li
@@ -178,15 +179,15 @@
                                 :key="openingHour.id"
                             >
                                 <div v-if="!openingHour.not_open">
-                                    <span class="text-black">{{
+                                    <span :class="`text-${$page.title_text_color}`">{{
                                         openingHour.label
                                     }}</span>
                                     {{ openingHour.start_time }}
-                                    <span class="text-black">Até</span>
+                                    <span >Até</span>
                                     {{ openingHour.end_time }}
                                 </div>
                                 <div v-else>
-                                    <span class="text-black">{{
+                                    <span >{{
                                         openingHour.label
                                     }}</span>
                                     Não Funciona
@@ -209,6 +210,7 @@
                             class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3"
                         >
                             <a
+                                :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:no-underline`"
                                 class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
                                 href="#"
                             >
@@ -218,7 +220,7 @@
                     </nav>
 
                     <ProductCard
-                        class="shadow-xl rounded bg-gray-50 p-10"
+                        class="shadow-xl rounded bg-gray-50 p-2"
                         v-for="product in category.products"
                         :key="product.id"
                         :product="product"
@@ -227,13 +229,14 @@
             </section>
 
             <footer
-                class="container mx-auto bg-white py-8 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+                :class="`bg-gradient-to-r from-${$page.primary_color}-400 via-${$page.primary_color}-500 to-${$page.primary_color}-600`"
+                class="mx-auto py-8"
             >
                 <div class="container flex px-3 py-8 ">
                     <div class="w-full mx-auto flex flex-wrap">
                         <div class="flex w-full lg:w-1/2 ">
                             <div class="px-3 md:px-0">
-                                <h3 class="font-bold text-gray-900">About</h3>
+                                <h3 class="font-bold" :class="`text-${$page.title_text_color}`">About</h3>
                                 <p class="py-4">
                                     Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit. Maecenas vel mi ut felis
@@ -246,13 +249,24 @@
                             class="flex w-full lg:w-1/2 lg:justify-end lg:text-right"
                         >
                             <div class="px-3 md:px-0">
-                                <h3 class="font-bold text-gray-900">Social</h3>
+                                <h3 class="font-bold" :class="`text-${$page.title_text_color}`">Social</h3>
                                 <ul class="list-reset items-center pt-3">
                                     <li>
+                                        ICON
                                         <a
-                                            class="inline-block no-underline hover:text-black hover:underline py-1"
+                                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:no-underline`"
+                                            class="inline-block no-underline py-1"
                                             href="#"
-                                            >Add social links</a
+                                            >@gusttavo212</a
+                                        >
+                                    </li>
+                                     <li>
+                                        ICON
+                                        <a
+                                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:no-underline`"
+                                            class="inline-block no-underline py-1"
+                                            href="#"
+                                            >@gusttavo212</a
                                         >
                                     </li>
                                 </ul>
@@ -311,12 +325,6 @@ export default {
     methods: {
         addToCart() {
             console.log();
-        },
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/img/cache/thumb/${photoPath}`;
-
-            return photo;
         }
     }
 };

@@ -5,9 +5,11 @@
         bg-pink-800 rounded-t-lg text-center text-gray-50 hover:bg-pink-600"
     > -->
     <div
-        class="cursor-pointer  w-3/4 lg:w-3/4 sm:w-2/4 md:w-2/4 fixed inset-x-0 bottom-0
-        bg-pink-700 rounded-t-lg text-center text-gray-50 hover:bg-pink-600
-        container flex flex-wrap items-center justify-center pt-2"
+         :class="`bg-gradient-to-r from-${$page.secondary_color}-500 via-${$page.secondary_color}-600 to-${$page.secondary_color}-700`"
+        class="
+            cursor-pointer  w-3/4 lg:w-3/4 sm:w-2/4 md:w-2/4 fixed inset-x-0 bottom-0
+            rounded-t-lg text-center text-gray-50 container flex flex-wrap items-center justify-center pt-2
+        "
         style="z-index: 9999999999999999999999999"
         @click="showOrder"
     >

@@ -5,7 +5,7 @@
                 v-for="establishment in $page.establishments.data"
                 :key="establishment.id"
                 :name="establishment.name"
-                :picture="getPicture(establishment.picture)"
+                :picture="establishment.picture"
                 :id="establishment.id"
                 :link="establishment.public_link_name"
                 @confirm-delete="confirmDelete"
@@ -70,12 +70,6 @@ export default {
         };
     },
     methods: {
-        getPicture(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/storage/${photoPath}`;
-
-            return photo;
-        },
         confirmDelete(id) {
            this.showRemoveModal = true
            this.itemIdToRemove = id

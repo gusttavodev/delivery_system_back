@@ -91,12 +91,6 @@ export default {
         };
     },
     methods: {
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/storage/${photoPath}`;
-
-            return photo;
-        },
         confirmDelete(id) {
             this.confirmToDelete = true;
             this.toDelete = id;

@@ -20,7 +20,7 @@
                     <div v-if="isEdit && !editPhotoPreview">
                         <img
                             id="old_image"
-                            :src="getPhoto(form.photo)"
+                            :src="form.photo"
                             class="block rounded-full w-40 h-40"
                             :alt="form.name"
                         />
@@ -253,12 +253,6 @@ export default {
         }
     },
     methods: {
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/storage/${photoPath}`;
-            this.photoPreview = true;
-            return photo;
-        },
         async sendForm() {
             this.form.category = this.selectedCategories.map(
                 category => category.id

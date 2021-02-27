@@ -1,16 +1,16 @@
 <template>
         <div
-            class="w-full md:w-1/3 xl:w-1/4 m-3 flex flex-col M-10"
+            class="w-full md:w-1/3 xl:w-1/4 m-3 flex flex-col text-center"
             @click="selectProduct"
         >
             <img
                 class="hover:grow hover:shadow-lg rounded block h-auto w-full"
-                :src="getPhoto(product.photo)"
+                :src="product.photo"
             />
-            <div class="pt-3 flex items-center justify-between">
-                <p class="text-black">{{ product.name }}</p>
+            <div class="pt-3">
+                <p>{{ product.name }}</p>
             </div>
-            <p class="pt-1 text-gray-900">R$ {{ product.price }}</p>
+            <p>R$ {{ product.price }}</p>
         </div>
 </template>
 
@@ -30,12 +30,6 @@ export default {
         }
     },
     methods: {
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/img/cache/thumb/${photoPath}`;
-
-            return photo;
-        },
         selectProduct() {
             this.showModal = true
             this.$store.dispatch(SET_PRODUCT, this.product)

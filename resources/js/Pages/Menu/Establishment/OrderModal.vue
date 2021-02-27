@@ -79,12 +79,6 @@ export default {
         closeModal() {
             this.$store.dispatch(SET_SHOW_ORDER, false);
         },
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/img/cache/thumb/${photoPath}`;
-
-            return photo;
-        },
         addToCart() {
             this.$store.dispatch(ADD_ITEM, this.selectedProduct);
             this.closeModal();

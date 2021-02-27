@@ -26,7 +26,7 @@
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" v-show="photoPreview">
                     <div v-if="isEdit && !editPhotoPreview">
-                        <img id="old_image" :src="getCategoryPhoto(form.photo)" class="block rounded-full w-40 h-40" :alt="form.name" />
+                        <img id="old_image" :src="form.photo" class="block rounded-full w-40 h-40" :alt="form.name" />
                     </div>
                     <div v-else>
                         <span class="block rounded-full w-40 h-40"
@@ -122,12 +122,6 @@ export default {
         }
     },
     methods: {
-        getCategoryPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/storage/${photoPath}`;
-            this.photoPreview = true
-            return photo;
-        },
         async createCategory() {
             if(this.isEdit){
                 return await this.updateCategory()

@@ -1,24 +1,27 @@
 <template>
     <Modal v-if="hasProduct" @close="closeModal">
-        <h3 slot="header" class="text-2xl">{{ selectedProduct.name }}</h3>
+        <h3 slot="header" class="text-xl">{{ selectedProduct.name }}</h3>
         <div slot="body">
             <div
-                class="flex flex-col items-center justify-center text-gray-800 work-sans leading-normal text-base"
+                class="flex flex-col items-center justify-center text-gray-800 work-sans leading-normal"
             >
-                <img
-                    class="hover:grow hover:shadow-lg rounded h-auto md:max-w-2xl"
-                    :src="getPhoto(selectedProduct.photo)"
-                />
-                <h3 class="text-center pt-2">
+
+                    <img
+                        class="flex-1 md:max-w-2xl xl:max-w-2xl m-0 hover:grow rounded"
+                        :src="selectedProduct.photo"
+                    />
+
+
+                <h3 class="text-center pt-2 text-xl lt:text-base">
                     {{ selectedProduct.description }}
                 </h3>
 
                  <div class="pt-2 flex flex-row justify-center w-full p-2">
-                   <h2 class="p-2 flex-1 text-left">Quantidade:</h2>
+                   <h2 class="p-2 flex-1 text-left text-base lt:text-sm">Quantidade:</h2>
 
                     <vue-number-input
                         v-model="selectedProduct.quantity"
-                        class="flex-2"
+                        class="flex-2 mb-2"
                         rounded
                         controls
                         :min="1"
@@ -26,11 +29,11 @@
                         :inputtable="false"
                     />
 
-                    <h2 v-if="selectedProduct.quantity" class="p-2 flex-1 text-right">{{ $currency_format(selectedProduct.price*selectedProduct.quantity) }}</h2>
-                    <h2 v-else class="p-2 flex-1 text-right">{{ $currency_format(selectedProduct.price) }}</h2>
+                    <h2 v-if="selectedProduct.quantity" class="p-2 flex-1 text-right text-base lt:text-sm">{{ $currency_format(selectedProduct.price*selectedProduct.quantity) }}</h2>
+                    <h2 v-else class="p-2 flex-1 text-right text-base lt:text-sm">{{ $currency_format(selectedProduct.price) }}</h2>
                 </div>
 
-                <h1 class="text-2xl text-center pt-2">
+                <h1 class="text-xl text-center pt-2">
                     Acréssimos
                 </h1>
 
@@ -39,11 +42,11 @@
                     :key="additional.id"
                     class="pt-2 flex flex-row justify-between w-full"
                 >
-                    <h2 class="p-2 flex-1 text-left">{{ additional.name }}</h2>
+                    <h2 class="p-2 flex-1 text-left text-base lt:text-sm">{{ additional.name }}</h2>
 
                     <vue-number-input
                         v-model="additional.quantity"
-                        class="flex-2"
+                        class="flex-2 mb-2"
                         @change="event => changeCounter(event, additional)"
                         rounded
                         controls
@@ -52,8 +55,8 @@
                         :inputtable="false"
                     />
 
-                    <h2 v-if="additional.quantity" class="p-2 flex-1 text-right">{{ $currency_format(additional.price*additional.quantity) }}</h2>
-                    <h2 v-else class="p-2 flex-1 text-right">{{ $currency_format(additional.price) }}</h2>
+                    <h2 v-if="additional.quantity" class="p-2 flex-1 text-right  lt:text-sm">{{ $currency_format(additional.price*additional.quantity) }}</h2>
+                    <h2 v-else class="p-2 flex-1 text-right text-base lt:text-sm">{{ $currency_format(additional.price) }}</h2>
 
                 </div>
             </div>
@@ -117,12 +120,6 @@ export default {
         closeModal() {
             this.selectedAdditionals = [];
             this.$store.dispatch(DELETE_PRODUCT);
-        },
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/img/cache/thumb/${photoPath}`;
-
-            return photo;
         },
         addToCart() {
             this.$store.dispatch(ADD_ITEM, this.selectedProduct)

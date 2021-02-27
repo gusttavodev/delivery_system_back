@@ -5,7 +5,7 @@
     >
         <div class="p-2 w-12">
             <img
-                :src="getPhoto(product.photo)"
+                :src="product.photo"
                 alt="img product"
             />
         </div>
@@ -61,12 +61,6 @@ export default {
         return {};
     },
     methods: {
-        getPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/img/cache/thumb/${photoPath}`;
-
-            return photo;
-        },
         selectProduct() {}
     }
 };

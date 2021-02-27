@@ -14,7 +14,7 @@
             <div v-if="isEdit && !editPhotoPreview">
                 <img
                     id="old_image"
-                    :src="getCategoryPhoto(defaultImageUrl)"
+                    :src="defaultImageUrl"
                     class="block rounded-full w-40 h-40"
                 />
             </div>
@@ -115,14 +115,6 @@ export default {
             this.photoPreview = null
             this.$emit('input', null)
         },
-
-        getCategoryPhoto(photoPath) {
-            const host = window.location.host;
-            const picture = `http://${host}/storage/${photoPath}`;
-            this.photoPreview = true;
-            return picture;
-        },
-
         selectNewPhoto() {
             this.$refs.component_picture_upload.click();
         }

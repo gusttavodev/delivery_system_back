@@ -5,7 +5,7 @@
                 v-for="category in $page.categories.data"
                 :key="category.id"
                 :name="category.name"
-                :photo="getCategoryPhoto(category.photo)"
+                :photo="category.photo"
                 :id="category.id"
                 :enable="category.enable"
                 @confirm-delete="confirmDelete(category.id)"
@@ -89,12 +89,6 @@ export default {
         };
     },
     methods: {
-        getCategoryPhoto(photoPath) {
-            const host = window.location.host;
-            const photo = `http://${host}/storage/${photoPath}`;
-
-            return photo;
-        },
         confirmDelete(id) {
             this.confirmingCategoryDeletion = true;
             this.categeoryToDelete = id;
