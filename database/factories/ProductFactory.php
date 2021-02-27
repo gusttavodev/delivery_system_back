@@ -24,7 +24,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'photo' => "images/TPtdcnzl5eFhlEvB6cBAw5bQtMlIVMeBsLGwo2hm.jpeg",
+            'photo' => "images/product/D8V1fNTDpYSGJFdSErp0JagjQwHtEwxb0xas62VO.jpg",
             'available' => true,
             'enable' => true,
             'priority' => 1,

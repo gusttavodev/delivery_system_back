@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Additional as AdditionalResource;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\Additional as AdditionalResource;
 
 class Product extends JsonResource
 {
@@ -19,7 +20,7 @@ class Product extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'photo' => $this->photo,
+            'photo' => Storage::url($this->photo),
             'priority' => $this->priority,
             'enable' => $this->enable,
             'price' => $this->price,

@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Product as ProductResource;
 use App\Http\Requests\Product\ProductCreateRequest;
 use App\Http\Requests\Product\ProductUpdateRequest;
-use App\Http\Resources\Product as ProductResource;
 use App\Http\Resources\Category as CategoryResource;
 use App\Http\Resources\Additional as AdditionalResource;
 
@@ -59,7 +60,8 @@ class ProductController extends Controller
      */
     public function store(ProductCreateRequest $request)
     {
-        $pathName = $request->file('photo')->store('images', 'public');
+        $productPicturePath = $request->file('photo')->store('images/product');
+        Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/establishment', $request->file('photo'));
 
         $product = new Product();
 
@@ -67,7 +69,7 @@ class ProductController extends Controller
         $product->priority = $request->priority;
         $product->price = $request->price;
 
-        $product->photo = $pathName;
+        $product->photo = $productPicturePath;
         $product->description = $request->description;
         $product->enable = $request->enable == 'true' ? true : false;
         $product->available = true;
@@ -132,8 +134,10 @@ class ProductController extends Controller
         $product = Product::findByUser($id, $user_id);
 
         if($request->updateImage != "false"){
-            $pathName = $request->file('photo')->store('images', 'public');
-            $product->photo = $pathName;
+            $productPicturePath = $request->file('photo')->store('images/product');
+            Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/establishment', $request->file('photo'));
+
+            $product->photo = $productPicturePath;
         }
 
         $product->categories()->sync($request->category);

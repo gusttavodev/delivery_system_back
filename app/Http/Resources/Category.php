@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Category extends JsonResource
@@ -18,7 +19,8 @@ class Category extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'photo' => $this->photo,
+            // 'photo' => $this->photo,
+            'photo' =>   Storage::url($this->photo),
             'priority' => $this->priority,
             'enable' => $this->enable,
 

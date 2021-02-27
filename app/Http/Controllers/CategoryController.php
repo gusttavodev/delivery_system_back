@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Category as CategoryResource;
 use App\Http\Requests\Category\CategoryCreateRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
-use App\Http\Resources\Category as CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -48,11 +49,12 @@ class CategoryController extends Controller
      */
     public function store(CategoryCreateRequest $request)
     {
-        $pathName = $request->file('photo')->store('images', 'public');
+        $filePath = $request->file('photo')->store('images/category');
+        Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/category', $request->file('photo'));
 
         $category = new Category();
         $category->name = $request->name;
-        $category->photo = $pathName;
+        $category->photo = $filePath;
         $category->priority = $request->priority;
         $category->enable = $request->enable == 'true' ? true : false;
         $category->user_id = $request->user()->id;
@@ -98,12 +100,15 @@ class CategoryController extends Controller
      */
     public function update(CategoryUpdateRequest $request, $id)
     {
+
         $user_id =  $request->user()->id;
         $category = Category::findByUser($id, $user_id);
 
         if($request->updateImage != "false"){
-            $pathName = $request->file('photo')->store('images', 'public');
-            $category->photo = $pathName;
+            $filePath = $request->file('photo')->store('images/category');
+            Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/category', $request->file('photo'));
+
+            $category->photo = $filePath;
         }
 
         $category->name = $request->name;

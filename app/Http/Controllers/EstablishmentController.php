@@ -14,6 +14,8 @@ use App\Http\Requests\Establishment\EstablishmentCreateRequest;
 use App\Http\Requests\Establishment\EstablishmentUpdateRequest;
 use App\Http\Requests\Establishment\EstablishmentAddressCreateRequest;
 
+use Illuminate\Support\Facades\Storage;
+
 class EstablishmentController extends Controller
 {
     /**
@@ -50,8 +52,11 @@ class EstablishmentController extends Controller
      */
     public function store(EstablishmentCreateRequest $request)
     {
-        $picturePath = $request->file('picture')->store('images', 'public');
-        $backgroundPicturePath = $request->file('background_picture')->store('images', 'public');
+        $picturePath = $request->file('picture')->store('images/establishment');
+        $backgroundPicturePath = $request->file('background_picture')->store('images/establishment');
+
+        Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/establishment', $request->file('picture'));
+        Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/establishment', $request->file('background_picture'));
 
         $establishment = new Establishment();
 
@@ -120,11 +125,15 @@ class EstablishmentController extends Controller
         $establishment->phone = $request->phone;
 
         if($request->picture) {
-            $picturePath = $request->file('picture')->store('images', 'public');
+            $picturePath = $request->file('picture')->store('images/establishment');
+            Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/establishment', $request->file('picture'));
+
             $establishment->picture = $picturePath;
         }
         if($request->background_picture) {
-            $backgroundPicturePath = $request->file('background_picture')->store('images', 'public');
+            $backgroundPicturePath = $request->file('background_picture')->store('images/establishment');
+            Storage::disk(env('FILESYSTEM_DRIVER'))->put('images/establishment', $request->file('background_picture'));
+
             $establishment->background_picture = $backgroundPicturePath;
         }
 

@@ -29,8 +29,8 @@ class EstablishmentFactory extends Factory
             'description' =>  Str::random(10),
             'phone' =>  "31987110017",
 
-            'picture' => "images/AFrAKXdnmXcyIsU21PrQZKIxvrmurFfoM4QAl7Ds.png",
-            'background_picture' => "images/AFrAKXdnmXcyIsU21PrQZKIxvrmurFfoM4QAl7Ds.png",
+            'picture' => "images/establishment/NspozmnY1uUkrV9n7nfPekDgQyi7HSTqDSHnCW52.png",
+            'background_picture' => "images/establishment/NZ6ZBeZ2OkLUfffhqKU8lPdG5jIrmEWZ9PqtkHnS.jpg",
 
             'delivery_time' => "1H - 40M",
             'min_value' => 10.12,
