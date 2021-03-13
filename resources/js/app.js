@@ -15,9 +15,11 @@ import { uniCheckCircle, uniTimesCircle, uniShoppingCart } from 'vue-unicons/src
 import vSelect from 'vue-select'
 import VueTheMask from 'vue-the-mask'
 import VueNumberInput from '@chenfengyuan/vue-number-input';
+import Verte from 'verte';
 
 
 // Components
+Vue.component('verte', Verte);
 Vue.component('multiselect', require('vue-multiselect'));
 Vue.component('vue-number-input', VueNumberInput);
 Vue.mixin({ methods: { route } });
@@ -33,6 +35,7 @@ Vue.use(VueTheMask)
 // CSS
 import '../css/vue_notification.scss'
 import 'vue-select/dist/vue-select.css';
+import 'verte/dist/verte.css';
 
 // Vue instance
 const app = document.getElementById('app');

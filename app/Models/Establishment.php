@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Theme;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Establishment extends Model
 {
@@ -28,6 +29,11 @@ class Establishment extends Model
     public function openingHours()
     {
         return $this->hasMany(OpeningHour::class);
+    }
+
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class);
     }
 
     static function findByUser($id, $user_id) {

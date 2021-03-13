@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\OpeningHour;
 use App\Models\Establishment;
 use Illuminate\Database\Seeder;
+use App\Models\Theme;
 
 class EstablishmentSeeder extends Seeder
 {
@@ -24,9 +25,10 @@ class EstablishmentSeeder extends Seeder
         // Registra de forma encadeada
         User::all()->each(function($user) {
             $address = Address::first();
+            $theme = Theme::first();
             $user->establishments()->saveMany(
                 Establishment::factory(1)->make([
-                    'user_id' => $user->id, 'address_id' => $address->id
+                    'user_id' => $user->id, 'address_id' => $address->id, 'theme_id' => $theme->id
                 ])
             )->each(function($establishment) {
                 $establishment->openingHours()->saveMany(

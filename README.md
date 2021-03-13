@@ -96,3 +96,12 @@ Colocar resetOnSuccess: false no form, caso seja true ele atualiza a tela porem 
     heroku run php artisan migrate:fresh --seed
 ```
 
+Buscar as Cores via API, pois ela já ficam renderizadas
+
+
+Usar a função se setar cores do css para definir o tema no tailwind
+https://www.youtube.com/watch?v=o4Prej0wIZA&t=435s
+
+
+
+- [] Adicionar establishment_id na tabela order, para saber em q estabelecimento o pedio foi deito

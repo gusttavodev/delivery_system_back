@@ -73,7 +73,6 @@ export default {
 
 .modal-header h3 {
   margin-top: 0;
-  color: #009efb;
 }
 
 .modal-body {

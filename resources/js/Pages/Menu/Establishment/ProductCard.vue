@@ -8,9 +8,9 @@
                 :src="product.photo"
             />
             <div class="pt-3">
-                <p>{{ product.name }}</p>
+                <p class="text-card-text">{{ product.name }}</p>
             </div>
-            <p>R$ {{ product.price }}</p>
+            <p class="text-price-text">R$ {{ product.price }}</p>
         </div>
 </template>
 

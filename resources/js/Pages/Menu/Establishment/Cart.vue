@@ -1,14 +1,9 @@
 <template>
-    <!-- <div
-        class="
-        mx-auto lg:w-3/4 sm:w-3/4 md:w-2/4 fixed inset-x-0 bottom-0
-        bg-pink-800 rounded-t-lg text-center text-gray-50 hover:bg-pink-600"
-    > -->
     <div
-         :class="`bg-gradient-to-r from-${$page.secondary_color}-500 via-${$page.secondary_color}-600 to-${$page.secondary_color}-700`"
         class="
             cursor-pointer  w-3/4 lg:w-3/4 sm:w-2/4 md:w-2/4 fixed inset-x-0 bottom-0
-            rounded-t-lg text-center text-gray-50 container flex flex-wrap items-center justify-center pt-2
+            rounded-t-lg text-center container flex flex-wrap items-center justify-center pt-2
+            bg-personal-colors-button-background hover:bg-personal-colors-button-hover text-button-text
         "
         style="z-index: 9999999999999999999999999"
         @click="showOrder"
@@ -17,7 +12,7 @@
 
         <div slot="icon" class="relative">
             <div
-                class="absolute text-xs rounded-full -mt-1 -mr-2 px-1 font-bold top-0 right-0 bg-green-500 text-white"
+                class="absolute text-xs rounded-full -mt-1 -mr-2 px-1 font-bold top-0 right-0 bg-personal-colors-button-count"
             >
                 {{ cartCount }}
             </div>

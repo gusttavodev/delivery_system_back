@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\ThemeSeeder;
 use Database\Seeders\RoadmapSeeder;
 use Database\Seeders\EstablishmentSeeder;
 
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UserSeeder::class);
+        $this->call(ThemeSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(RoadmapSeeder::class);
         $this->call(EstablishmentSeeder::class);

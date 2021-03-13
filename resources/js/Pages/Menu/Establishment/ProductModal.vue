@@ -1,6 +1,6 @@
 <template>
     <Modal v-if="hasProduct" @close="closeModal">
-        <h3 slot="header" class="text-xl">{{ selectedProduct.name }}</h3>
+        <h3 slot="header" class="text-xl font-bold text-title-color">{{ selectedProduct.name }}</h3>
         <div slot="body">
             <div
                 class="flex flex-col items-center justify-center text-gray-800 work-sans leading-normal"

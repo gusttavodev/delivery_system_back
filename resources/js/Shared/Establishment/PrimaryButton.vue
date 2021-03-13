@@ -1,5 +1,14 @@
 <template>
-    <button :type="type" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
+    <button :type="type" class="inline-flex items-center px-4 py-2
+    border-transparent rounded-md font-semibold text-xs transition ease-in-out
+    uppercase tracking-widest focus:outline-none focus:shadow-outline-gray
+    duration-150
+
+    bg-personal-colors-button-background hover:bg-personal-colors-button-hover text-button-text
+    focus:bg-personal-colors-button-background
+    active:bg-personal-colors-button-background
+    "
+    >
         <slot
 
         ></slot>

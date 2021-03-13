@@ -29,7 +29,7 @@
                             <jet-nav-link :href="route('indexAddition')" :active="$page.currentRouteName == 'indexAddition'">
                                 Adicionais
                             </jet-nav-link>
-                            <jet-nav-link :href="route('indexUser')" :active="$page.currentRouteName == 'indexUser'">
+                            <jet-nav-link :href="route('indexTheme')" :active="$page.currentRouteName == 'indexTheme'">
                                 Temas
                             </jet-nav-link>
                             <jet-nav-link :href="route('indexUser')" :active="$page.currentRouteName == 'indexUser'">
@@ -162,7 +162,7 @@
                             <jet-nav-link :href="route('indexAddition')" :active="$page.currentRouteName == 'indexAddition'">
                                 Adicionais
                             </jet-nav-link>
-                            <jet-nav-link :href="route('indexUser')" :active="$page.currentRouteName == 'indexUser'">
+                            <jet-nav-link :href="route('indexTheme')" :active="$page.currentRouteName == 'indexTheme'">
                                 Temas
                             </jet-nav-link>
                             <jet-nav-link :href="route('indexUser')" :active="$page.currentRouteName == 'indexUser'">

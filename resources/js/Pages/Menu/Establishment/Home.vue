@@ -1,16 +1,21 @@
 <template>
-    <div>
+    <div class="establishment-ambient">
 
         <div
-            class="work-sans leading-normal text-base tracking-normal "
-            :class="`bg-${$page.background_color} text-${$page.text_color}`"
+            class="work-sans leading-normal text-base tracking-normal bg-personal-colors-background text-content-color"
         >
 
             <!--Nav-->
+            <!-- <nav
+                id="header"
+                class="w-full z-30 top-0 py-1 bg-gradient-to-r
+                    from-personal-colors-secondary
+                    via-personal-colors-primary
+                    to-personal-colors-secondary"
+            > -->
             <nav
                 id="header"
-                class="w-full z-30 top-0 py-1"
-                :class="`bg-gradient-to-r from-${$page.primary_color}-400 via-${$page.primary_color}-500 to-${$page.primary_color}-600`"
+                class="w-full z-30 top-0 py-1 bg-personal-colors-primary"
             >
                 <div
                     class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3"
@@ -44,16 +49,14 @@
                             >
                                 <li>
                                     <a
-                                        class="inline-block py-2 px-4 no-underline"
-                                        :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
+                                        class="inline-block py-2 px-4 no-underline hover:underline text-title-color hover:text-title-hover-color"
                                         href="#"
                                         >Shop</a
                                     >
                                 </li>
                                 <li>
                                     <a
-                                        class="inline-block py-2 px-4 no-underline"
-                                        :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
+                                        class="inline-block py-2 px-4 no-underline hover:underline text-title-color hover:text-title-hover-color"
                                         href="#"
                                         >About
                                     </a>
@@ -64,8 +67,7 @@
 
                     <div class="order-1 md:order-2">
                         <a
-                            class="flex items-center tracking-wide font-bold text-xl no-underline hover:no-underline"
-                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_color}`"
+                            class="flex items-center tracking-wide font-bold text-xl no-underline hover:no-underline text-title-color hover:text-title-hover-color"
                             href="#"
                         >
                             <img
@@ -83,8 +85,7 @@
                         id="nav-content"
                     >
                         <a
-                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
-                            class="inline-block no-underline"
+                            class="inline-block no-underline hover:underline text-title-color hover:text-title-hover-color"
                             href="#"
                         >
                             <svg
@@ -102,8 +103,7 @@
                         </a>
 
                         <a
-                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:underline`"
-                            class="pl-3 inline-block no-underline"
+                            class="pl-3 inline-block no-underline hover:underline text-title-color hover:text-title-hover-color"
                             href="#"
                         >
                             <svg
@@ -125,16 +125,14 @@
             </nav>
 
             <section
-                :class="`bg-gradient-to-r from-${$page.primary_color}-400 via-${$page.primary_color}-500 to-${$page.primary_color}-600`"
-                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded m-3"
+
+                class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right rounded m-3 bg-personal-colors-primary"
                 style="max-width:1600px; height: 32rem;"
             >
-
                 <!-- component -->
                 <!-- Collapsible card by Julian Rachele -->
                 <div
-                    class="shadow-md m-2 rounded"
-                    :class="`bg-${$page.background_color}`"
+                    class="shadow-md m-2 rounded bg-personal-colors-background"
                 >
                     <div class="flex items-center">
                         <img
@@ -143,7 +141,7 @@
                             class="w-auto h-20 mr-4"
                         />
 
-                        <div class="description" :class="`text-${$page.title_text_color}`">
+                        <div class="description text-title-color">
                             <p>{{ $page.establishment.data.description }}</p>
                         </div>
                     </div>
@@ -151,26 +149,26 @@
                     <div class="flex flex-col m-4">
                         <hr class="mb-4 border-gray-700" />
                         <p>
-                            <span  :class="`text-${$page.title_text_color}`">Endereço:</span>
+                            <span  class="text-title-color" >Endereço:</span>
                             {{
                                 `${$page.establishment.data.address.street}, Número ${$page.establishment.data.address.number} ${$page.establishment.data.address.complement},
                                     ${$page.establishment.data.address.district} - ${$page.establishment.data.address.city} ${$page.establishment.data.address.state}`
                             }}
                         </p>
                         <p>
-                            <span :class="`text-${$page.title_text_color}`">Telefone:</span>
+                            <span class="text-title-color" >Telefone:</span>
                             {{ $page.establishment.data.phone }}
                         </p>
                         <p>
-                            <span :class="`text-${$page.title_text_color}`">Tempo Médio:</span>
+                            <span class="text-title-color" >Tempo Médio:</span>
                             {{ $page.establishment.data.delivery_time }}
                         </p>
                         <p>
-                            <span :class="`text-${$page.title_text_color}`">Preço Mínimo:</span> R$
+                            <span class="text-title-color" >Preço Mínimo:</span> R$
                             {{ $page.establishment.data.min_value }}
                         </p>
                         <p>
-                            <span :class="`text-${$page.title_text_color}`">Horarios de Funcionamento:</span>
+                            <span class="text-title-color" >Horarios de Funcionamento:</span>
                         </p>
                         <ul class="list-disc ml-4 mt-1">
                             <li
@@ -179,7 +177,7 @@
                                 :key="openingHour.id"
                             >
                                 <div v-if="!openingHour.not_open">
-                                    <span :class="`text-${$page.title_text_color}`">{{
+                                    <span class="text-title-color" >{{
                                         openingHour.label
                                     }}</span>
                                     {{ openingHour.start_time }}
@@ -210,8 +208,7 @@
                             class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3"
                         >
                             <a
-                                :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:no-underline`"
-                                class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
+                                class="uppercase tracking-wide no-underline hover:no-underline font-bold text-xl text-title-color hover:text-title-hover-color"
                                 href="#"
                             >
                                 {{ category.name }}
@@ -220,7 +217,7 @@
                     </nav>
 
                     <ProductCard
-                        class="shadow-xl rounded bg-gray-50 p-2"
+                        class="shadow-xl rounded p-2 bg-personal-colors-card-background"
                         v-for="product in category.products"
                         :key="product.id"
                         :product="product"
@@ -229,14 +226,13 @@
             </section>
 
             <footer
-                :class="`bg-gradient-to-r from-${$page.primary_color}-400 via-${$page.primary_color}-500 to-${$page.primary_color}-600`"
-                class="mx-auto py-8"
+                class="mx-auto py-8 bg-personal-colors-primary"
             >
                 <div class="container flex px-3 py-8 ">
                     <div class="w-full mx-auto flex flex-wrap">
                         <div class="flex w-full lg:w-1/2 ">
                             <div class="px-3 md:px-0">
-                                <h3 class="font-bold" :class="`text-${$page.title_text_color}`">About</h3>
+                                <h3 class="font-bold text-title-color">About</h3>
                                 <p class="py-4">
                                     Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit. Maecenas vel mi ut felis
@@ -249,13 +245,12 @@
                             class="flex w-full lg:w-1/2 lg:justify-end lg:text-right"
                         >
                             <div class="px-3 md:px-0">
-                                <h3 class="font-bold" :class="`text-${$page.title_text_color}`">Social</h3>
+                                <h3 class="font-bold text-title-color">Social</h3>
                                 <ul class="list-reset items-center pt-3">
                                     <li>
                                         ICON
                                         <a
-                                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:no-underline`"
-                                            class="inline-block no-underline py-1"
+                                            class="inline-block no-underline py-1 hover:no-underline text-title-color hover:text-title-hover-color"
                                             href="#"
                                             >@gusttavo212</a
                                         >
@@ -263,8 +258,7 @@
                                      <li>
                                         ICON
                                         <a
-                                            :class="`text-${$page.title_text_color} hover:text-${$page.title_text_hover_color} hover:no-underline`"
-                                            class="inline-block no-underline py-1"
+                                            class="inline-block no-underline py-1 hover:no-underline text-title-color hover:text-title-hover-color"
                                             href="#"
                                             >@gusttavo212</a
                                         >
@@ -308,10 +302,29 @@ export default {
     },
     data() {
         return {
+            styleObject: {
+                backgroundColor: 'black'
+            },
             establishment: null
         };
     },
-    created(){
+    async mounted(){
+        const theme = this.$page.establishment.data.theme
+        console.log("theme ", theme);
+
+        document.documentElement.style.setProperty('--primary-color', theme.primary_color);
+        document.documentElement.style.setProperty('--secondary-color', theme.secondary_color);
+        document.documentElement.style.setProperty('--text-color', theme.text_color);
+        document.documentElement.style.setProperty('--title-text-color', theme.title_text_color);
+        document.documentElement.style.setProperty('--title-text-hover-color', theme.title_text_hover_color);
+        document.documentElement.style.setProperty('--background-color', theme.background_color);
+        document.documentElement.style.setProperty('--button-background-color', theme.button_background_color);
+        document.documentElement.style.setProperty('--button-hover-color', theme.button_hover_color);
+        document.documentElement.style.setProperty('--button-text-color', theme.button_text_color);
+        document.documentElement.style.setProperty('--button-count-color', theme.button_count_color);
+        document.documentElement.style.setProperty('--card-background-color', theme.card_background_color);
+        document.documentElement.style.setProperty('--card-text-color', theme.card_text_color);
+        document.documentElement.style.setProperty('--card-price-color', theme.card_price_color);
 
     },
     computed: {

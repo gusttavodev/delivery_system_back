@@ -1,2 +1,46 @@
-
 @import "node_modules/bootstrap/scss/bootstrap.scss";
+
+:root {
+    --primary-color: #F9FAFB;
+    --secondary-color: #F9FAFB;
+    --text-color: #F9FAFB;
+    --title-text-color: #F9FAFB;
+    --title-text-hover-color: #F9FAFB;
+    --background-color: #F9FAFB;
+
+    --button-background-color: #162FA1;
+    --button-hover-color: #1ca4e6;
+
+    --button-text-color: #162FA1;
+    --button-count-color: #ff0000;
+
+    --card-background-color: #6600cc;
+    --card-text-color: #ff0000;
+    --card-price-color: #fffb00;
+}
+
+// .theme-red {
+//     --bg-background-primary: red
+// }
+
+// .theme-blue {
+//     --bg-background-primary: blue
+// }
+
+// $--color-primary: theme('colors.app_blue.500');
+
+// #teste-theme-blue {
+//     background-color: $--color-primary;
+// }
+
+// .establishment-ambient {
+//     --cor-bg-principal: brown;
+// }
+
+
+// $--color-gradient-primary: 'from-red-500';
+
+// #teste-theme-blue {
+//     @apply bg-gradient-to-r;
+//     @apply from-red-500;
+// }

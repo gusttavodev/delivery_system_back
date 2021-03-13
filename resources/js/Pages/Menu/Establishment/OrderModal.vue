@@ -1,6 +1,6 @@
 <template>
     <Modal v-if="showOrder" @close="closeModal">
-        <h3 slot="header" class="text-2xl">Confirme sua compra</h3>
+        <h3 slot="header" class="font-bold text-2xl text-title-color">Confirme sua compra</h3>
         <div slot="body">
             <ProductItem
                 v-for="product in storeCart"

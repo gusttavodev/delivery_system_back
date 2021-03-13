@@ -51,6 +51,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+use Intervention\Image\ImageManagerStatic as Image;
+Route::get('/teste', function () {
+    $teste = Storage::url("images/category/k2v6hLertmBCeXOtwadRuJXvAW6mebNA0lBqbgYJ.jpg");
+
+    return $teste;
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');
@@ -166,7 +174,17 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/addition', 'mid
     Route::post('/edit/{id}', array('as' => 'updateAddition', 'uses' => 'AdditionalController@update'));
 });
 
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/establishment_theme', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', array('as' => 'indexTheme', 'uses' => 'ThemeController@index'));
+    Route::get('/create', array('as' => 'createTheme', 'uses' => 'ThemeController@create'));
+    Route::post('/create', array('as' => 'storeTheme', 'uses' => 'ThemeController@store'));
+    Route::delete('/{id}', array('as' => 'deleteTheme', 'uses' => 'ThemeController@destroy'));
+    Route::get('/edit/{id}', array('as' => 'editTheme', 'uses' => 'ThemeController@edit'));
+    Route::post('/edit/{id}', array('as' => 'updateTheme', 'uses' => 'ThemeController@update'));
+});
 
-Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/menu/establishment'], function () {
-    Route::get('/{public_link_name}', array('as' => 'indexPublicEstablishment', 'uses' => 'PublicEstablishmentController@home'));
+// Public
+Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/menu'], function () {
+    Route::get('/establishment/{public_link_name}', array('as' => 'indexPublicEstablishment', 'uses' => 'PublicEstablishmentController@home'));
+    Route::get('/theme/{establishment}', array('as' => 'showTheme', 'uses' => 'ThemeController@show'));
 });

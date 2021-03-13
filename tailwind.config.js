@@ -10,24 +10,36 @@ module.exports = {
     theme: {
         screens: {
             'lt': '360px',
-
             'sm': '640px',
-            // => @media (min-width: 640px) { ... }
-
             'md': '768px',
-            // => @media (min-width: 768px) { ... }
-
             'lg': '1024px',
-            // => @media (min-width: 1024px) { ... }
-
             'xl': '1280px',
-            // => @media (min-width: 1280px) { ... }
         },
         extend: {
+            textColor: {
+                'content-color': "var(--text-color)",
+                'title-color': "var(--title-text-color)",
+                'title-hover-color': "var(--title-text-hover-color)",
+
+                'button-text': "var(--button-text-color)",
+
+                'card-text': "var(--card-text-color)",
+                'price-text': "var(--card-price-color)",
+            },
             fontFamily: {
                 sans: ["Nunito", ...defaultTheme.fontFamily.sans]
             },
             colors: {
+                'personal-colors': {
+                    'primary': "var(--primary-color)",
+                    'secondary': "var(--primary-color)",
+                    'background': "var(--background-color)",
+
+                    'button-background': "var(--button-background-color)",
+                    'button-hover': "var(--button-hover-color)",
+                    'button-count': "var(--button-count-color)",
+                    'card-background': "var(--card-background-color)",
+                },
                 transparent: "transparent",
                 current: "currentColor",
                 app_blue: {

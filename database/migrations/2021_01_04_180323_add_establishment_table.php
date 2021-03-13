@@ -28,7 +28,9 @@ class AddEstablishmentTable extends Migration
 
             $table->boolean('need_confirm_order')->default(0);
 
+            $table->foreignId('theme_id')->nullable()->references('id')->on('themes');
             $table->foreignId('address_id')->nullable()->references('id')->on('addresses');
+
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();

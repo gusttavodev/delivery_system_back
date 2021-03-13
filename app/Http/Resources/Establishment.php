@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Address as AddressResource;
+use App\Http\Resources\ThemeResource;
 use App\Http\Resources\OpeningHours as OpeningHoursResource;
 
 class Establishment extends JsonResource
@@ -30,6 +31,7 @@ class Establishment extends JsonResource
 
             'address' => new  AddressResource($this->address),
             'opening_hours' => OpeningHoursResource::collection($this->openingHours),
+            'theme' => new ThemeResource($this->theme),
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
