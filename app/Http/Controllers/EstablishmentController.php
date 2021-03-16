@@ -8,13 +8,15 @@ use App\Enums\DaysOfWeek;
 
 use Illuminate\Http\Request;
 use App\Models\Establishment;
+use App\Http\Resources\ThemeResource;
+
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Establishment\EstablishmentStoreTheme;
 use App\Http\Resources\Establishment as EstablishmentResource;
 
 use App\Http\Requests\Establishment\EstablishmentCreateRequest;
 use App\Http\Requests\Establishment\EstablishmentUpdateRequest;
 use App\Http\Requests\Establishment\EstablishmentAddressCreateRequest;
-
-use Illuminate\Support\Facades\Storage;
 
 class EstablishmentController extends Controller
 {
@@ -98,9 +100,10 @@ class EstablishmentController extends Controller
     {
         $user_id =  $request->user()->id;
         $establishment = Establishment::findByUser($id, $user_id);
+        $themes =  $request->user()->themes;
         $daysOfWeek = DaysOfWeek::List;
-
         return Inertia::render('Establishment/Edit', [
+            'themes' => ThemeResource::collection($themes),
             'establishment' => EstablishmentResource::make($establishment),
             'daysOfWeek' => $daysOfWeek
         ]);
@@ -182,5 +185,14 @@ class EstablishmentController extends Controller
         $establishment->save();
 
         return redirect()->back();
+    }
+
+    public function storeEstablishmentTheme(EstablishmentStoreTheme $request){
+        $establishment =  $request->user()->establishments->where('id', $request->establishment['id'])->first();
+        $establishment->theme_id = $request->theme['id'];
+        $establishment->save();
+        
+        return redirect()->back()->with('message', 'Estabelecimento atualizado com sucesso!');
+
     }
 }

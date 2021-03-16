@@ -163,6 +163,8 @@ Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/establishment',
     Route::post('/create/address', array('as' => 'storeEstablishmentAddress', 'uses' => 'EstablishmentController@storeAddress'));
     //Store OpeningHour
     Route::post('/create/opening_hours', array('as' => 'storeEstablishmentOpeningHour', 'uses' => 'OpeningHourController@store'));
+    //Store Theme
+    Route::post('/create/theme', array('as' => 'storeEstablishmentTheme', 'uses' => 'EstablishmentController@storeEstablishmentTheme'));
 });
 
 Route::group(['namespace'=>'App\Http\Controllers' ,'prefix' => '/addition', 'middleware' => ['auth:sanctum']], function () {

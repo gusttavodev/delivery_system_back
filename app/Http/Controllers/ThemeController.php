@@ -85,12 +85,10 @@ class ThemeController extends Controller
      */
     public function update(ThemeCreateRequest $request, $id)
     {
-        // $theme =  $request->user()->themes->where('id', $id)->first();
-        $request->user()->themes()->findOrFail($id);
-
         $input = $request->validated();
         $input['user_id'] = $request->user()->id;
 
+        $theme = $request->user()->themes()->findOrFail($id);
         $theme->update($input);
 
         return redirect()->back()->with('message', 'Tema atualizado !!!.');
